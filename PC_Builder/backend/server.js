@@ -1,0 +1,33 @@
+// 1. Import các packages đã cài
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+// 2. Tạo Express app
+const productRoutes = require('./routes/productRoutes');
+const buildRoutes = require('./routes/buildRoutes');
+const app = express();
+
+// 3. Middleware 
+app.use(cors());
+app.use(express.json());
+
+// 4. Kết nối MongoDB
+mongoose.connect(process.env.MONGO_DB_URL)
+    .then(() => console.log('✅ MongoDB Connected'))
+    .catch(err => console.error('❌ MongoDB Error:', err));
+
+// 5. Test route 
+app.get('/', (req, res) => {
+    res.json({ message: 'PC Builder API is running!' });
+});
+
+app.use('/api/products', productRoutes);
+app.use('/api/build', buildRoutes);
+
+// 6. Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
