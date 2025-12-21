@@ -1,0 +1,68 @@
+{
+    "header": {
+        "language": "Ngôn ngữ",
+        "search_placeholder": "Tìm kiếm...",
+        "welcome": "Xin chào",
+        "login": "Đăng nhập / Đăng ký",
+        "logout": "Đăng xuất",
+        "cart": "Giỏ hàng",
+        "system_builder": "Xây dựng cấu hình",
+        "browse": "Tìm sản phẩm"
+    },
+    "category": {
+        "storage": "Lưu trữ",
+        "gpu": "Card màn hình",
+        "psu": "Nguồn",
+        "case": "Vỏ máy",
+        "cpu": "Vi xử lý",
+        "cooler": "Tản nhiệt",
+        "mainboard": "Bo mạch chủ",
+        "ram": "Ram"
+    },
+    "subcategory": {
+        "cooling": "Tản nhiệt & Làm mát",
+        "case_fans": "Quạt Case",
+        "thermal": "Keo tản nhiệt",
+        "expansion": "Mở rộng & Mạng",
+        "sound_card": "Card âm thanh",
+        "wired_net": "Mạng dây (LAN)",
+        "wifi_net": "Mạng không dây (WiFi)",
+        "peripherals": "Thiết bị ngoại vi",
+        "headphones": "Tai nghe",
+        "keyboard": "Bàn phím",
+        "mouse": "Chuột",
+        "speakers": "Loa",
+        "webcam": "Webcam",
+        "software": "Phần mềm",
+        "antivirus": "Diệt Virus",
+        "utilities": "Tiện ích",
+        "os": "Hệ điều hành"
+    },
+    "auth": {
+        "login_title": "ĐĂNG NHẬP HỆ THỐNG",
+        "register_title": "TẠO TÀI KHOẢN MỚI",
+        "name_placeholder": "Họ và tên",
+        "phone_placeholder": "Số điện thoại",
+        "email_placeholder": "Địa chỉ Email",
+        "password_placeholder": "Mật khẩu",
+        "btn_login": "ĐĂNG NHẬP",
+        "btn_register": "ĐĂNG KÝ NGAY",
+        "have_account": "Đã có tài khoản?",
+        "no_account": "Chưa có tài khoản?",
+        "click_login": "Đăng nhập ngay",
+        "click_register": "Đăng ký tại đây",
+        "or_login_with": "Hoặc đăng nhập bằng"
+    },
+    "footer": {
+        "cta_text": "Có thắc mắc? Tham gia diễn đàn và thảo luận cùng chuyên gia.",
+        "cta_btn": "Ghé thăm diễn đàn",
+        "desc": "PC Builder là công cụ giúp việc xây dựng máy tính dễ dàng hơn bao giờ hết. Chọn linh kiện, kiểm tra tương thích và tạo ra cỗ máy mơ ước của bạn.",
+        "popular_tags": "TỪ KHÓA PHỔ BIẾN",
+        "useful_links": "LIÊN KẾT HỮU ÍCH",
+        "about_us": "Về chúng tôi",
+        "contact_us": "Liên hệ",
+        "forum": "Diễn đàn",
+        "blog": "Tin tức công nghệ",
+        "copyright": "Bản quyền © 2025 PC Builder. Đã đăng ký bản quyền."
+    }
+}

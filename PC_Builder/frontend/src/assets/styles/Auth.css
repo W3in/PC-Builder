@@ -1,0 +1,160 @@
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #0b1d2a;
+    /* Màu tối trùng theme */
+    border: 1px solid #1c2e3e;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: white;
+}
+
+.auth-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #26a69a;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #031420;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    border-color: #26a69a;
+    outline: none;
+}
+
+.btn-auth {
+    padding: 12px;
+    background: #26a69a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn-auth:hover {
+    background: #1e8e84;
+}
+
+.auth-switch {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.auth-switch span {
+    color: #26a69a;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.error-msg {
+    background: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Thêm vào cuối file assets/styles/Auth.css */
+
+/* Nút Google */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+.google-btn:hover {
+    background: #f1f1f1;
+}
+
+.divider {
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+}
+
+.divider span {
+    background: #0b1d2a;
+    /* Trùng màu nền container */
+    padding: 0 10px;
+    color: #888;
+    font-size: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #2c3e50;
+    z-index: 1;
+}
+
+/* Auth Language Switcher (Nằm góc trên phải màn hình) */
+.auth-lang-switch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+}
+
+.auth-lang-btn {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth-lang-btn:hover,
+.auth-lang-btn.active {
+    border-color: #26a69a;
+    background: rgba(38, 166, 154, 0.2);
+}
+
+.auth-lang-btn img {
+    width: 24px;
+    display: block;
+}

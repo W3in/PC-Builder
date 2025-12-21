@@ -7,6 +7,7 @@ require('dotenv').config();
 // 2. Tạo Express app
 const productRoutes = require('./routes/productRoutes');
 const buildRoutes = require('./routes/buildRoutes');
+const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 // 3. Middleware 
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes);
 app.use('/api/build', buildRoutes);
-
+app.use('/api/users', userRoutes);
 // 6. Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

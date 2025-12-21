@@ -1,0 +1,68 @@
+{
+    "header": {
+        "language": "Language",
+        "search_placeholder": "Search...",
+        "welcome": "Welcome",
+        "login": "Sign In / Register",
+        "logout": "Logout",
+        "cart": "Cart",
+        "system_builder": "System Builder",
+        "browse": "Browse Products"
+    },
+    "category": {
+        "storage": "Storage",
+        "gpu": "Graphics Card",
+        "psu": "Power Supply",
+        "case": "Case",
+        "cpu": "CPU",
+        "cooler": "CPU Cooler",
+        "mainboard": "Motherboard",
+        "ram": "Memory"
+    },
+    "subcategory": {
+        "cooling": "Cooling",
+        "case_fans": "Case Fans",
+        "thermal": "Thermal Compound",
+        "expansion": "Expansion",
+        "sound_card": "Sound Cards",
+        "wired_net": "Wired Networking",
+        "wifi_net": "Wireless Networking",
+        "peripherals": "Peripherals",
+        "headphones": "Headphones",
+        "keyboard": "Keyboards",
+        "mouse": "Mouse",
+        "speakers": "Speakers",
+        "webcam": "Webcam",
+        "software": "Software",
+        "antivirus": "Antivirus",
+        "utilities": "Utilities",
+        "os": "Operating Systems"
+    },
+    "auth": {
+        "login_title": "SYSTEM LOGIN",
+        "register_title": "CREATE NEW ACCOUNT",
+        "name_placeholder": "Full Name",
+        "phone_placeholder": "Phone Number",
+        "email_placeholder": "Email Address",
+        "password_placeholder": "Password",
+        "btn_login": "LOGIN",
+        "btn_register": "REGISTER NOW",
+        "have_account": "Already have an account?",
+        "no_account": "Don't have an account?",
+        "click_login": "Login here",
+        "click_register": "Register here",
+        "or_login_with": "Or login with"
+    },
+    "footer": {
+        "cta_text": "Have questions? Join the forum and discuss with experts.",
+        "cta_btn": "Visit the forum",
+        "desc": "PC Builder is a tool that makes building a PC easier than ever. Choose components, check compatibility, and create your dream machine.",
+        "popular_tags": "POPULAR KEYWORDS",
+        "useful_links": "USEFUL LINKS",
+        "about_us": "About us",
+        "contact_us": "Contact",
+        "forum": "Forum",
+        "blog": "Technology news",
+        "copyright": "Copyright © 2025 PC Builder. All rights reserved."
+    }
+}

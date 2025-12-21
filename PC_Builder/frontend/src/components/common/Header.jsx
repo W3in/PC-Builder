@@ -1,67 +1,78 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// Import Icon từ thư viện react-icons
-import { FaSearch, FaUserCircle, FaShoppingCart, FaMoon, FaSun, FaWrench, FaLaptop, FaMicrochip, FaMemory, FaHdd, FaFan } from 'react-icons/fa';
-import { BsMotherboard, BsGpuCard, BsDeviceSsd } from "react-icons/bs";
-import { GiPowerGenerator, GiComputerFan } from "react-icons/gi";
-import { RiComputerLine } from "react-icons/ri";
-
+import { FaSearch, FaUserCircle, FaShoppingCart, FaMoon, FaSun, FaWrench, FaMicrochip, FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import '../../assets/styles/Header.css';
-
+import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 const Header = () => {
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const { t, i18n } = useTranslation();
+    const [showLangMenu, setShowLangMenu] = useState(false);
+    const { user, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme();
+    const languages = [
+        { code: 'vi', label: 'Tiếng Việt', flag: 'https://flagcdn.com/w40/vn.png' },
+        { code: 'en', label: 'English', flag: 'https://flagcdn.com/w40/us.png' },
+        { code: 'ja', label: '日本語', flag: 'https://flagcdn.com/w40/jp.png' }
+    ];
 
+    const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+
+    const handleLanguageSelect = (code) => {
+        i18n.changeLanguage(code);
+        setShowLangMenu(false);
+    };
     const mainComponents = [
         {
-            name: "Storage",
+            name: t('category.storage'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/storage.png"
         },
         {
-            name: "Graphics Card",
+            name: t('category.gpu'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/graphics-card.png"
         },
         {
-            name: "Power Supply",
+            name: t('category.psu'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/power-supply.png"
         },
         {
-            name: "Case",
+            name: t('category.case'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/case.png"
         },
         {
-            name: "CPU",
+            name: t('category.cpu'),
             img: "https://static.pcbuilder.net/assets/images/mega-menu/nav-processor.png"
         },
         {
-            name: "CPU Cooler",
+            name: t('category.cooler'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/cpu-cooler.png"
         },
         {
-            name: "Motherboard",
+            name: t('category.mainboard'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/motherboard.png"
         },
         {
-            name: "Memory",
+            name: t('category.ram'),
             img: "https://static.pcbuilder.net/assets/images/megamenu/memory.png"
         },
     ];
 
     const subCategories = [
         {
-            title: "Cooling",
-            items: ["Case Fans", "Thermal Compound"]
+            title: t('subcategory.cooling'),
+            items: [t('subcategory.case_fans'), t('subcategory.thermal')]
         },
         {
-            title: "Expansion",
-            items: ["Sound Cards", "Wired Networking", "Wireless Networking"]
+            title: t('subcategory.expansion'),
+            items: [t('subcategory.sound_card'), t('subcategory.wired_net'), t('subcategory.wifi_net')]
         },
         {
-            title: "Peripherals",
-            items: ["Headphones", "Keyboards", "Mouse", "Speakers", "Webcam"]
+            title: t('subcategory.peripherals'),
+            items: [t('subcategory.headphones'), t('subcategory.keyboard'), t('subcategory.mouse'), t('subcategory.speakers'), t('subcategory.webcam')]
         },
         {
-            title: "Software",
-            items: ["Antivirus", "Utilities", "Operating Systems"]
+            title: t('subcategory.software'),
+            items: [t('subcategory.antivirus'), t('subcategory.utilities'), t('subcategory.os')]
         }
     ];
     return (
@@ -76,17 +87,36 @@ const Header = () => {
 
                 <div className="search-bar">
                     <FaSearch className="search-icon" />
-                    <input type="text" placeholder="Search..." className="search-input" />
+                    <input type="text" placeholder={t('header.search_placeholder')} className="search-input" />
                 </div>
 
 
                 <div className="user-actions">
                     <div className="action-item">
-                        <FaUserCircle className="icon-btn" />
-                        <div>
-                            <div style={{ fontSize: '11px', color: '#888' }}>Welcome</div>
-                            <div style={{ fontWeight: 'bold' }}>Sign In / Register</div>
-                        </div>
+                        {user ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <FaUserCircle className="icon-btn" style={{ color: '#26a69a' }} />
+                                <div>
+                                    <div style={{ fontSize: '11px', color: '#888' }}>{t('header.welcome')}</div>
+                                    <div style={{ fontWeight: 'bold', color: '#26a69a' }}>{user.name}</div>
+                                </div>
+                                <button
+                                    onClick={logout}
+                                    title={t('header.logout')}
+                                    style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', marginLeft: '5px' }}
+                                >
+                                    <FaSignOutAlt />
+                                </button>
+                            </div>
+                        ) : (
+                            <Link to="/login" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'white' }}>
+                                <FaUserCircle className="icon-btn" />
+                                <div>
+                                    <div style={{ fontSize: '11px', color: '#888' }}>{t('header.welcome')}</div>
+                                    <div style={{ fontWeight: 'bold' }}>{t('header.login')}</div>
+                                </div>
+                            </Link>
+                        )}
                     </div>
 
                     <div className="action-item">
@@ -95,14 +125,41 @@ const Header = () => {
                                 <FaShoppingCart className="icon-btn" />
                                 <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'red', fontSize: '10px', padding: '2px 5px', borderRadius: '50%' }}>0</span>
                             </div>
-                            <span>Cart</span>
+                            <span>{t('header.cart')}</span>
                         </Link>
                     </div>
 
-                    <div className="dark-mode-toggle" onClick={() => setIsDarkMode(!isDarkMode)}>
-                        {isDarkMode ? <FaMoon color="#f1c40f" /> : <FaSun color="orange" />}
-                        <div style={{ width: '24px', height: '12px', background: isDarkMode ? '#2ecc71' : '#ccc', borderRadius: '10px', position: 'relative' }}>
-                            <div style={{ width: '10px', height: '10px', background: 'white', borderRadius: '50%', position: 'absolute', top: '1px', left: isDarkMode ? '13px' : '1px', transition: '0.2s' }}></div>
+                    <div className="lang-wrapper">
+                        <span className="lang-label">{t('header.language')}:</span>
+
+                        <div className="lang-dropdown">
+                            <div className="lang-current" onClick={() => setShowLangMenu(!showLangMenu)}>
+                                <img src={currentLang.flag} alt="" style={{ width: '20px', borderRadius: '2px' }} />
+                                <span style={{ fontSize: '14px', flex: 1 }}>{currentLang.label}</span>
+                                <FaChevronDown size={10} />
+                            </div>
+
+                            {showLangMenu && (
+                                <div className="lang-list">
+                                    {languages.map((lang) => (
+                                        <div
+                                            key={lang.code}
+                                            className="lang-item"
+                                            onClick={() => handleLanguageSelect(lang.code)}
+                                        >
+                                            <img src={lang.flag} alt="" style={{ width: '20px', borderRadius: '2px' }} />
+                                            <span style={{ fontSize: '13px' }}>{lang.label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="dark-mode-toggle" onClick={toggleTheme}>
+                        {theme === 'dark' ? <FaMoon color="#f1c40f" /> : <FaSun color="orange" />}
+                        <div style={{ width: '24px', height: '12px', background: theme === 'dark' ? '#2ecc71' : '#ccc', borderRadius: '10px', position: 'relative' }}>
+                            <div style={{ width: '10px', height: '10px', background: 'white', borderRadius: '50%', position: 'absolute', top: '1px', left: theme === 'dark' ? '13px' : '1px', transition: '0.2s' }}></div>
                         </div>
                     </div>
                 </div>
@@ -110,12 +167,12 @@ const Header = () => {
 
             <div className="sub-navbar">
                 <Link to="/builder" className="nav-item active">
-                    <FaWrench style={{ marginRight: '8px' }} /> System Builder
+                    <FaWrench style={{ marginRight: '8px' }} /> {t('header.system_builder')}
                 </Link>
 
                 <div className="nav-item-group" style={{ height: '100%' }}>
                     <div className="nav-item">
-                        <FaMicrochip style={{ marginRight: '8px' }} /> Browse Products ▾
+                        <FaMicrochip style={{ marginRight: '8px' }} /> {t('header.browse')}
                     </div>
 
                     <div className="mega-menu-container">

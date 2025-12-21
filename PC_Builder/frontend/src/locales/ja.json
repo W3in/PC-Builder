@@ -1,0 +1,68 @@
+{
+    "header": {
+        "language": "言語",
+        "search_placeholder": "検索...",
+        "welcome": "ようこそ",
+        "login": "ログイン / 登録",
+        "logout": "ログアウト",
+        "cart": "カート",
+        "system_builder": "PC構築",
+        "browse": "製品を探す"
+    },
+    "category": {
+        "storage": "ストレージ",
+        "gpu": "グラボ",
+        "psu": "電源ユニット",
+        "case": "PCケース",
+        "cpu": "CPU",
+        "cooler": "CPUクーラー",
+        "mainboard": "マザーボード",
+        "ram": "メモリ"
+    },
+    "subcategory": {
+        "cooling": "冷却パーツ",
+        "case_fans": "ケースファン",
+        "thermal": "サーマルグリス",
+        "expansion": "拡張カード",
+        "sound_card": "サウンドカード",
+        "wired_net": "有線LAN",
+        "wifi_net": "無線LAN / Wi-Fi",
+        "peripherals": "周辺機器",
+        "headphones": "ヘッドホン",
+        "keyboard": "キーボード",
+        "mouse": "マウス",
+        "speakers": "スピーカー",
+        "webcam": "ウェブカメラ",
+        "software": "ソフトウェア",
+        "antivirus": "アンチウイルス",
+        "utilities": "ユーティリティ",
+        "os": "オペレーティングシステム"
+    },
+    "auth": {
+        "login_title": "システムログイン",
+        "register_title": "新規アカウント作成",
+        "name_placeholder": "氏名",
+        "phone_placeholder": "電話番号",
+        "email_placeholder": "メールアドレス",
+        "password_placeholder": "パスワード",
+        "btn_login": "ログイン",
+        "btn_register": "新規登録",
+        "have_account": "アカウントをお持ちですか？",
+        "no_account": "アカウントをお持ちでないですか？",
+        "click_login": "ログイン",
+        "click_register": "登録する",
+        "or_login_with": "または次でログイン"
+    },
+    "footer": {
+        "cta_text": "ご質問がありますか？フォーラムに参加して専門家とディスカッションしましょう。",
+        "cta_btn": "フォーラムにアクセス",
+        "desc": "PC Builderは、PCの組み立てをこれまで以上に簡単にするツールです。パーツを選び、互換性を確認し、理想のマシンを作りましょう。",
+        "popular_tags": "人気キーワード",
+        "useful_links": "役立つリンク",
+        "about_us": "PC Builderについて",
+        "contact_us": "お問い合わせ",
+        "forum": "フォーラム",
+        "blog": "テクノロジーニュース",
+        "copyright": "Copyright © 2025 PC Builder. All rights reserved."
+    }
+}

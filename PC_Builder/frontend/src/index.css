@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
 
+:root {
+    --bg-body: #f4f6f8;
+    --bg-container: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --border-color: #e0e0e0;
+    --accent-color: #26a69a;
+    --header-bg: #ffffff;
+    --header-text: #333333;
+    --input-bg: #f1f3f5;
+    --footer-bg: #1a1a1a;
+}
+
+
+[data-theme='dark'] {
+    --bg-body: #020d16;
+    --bg-container: #0b1d2a;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --border-color: #1c2e3e;
+    --accent-color: #26a69a;
+    --header-bg: #031420;
+    --header-text: #ffffff;
+    --input-bg: #0b1d2a;
+    --footer-bg: #031420;
+}
 
 * {
     margin: 0;
@@ -10,35 +36,11 @@
 html,
 body {
     width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    background-color: #031420;
-    color: #000;
-
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.logo-area,
-.nav-item,
-button,
-.price-tag {
-    font-family: 'Chakra Petch', sans-serif;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-#root {
-    width: 100%;
     min-height: 100vh;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 a {
@@ -48,4 +50,16 @@ a {
 
 ul {
     list-style: none;
+}
+
+/* Font tiêu đề */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.logo-icon {
+    font-family: 'Chakra Petch', sans-serif;
 }
