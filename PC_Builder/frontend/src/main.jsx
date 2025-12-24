@@ -5,6 +5,7 @@ import './index.css'
 import './i18n';
 import { BuilderProvider } from './context/BuilderContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
+import { CartProvider } from './context/CartContext.jsx'
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <AuthProvider>
         <BuilderProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </BuilderProvider>
       </AuthProvider>
     </BrowserRouter>

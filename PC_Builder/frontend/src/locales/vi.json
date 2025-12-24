@@ -64,5 +64,105 @@
         "forum": "Diễn đàn",
         "blog": "Tin tức công nghệ",
         "copyright": "Bản quyền © 2025 PC Builder. Đã đăng ký bản quyền."
+    },
+    "coming_soon": {
+        "status": "ĐANG ĐƯỢC PHÁT TRIỂN",
+        "desc": "Tính năng này đang được đội ngũ kỹ thuật xây dựng và sẽ sớm ra mắt trong phiên bản tới. Vui lòng quay lại sau!",
+        "back_home": "Quay về trang chủ"
+    },
+    "about": {
+        "title": "VỀ CHÚNG TÔI",
+        "story": "Câu chuyện",
+        "story_desc": "PC Builder được thành lập với sứ mệnh đơn giản hóa quá trình xây dựng máy tính cho mọi người.",
+        "mission": "Sứ mệnh",
+        "mission_desc": "Cung cấp công cụ trực quan, thông minh và cộng đồng hỗ trợ nhiệt tình."
+    },
+    "contact": {
+        "title": "LIÊN HỆ VỚI CHÚNG TÔI",
+        "name": "Họ và tên",
+        "email": "Email",
+        "subject": "Tiêu đề",
+        "message": "Nội dung tin nhắn",
+        "send": "Gửi tin nhắn",
+        "success": "Đã gửi thành công! Chúng tôi sẽ phản hồi sớm."
+    },
+    "not_found": {
+        "title": "LẠC TRÔI TRONG KHÔNG GIAN?",
+        "desc": "Trang bạn đang tìm kiếm không tồn tại hoặc đã bị chuyển đi nơi khác.",
+        "btn_home": "Về trạm chỉ huy"
+    },
+    "intro": {
+        "slogan": "XÂY DỰNG CỖ MÁY MƠ ƯỚC CỦA BẠN",
+        "enter_btn": "KHÁM PHÁ NGAY"
+    },
+    "builder": {
+        "spent": "Đã dùng",
+        "remaining": "Còn lại",
+        "title": "XÂY DỰNG CẤU HÌNH PC",
+        "budget": "Ngân sách dự tính",
+        "suggest": "Gợi ý",
+        "total": "Tổng tiền",
+        "add_all_cart": "Thêm toàn bộ vào Giỏ",
+        "alert_empty": "Bạn chưa chọn linh kiện nào!",
+        "table": {
+            "component": "Linh kiện",
+            "image": "Hình ảnh",
+            "name": "Tên sản phẩm",
+            "price": "Giá",
+            "action": "Thao tác"
+        },
+        "components": {
+            "cpu": "Vi xử lý (CPU)",
+            "mainboard": "Bo mạch chủ (Mainboard)",
+            "cooler": "Tản nhiệt (CPU Cooler)",
+            "ram": "Bộ nhớ trong (RAM)",
+            "gpu": "Card màn hình (VGA)",
+            "storage": "Ổ cứng (SSD/HDD)",
+            "storage2": "Ổ cứng phụ (Lưu trữ)",
+            "psu": "Nguồn máy tính (PSU)",
+            "case": "Vỏ máy tính (Case)"
+        },
+        "btn_choose": "Chọn"
+    },
+    "selection": {
+        "budget_hint": "Ngân sách gợi ý",
+        "back": "Quay lại",
+        "add_to_build": "Thêm vào cấu hình",
+        "not_found": "Không tìm thấy linh kiện nào!",
+        "not_found_desc": "Vui lòng kiểm tra lại dữ liệu hoặc chọn danh mục khác.",
+        "loading": "Đang tải dữ liệu..."
+    },
+    "cart": {
+        "title": "GIỎ HÀNG CỦA BẠN",
+        "product": "Sản phẩm",
+        "price": "Đơn giá",
+        "qty": "Số lượng",
+        "total": "Thành tiền",
+        "action": "Xóa",
+        "empty": "Giỏ hàng đang trống!",
+        "continue": "Tiếp tục mua sắm",
+        "subtotal": "Tạm tính",
+        "discount": "Giảm giá",
+        "final_total": "TỔNG THANH TOÁN",
+        "checkout_cod": "Thanh toán khi nhận hàng (COD)",
+        "checkout_online": "Thanh toán Online (Visa/Stripe)",
+        "apply_coupon": "Áp dụng",
+        "coupon_placeholder": "Nhập mã giảm giá"
+    },
+    "payment": {
+        "title": "THANH TOÁN AN TOÀN",
+        "total": "Tổng thanh toán",
+        "processing": "Đang khởi tạo cổng thanh toán...",
+        "pay_now": "Thanh toán ngay",
+        "processing_btn": "Đang xử lý...",
+        "error": "Lỗi thanh toán",
+        "success_title": "Thanh toán thành công!",
+        "success_desc": "Cảm ơn bạn đã mua hàng tại PC Builder. Đơn hàng của bạn đang được xử lý và sẽ sớm được giao.",
+        "continue_shopping": "Tiếp tục mua sắm"
+    },
+    "home": {
+        "featured_products": "Danh sách linh kiện nổi bật",
+        "build_now": "Build PC Ngay",
+        "no_products": "Không có sản phẩm nào hoặc đang tải..."
     }
 }

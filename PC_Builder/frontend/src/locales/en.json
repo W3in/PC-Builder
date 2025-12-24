@@ -64,5 +64,105 @@
         "forum": "Forum",
         "blog": "Technology news",
         "copyright": "Copyright © 2025 PC Builder. All rights reserved."
+    },
+    "coming_soon": {
+        "status": "UNDER DEVELOPMENT",
+        "desc": "This feature is currently under construction by our engineering team and will be released soon. Please check back later!",
+        "back_home": "Back to Home"
+    },
+    "about": {
+        "title": "ABOUT US",
+        "story": "Story",
+        "story_desc": "PC Builder was founded with the mission of simplifying the process of building computers for everyone.",
+        "mission": "Mission",
+        "mission_desc": "To provide intuitive, intelligent tools and a supportive community."
+    },
+    "contact": {
+        "title": "CONTACT US",
+        "name": "Full name",
+        "email": "Email",
+        "subject": "Subject",
+        "message": "Message content",
+        "send": "Sent message",
+        "success": "Sent successfully! We will respond soon."
+    },
+    "not_found": {
+        "title": "LOST IN THE AIR PLANE?",
+        "desc": "The page you are looking for does not exist or has been moved elsewhere.",
+        "btn_home": "Back to command station"
+    },
+    "intro": {
+        "slogan": "BUILD YOUR DREAM MACHINE",
+        "enter_btn": "EXPLORE NOW"
+    },
+    "builder": {
+        "spent": "Spent",
+        "remaining": "Remaining",
+        "title": "SYSTEM BUILDER",
+        "budget": "Estimated Budget",
+        "suggest": "Suggest",
+        "total": "Total",
+        "add_all_cart": "Add All to Cart",
+        "alert_empty": "You haven't selected any components!",
+        "table": {
+            "component": "Component",
+            "image": "Image",
+            "name": "Product Name",
+            "price": "Price",
+            "action": "Action"
+        },
+        "components": {
+            "cpu": "Processor (CPU)",
+            "mainboard": "Motherboard",
+            "cooler": "CPU Cooler",
+            "ram": "Memory (RAM)",
+            "gpu": "Graphics Card (Video Card)",
+            "storage": "Storage (SSD/HDD)",
+            "storage2": "Secondary Storage",
+            "psu": "Power Supply (PSU)",
+            "case": "Case"
+        },
+        "btn_choose": "Choose"
+    },
+    "selection": {
+        "budget_hint": "Suggested Budget",
+        "back": "Back",
+        "add_to_build": "Add to Build",
+        "not_found": "No components found!",
+        "not_found_desc": "Please check the data or choose another category.",
+        "loading": "Loading data..."
+    },
+    "cart": {
+        "title": "YOUR SHOPPING CART",
+        "product": "Product",
+        "price": "Unit Price",
+        "qty": "Quantity",
+        "total": "Subtotal",
+        "action": "Remove",
+        "empty": "Your cart is empty!",
+        "continue": "Continue Shopping",
+        "subtotal": "Subtotal",
+        "discount": "Discount",
+        "final_total": "GRAND TOTAL",
+        "checkout_cod": "Cash on Delivery (COD)",
+        "checkout_online": "Pay Online (Visa/Stripe)",
+        "apply_coupon": "Apply",
+        "coupon_placeholder": "Enter coupon code"
+    },
+    "payment": {
+        "title": "SECURE CHECKOUT",
+        "total": "Total Payment",
+        "processing": "Initializing payment gateway...",
+        "pay_now": "Pay Now",
+        "processing_btn": "Processing...",
+        "error": "Payment Error",
+        "success_title": "Payment Successful!",
+        "success_desc": "Thank you for purchasing at PC Builder. Your order is being processed and will be shipped soon.",
+        "continue_shopping": "Continue Shopping"
+    },
+    "home": {
+        "featured_products": "Featured Components",
+        "build_now": "Build PC Now",
+        "no_products": "No products found or loading..."
     }
 }

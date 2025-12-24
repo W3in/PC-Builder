@@ -1,0 +1,56 @@
+.coming-soon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+}
+
+.gear-icon {
+    font-size: 80px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.coming-title {
+    font-size: 32px;
+    font-family: 'Chakra Petch', sans-serif;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.coming-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.back-home-btn {
+    padding: 12px 30px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: 'Chakra Petch', sans-serif;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.back-home-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}

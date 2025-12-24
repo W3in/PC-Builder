@@ -1,0 +1,118 @@
+.intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.intro-container.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.1);
+}
+
+
+.intro-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+
+.intro-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
+}
+
+
+.intro-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+}
+
+.glitch-text-intro {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 60px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #26a69a;
+    text-shadow: 0 0 20px rgba(38, 166, 154, 0.8);
+    margin-bottom: 10px;
+    animation: textFlicker 3s infinite alternate;
+}
+
+.intro-slogan {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+
+.enter-btn {
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    background: transparent;
+    border: 2px solid #26a69a;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(38, 166, 154, 0.3);
+}
+
+.enter-btn:hover {
+    background: #26a69a;
+    color: black;
+    box-shadow: 0 0 30px rgba(38, 166, 154, 0.8);
+    transform: translateY(-3px);
+}
+
+
+@keyframes textFlicker {
+    0% {
+        opacity: 1;
+    }
+
+    3% {
+        opacity: 0.8;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    99% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}

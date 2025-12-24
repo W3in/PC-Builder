@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FaSearch, FaUserCircle, FaShoppingCart, FaMoon, FaSun, FaWrench, FaMicrochip, FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import '../../assets/styles/Header.css';
@@ -10,10 +10,28 @@ const Header = () => {
     const [showLangMenu, setShowLangMenu] = useState(false);
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
+    const location = useLocation();
+    const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+
+    const isActive = (path) => {
+        if (isBrowseOpen) return '';
+
+        return location.pathname === path ? 'active' : '';
+    };
+
+    const toggleBrowse = () => {
+        setIsBrowseOpen(!isBrowseOpen);
+    };
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsBrowseOpen(false);
+    }, [location.pathname]);
+
     const languages = [
-        { code: 'vi', label: 'Tiếng Việt', flag: 'https://flagcdn.com/w40/vn.png' },
-        { code: 'en', label: 'English', flag: 'https://flagcdn.com/w40/us.png' },
-        { code: 'ja', label: '日本語', flag: 'https://flagcdn.com/w40/jp.png' }
+        { code: 'vi', label: 'Tiếng Việt', flag: '/images/flags/vn.png' },
+        { code: 'en', label: 'English', flag: '/images/flags/us.png' },
+        { code: 'ja', label: '日本語', flag: '/images/flags/jp.png' }
     ];
 
     const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
@@ -25,35 +43,35 @@ const Header = () => {
     const mainComponents = [
         {
             name: t('category.storage'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/storage.png"
+            img: "/images/components/storage.png"
         },
         {
             name: t('category.gpu'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/graphics-card.png"
+            img: "images/components/graphics-card.png"
         },
         {
             name: t('category.psu'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/power-supply.png"
+            img: "/images/components/power-supply.png"
         },
         {
             name: t('category.case'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/case.png"
+            img: "/images/components/case.png"
         },
         {
             name: t('category.cpu'),
-            img: "https://static.pcbuilder.net/assets/images/mega-menu/nav-processor.png"
+            img: "/images/components/nav-processor.png"
         },
         {
             name: t('category.cooler'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/cpu-cooler.png"
+            img: "/images/components/cpu-cooler.png"
         },
         {
             name: t('category.mainboard'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/motherboard.png"
+            img: "/images/components/motherboard.png"
         },
         {
             name: t('category.ram'),
-            img: "https://static.pcbuilder.net/assets/images/megamenu/memory.png"
+            img: "/images/components/memory.png"
         },
     ];
 
@@ -166,44 +184,48 @@ const Header = () => {
             </div>
 
             <div className="sub-navbar">
-                <Link to="/builder" className="nav-item active">
+                <Link to="/builder" className={`nav-item ${isActive('/builder')}`}>
                     <FaWrench style={{ marginRight: '8px' }} /> {t('header.system_builder')}
                 </Link>
 
                 <div className="nav-item-group" style={{ height: '100%' }}>
-                    <div className="nav-item">
+                    <div
+                        className={`nav-item ${isBrowseOpen ? 'active' : ''}`}
+                        onClick={toggleBrowse}
+                    >
                         <FaMicrochip style={{ marginRight: '8px' }} /> {t('header.browse')}
                     </div>
+                    {isBrowseOpen && (
+                        <div className="mega-menu-container">
+                            <div className="mega-content-wrapper">
 
-                    <div className="mega-menu-container">
-                        <div className="mega-content-wrapper">
-
-                            <div className="mega-left">
-                                {mainComponents.map((cat, index) => (
-                                    <div key={index} className="mega-box-item">
-                                        <div className="mega-box-title">{cat.name}</div>
-                                        <div className="mega-box-img-wrapper">
-                                            <img src={cat.img} alt={cat.name} />
+                                <div className="mega-left">
+                                    {mainComponents.map((cat, index) => (
+                                        <div key={index} className="mega-box-item">
+                                            <div className="mega-box-title">{cat.name}</div>
+                                            <div className="mega-box-img-wrapper">
+                                                <img src={cat.img} alt={cat.name} />
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
 
-                            <div className="mega-right">
-                                {subCategories.map((group, index) => (
-                                    <div key={index} className="mega-list-column">
-                                        <h4 className="mega-list-title">{group.title}</h4>
-                                        <ul>
-                                            {group.items.map((item, i) => (
-                                                <li key={i} className="mega-list-item">{item}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
+                                <div className="mega-right">
+                                    {subCategories.map((group, index) => (
+                                        <div key={index} className="mega-list-column">
+                                            <h4 className="mega-list-title">{group.title}</h4>
+                                            <ul>
+                                                {group.items.map((item, i) => (
+                                                    <li key={i} className="mega-list-item">{item}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </header>

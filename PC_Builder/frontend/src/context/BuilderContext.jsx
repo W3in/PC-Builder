@@ -5,14 +5,12 @@ const BuilderContext = createContext();
 
 // 2. Tạo Provider (Nhà kho chứa dữ liệu)
 export const BuilderProvider = ({ children }) => {
-    // State lưu các linh kiện đã chọn
-    // Cấu trúc sẽ là: { cpu: {name: "Core i5"...}, mainboard: {name: "Asus B660"...} }
+
     const [buildState, setBuildState] = useState({});
 
-    // State lưu tổng tiền
+
     const [totalPrice, setTotalPrice] = useState(0);
 
-    // Hàm chọn linh kiện
     const addComponent = (category, product) => {
         setBuildState((prev) => {
             const newState = { ...prev, [category]: product };

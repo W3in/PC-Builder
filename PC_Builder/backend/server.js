@@ -8,6 +8,8 @@ require('dotenv').config();
 const productRoutes = require('./routes/productRoutes');
 const buildRoutes = require('./routes/buildRoutes');
 const userRoutes = require('./routes/userRoutes');
+const contactRoutes = require('./routes/contactRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const app = express();
 
 // 3. Middleware 
@@ -27,6 +29,9 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/build', buildRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/payment', paymentRoutes);
+
 // 6. Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

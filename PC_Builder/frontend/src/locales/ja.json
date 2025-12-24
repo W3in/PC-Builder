@@ -64,5 +64,105 @@
         "forum": "フォーラム",
         "blog": "テクノロジーニュース",
         "copyright": "Copyright © 2025 PC Builder. All rights reserved."
+    },
+    "coming_soon": {
+        "status": "現在開発中",
+        "desc": "この機能は現在開発チームによって構築中であり、次のバージョンでリリースされる予定です。後でもう一度確認してください！",
+        "back_home": "ホームに戻る"
+    },
+    "about": {
+        "title": "会社概要",
+        "story": "ストーリー",
+        "story_desc": "PC Builderは、誰もが簡単にコンピューターを組み立てられるようにするという使命を掲げて設立されました。",
+        "mission": "ミッション",
+        "mission_desc": "直感的でインテリジェントなツールと、協力的なコミュニティを提供すること。"
+    },
+    "contact": {
+        "title": "お問い合わせ",
+        "name": "氏名",
+        "email": "メールアドレス",
+        "subject": "件名",
+        "message": "メッセージ内容",
+        "send": "メッセージを送信しました",
+        "success": "送信に成功しました！すぐに返信いたします。"
+    },
+    "not_found": {
+        "title": "飛行機内で迷子？",
+        "desc": "お探しのページは存在しないか、別の場所に移動されています。",
+        "btn_home": "コマンドステーションに戻る"
+    },
+    "intro": {
+        "slogan": "夢のマシンを構築しよう",
+        "enter_btn": "今すぐ探索"
+    },
+    "builder": {
+        "spent": "使用済み",
+        "remaining": "残り",
+        "title": "PC構成シミュレーション",
+        "budget": "推定予算",
+        "suggest": "おすすめ",
+        "total": "合計金額",
+        "add_all_cart": "カートにすべて追加",
+        "alert_empty": "パーツが選択されていません！",
+        "table": {
+            "component": "コンポーネント",
+            "image": "画像",
+            "name": "製品名",
+            "price": "価格",
+            "action": "操作"
+        },
+        "components": {
+            "cpu": "CPU (プロセッサー)",
+            "mainboard": "マザーボード",
+            "cooler": "CPUクーラー",
+            "ram": "メモリ (RAM)",
+            "gpu": "グラフィックボード",
+            "storage": "ストレージ (SSD/HDD)",
+            "storage2": "セカンダリーストレージ",
+            "psu": "電源ユニット",
+            "case": "PCケース"
+        },
+        "btn_choose": "選択"
+    },
+    "selection": {
+        "budget_hint": "推奨予算",
+        "back": "戻る",
+        "add_to_build": "構成に追加",
+        "not_found": "コンポーネントが見つかりません！",
+        "not_found_desc": "データを確認するか、別のカテゴリを選択してください。",
+        "loading": "読み込み中..."
+    },
+    "cart": {
+        "title": "ショッピングカート",
+        "product": "商品",
+        "price": "単価",
+        "qty": "数量",
+        "total": "小計",
+        "action": "削除",
+        "empty": "カートは空です！",
+        "continue": "買い物を続ける",
+        "subtotal": "小計",
+        "discount": "割引",
+        "final_total": "合計金額",
+        "checkout_cod": "代金引換 (COD)",
+        "checkout_online": "オンライン決済 (Visa/Stripe)",
+        "apply_coupon": "適用",
+        "coupon_placeholder": "クーポンコードを入力"
+    },
+    "payment": {
+        "title": "安全な支払い",
+        "total": "支払い総額",
+        "processing": "決済ゲートウェイを初期化中...",
+        "pay_now": "今すぐ支払う",
+        "processing_btn": "処理中...",
+        "error": "支払いエラー",
+        "success_title": "支払い完了！",
+        "success_desc": "PC Builderでのお買い上げありがとうございます。ご注文は現在処理中であり、まもなく発送されます。",
+        "continue_shopping": "買い物を続ける"
+    },
+    "home": {
+        "featured_products": "おすすめパーツ一覧",
+        "build_now": "今すぐPCを組む",
+        "no_products": "製品が見つからないか、読み込み中です..."
     }
 }

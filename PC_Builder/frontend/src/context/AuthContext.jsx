@@ -8,8 +8,15 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem('pc_user');
-        return storedUser ? JSON.parse(storedUser) : null;
+        try {
+            const storedUser = localStorage.getItem('pc_user');
+            if (!storedUser || storedUser === "undefined") return null;
+            return JSON.parse(storedUser);
+        } catch (error) {
+            console.error("Lỗi đọc user từ LocalStorage:", error);
+            localStorage.removeItem('pc_user');
+            return null;
+        }
     });
 
     const [loading, setLoading] = useState(false);
