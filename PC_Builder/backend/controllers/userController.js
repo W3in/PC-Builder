@@ -71,7 +71,6 @@ const googleLogin = async (req, res) => {
     const { googleToken } = req.body;
 
     try {
-        // 1. Xác thực token với Google 
         const ticket = await client.verifyIdToken({
             idToken: googleToken,
             audience: process.env.GOOGLE_CLIENT_ID,
@@ -79,7 +78,6 @@ const googleLogin = async (req, res) => {
 
         const { name, email, picture } = ticket.getPayload();
 
-        // 2. Kiểm tra xem user này đã tồn tại trong DB chưa
         let user = await User.findOne({ email });
 
         if (user) {
@@ -115,5 +113,30 @@ const googleLogin = async (req, res) => {
     }
 };
 
+const updateUserProfile = async (req, res) => {
+    const user = await User.findById(req.user._id);
 
-module.exports = { registerUser, authUser, googleLogin };
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.phone = req.body.phone || user.phone;
+
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            phone: updatedUser.phone,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id),
+        });
+    } else {
+        res.status(404).json({ message: "User not found" });
+    }
+};
+
+module.exports = { registerUser, authUser, googleLogin, updateUserProfile };

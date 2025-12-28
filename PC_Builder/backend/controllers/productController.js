@@ -60,21 +60,65 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const { name, slug, price, image, brand, category, countInStock, description, specs } = req.body;
+        const { name, price, image, brand, category, countInStock, description, specs } = req.body;
+
+        if (!name || !price || !category) {
+            return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin bắt buộc" });
+        }
+
+        const generateSlug = (str) => {
+            return str
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9\s-]/g, "")
+                .trim()
+                .replace(/\s+/g, "-");
+        };
+
+        const slug = generateSlug(name) + "-" + Date.now();
+
+        console.log("Đang tạo sản phẩm:", { name, slug, category });
 
         const product = new Product({
-            name, slug, price, image, brand, category, countInStock, description, specs
+            name,
+            slug,
+            price,
+            user: req.user._id,
+            image,
+            brand,
+            category,
+            countInStock,
+            description,
+            specs
         });
 
         const createdProduct = await product.save();
+
+        console.log("Tạo thành công:", createdProduct._id);
         res.status(201).json(createdProduct);
+
     } catch (error) {
-        res.status(400).json({ message: "Error create product", error: error.message });
+        console.error("Lỗi tạo sản phẩm:", error);
+        res.status(400).json({
+            message: "Lỗi lưu dữ liệu",
+            error: error.message
+        });
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+        await product.deleteOne();
+        res.json({ message: 'Product deleted' });
+    } else {
+        res.status(404).json({ message: 'Product not found' });
     }
 };
 
 module.exports = {
     getProducts,
     getProductById,
-    createProduct
+    createProduct,
+    deleteProduct
 };

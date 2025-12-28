@@ -1,0 +1,156 @@
+.product-detail-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    color: var(--text-primary);
+}
+
+.pd-image-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.pd-image-box img {
+    max-width: 100%;
+    max-height: 500px;
+}
+
+.pd-info h1 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.pd-brand {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.pd-price {
+    font-size: 36px;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.pd-specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.pd-specs-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pd-specs-table td:first-child {
+    font-weight: bold;
+    width: 40%;
+    color: var(--text-secondary);
+}
+
+.pd-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-main {
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Chakra Petch';
+    text-transform: uppercase;
+}
+
+.btn-cart {
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-builder {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-cart:hover {
+    opacity: 0.9;
+}
+
+.btn-builder:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.pd-back-wrapper {
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 8px 15px;
+    color: var(--text-primary);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    background-color: var(--bg-container);
+}
+
+.pd-loading-container {
+    text-align: center;
+    margin-top: 50px;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.btn-icon {
+    margin-right: 8px;
+}
+
+.toast-msg-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toast-link-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    width: fit-content;
+    transition: background 0.2s;
+}
+
+.toast-link-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import axiosClient from '../api/axiosClient'; // Gọi API
+import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
+import axiosClient from '../api/axiosClient';
 import { useBuilder } from '../context/BuilderContext';
-import { formatPrice } from '../utils/format';
+import { formatPrice, getImageUrl } from '../utils/format';
 import { FaPlus, FaArrowLeft, FaFilter } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import FilterSidebar from '../components/product/FilterSidebar';
@@ -12,7 +12,8 @@ const SelectionPage = () => {
     const { t, i18n } = useTranslation();
     const { category } = useParams();
     const [searchParams] = useSearchParams();
-    const recommendedBudget = Number(searchParams.get('budget')) || 0;
+    const budgetParam = searchParams.get('budget');
+    const recommendedBudget = budgetParam ? Number(budgetParam) : null;
 
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
@@ -24,8 +25,17 @@ const SelectionPage = () => {
 
     const [filters, setFilters] = useState({});
 
-    const categoryLabel = t(`builder.components.${category}`);
+    let categoryLabel = '';
 
+    if (i18n.exists(`category.${category}`)) {
+        categoryLabel = t(`category.${category}`);
+    } else if (i18n.exists(`subcategory.${category}`)) {
+        categoryLabel = t(`subcategory.${category}`);
+    } else if (i18n.exists(`builder.slots.${category}`)) {
+        categoryLabel = t(`builder.slots.${category}`);
+    } else {
+        categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+    }
 
 
     const handleFilterChange = (key, value) => {
@@ -81,18 +91,19 @@ const SelectionPage = () => {
                 </button>
                 <div className="header-info">
                     <h2>{t('builder.btn_choose')} {categoryLabel}</h2>
-                    <p style={{ fontSize: '14px', color: '#888' }}>
-                        {t('selection.budget_hint')}:
-                        <span className="highlight" style={{ color: '#2ecc71', fontWeight: 'bold' }}>
-                            {formatPrice(recommendedBudget, i18n.language)}
-                        </span>
-                    </p>
+                    {recommendedBudget > 0 && (
+                        <p style={{ fontSize: '14px', color: '#888' }}>
+                            {t('selection.budget_hint')}:
+                            <span className="highlight" style={{ color: '#2ecc71', fontWeight: 'bold' }}>
+                                {formatPrice(recommendedBudget, i18n.language)}
+                            </span>
+                        </p>
+                    )}
                 </div>
             </div>
 
             <div className="selection-body" style={{ display: 'flex', gap: '30px' }}>
 
-                {/* 1. SIDEBAR FILTER */}
                 <div style={{ width: '250px', flexShrink: 0 }}>
                     <FilterSidebar
                         category={category}
@@ -117,10 +128,23 @@ const SelectionPage = () => {
                                 return (
                                     <div key={product._id} className={`product-card ${isOverBudget ? 'over-price' : ''}`}>
                                         <div className="card-img">
-                                            <img src={product.image} alt={product.name} />
+                                            <Link to={`/product/${product._id}`}
+                                                style={{
+                                                    display: 'flex',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }} >
+                                                <img src={getImageUrl(product.image)} alt={product.name} />
+                                            </Link>
                                         </div>
                                         <div className="card-body">
-                                            <h3 style={{ fontSize: '15px', fontWeight: 'bold' }}>{product.name}</h3>
+                                            <h3 style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                                                <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                                    {product.name}
+                                                </Link>
+                                            </h3>
 
                                             <div className="card-specs">
                                                 {product.specs && Object.entries(product.specs).slice(0, 3).map(([k, v]) => (

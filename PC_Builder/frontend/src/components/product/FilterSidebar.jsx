@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import '../../assets/styles/Selection.css';
 import { FILTER_OPTIONS } from '../../utils/filterOptions';
-const FilterSidebar = ({ category, selectedFilters, onFilterChange }) => {
+import { useTranslation } from 'react-i18next';
 
+const FilterSidebar = ({ category, selectedFilters, onFilterChange }) => {
+    const { t } = useTranslation();
 
     const options = FILTER_OPTIONS[category] || [];
 
@@ -17,16 +19,28 @@ const FilterSidebar = ({ category, selectedFilters, onFilterChange }) => {
         onFilterChange(key, value);
     };
 
+    const getTranslatedOption = (opt) => {
+        if (!isNaN(opt) || opt.includes("GB") || opt.includes("MHz") || opt.includes("Hz")) return opt;
+
+        const key = opt.toLowerCase().replace(/[\s/]/g, '_').replace(/[()]/g, '');
+
+        return t(`filters.options.${key}`, opt);
+    };
+
     return (
         <div className="filter-sidebar">
-            <h3 className="filter-heading">FILTERS</h3>
+            <h3 className="filter-heading">{t('home.filter') || "FILTERS"}</h3>
 
             {options.map((group) => {
-                const isOpen = openSections[group.key] !== false; // Mặc định mở
+                const isOpen = openSections[group.key] !== false;
+
+                const labelKey = group.label.toLowerCase().replace(/ /g, '_');
+                const translatedLabel = t(`filters.labels.${labelKey}`, group.label);
+
                 return (
                     <div key={group.key} className="filter-group">
                         <div className="filter-header" onClick={() => toggleSection(group.key)}>
-                            <span>{group.label}</span>
+                            <span>{translatedLabel}</span>
                             {isOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
                         </div>
 
@@ -37,9 +51,9 @@ const FilterSidebar = ({ category, selectedFilters, onFilterChange }) => {
                                         <input
                                             type="checkbox"
                                             checked={selectedFilters[group.key]?.includes(opt) || false}
-                                            onChange={() => handleCheckboxChange(group.key, opt)}
+                                            onChange={() => onFilterChange(group.key, opt)}
                                         />
-                                        {opt}
+                                        {getTranslatedOption(opt)}
                                     </label>
                                 ))}
                             </div>

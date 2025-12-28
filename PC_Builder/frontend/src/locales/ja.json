@@ -111,16 +111,20 @@
             "price": "価格",
             "action": "操作"
         },
-        "components": {
+        "slots": {
             "cpu": "CPU (プロセッサー)",
+            "cpu_n": "CPU #{{number}}",
             "mainboard": "マザーボード",
             "cooler": "CPUクーラー",
-            "ram": "メモリ (RAM)",
+            "cooler_n": "CPUクーラー #{{number}}",
+            "ram": "メモリ (スロット{{number}})",
             "gpu": "グラフィックボード",
-            "storage": "ストレージ (SSD/HDD)",
-            "storage2": "セカンダリーストレージ",
+            "gpu_n": "グラフィックボード #{{number}}",
+            "storage_os": "ストレージ (OS用)",
+            "storage_data": "ストレージ (データ用)",
             "psu": "電源ユニット",
-            "case": "PCケース"
+            "case": "PCケース",
+            "item": "個"
         },
         "btn_choose": "選択"
     },
@@ -147,7 +151,17 @@
         "checkout_cod": "代金引換 (COD)",
         "checkout_online": "オンライン決済 (Visa/Stripe)",
         "apply_coupon": "適用",
-        "coupon_placeholder": "クーポンコードを入力"
+        "coupon_placeholder": "クーポンコードを入力",
+        "invalid_coupon": "無効なクーポンコード！",
+        "continue_checkout": "チェックアウトに進む",
+        "full_name": "氏名",
+        "email": "メールアドレス",
+        "phone": "電話番号",
+        "address": "配送先住所",
+        "city": "市区町村",
+        "shipping_info": "配送情報",
+        "back_to_cart": "カートに戻る",
+        "order_summary": "注文概要"
     },
     "payment": {
         "title": "安全な支払い",
@@ -163,6 +177,93 @@
     "home": {
         "featured_products": "おすすめパーツ一覧",
         "build_now": "今すぐPCを組む",
-        "no_products": "製品が見つからないか、読み込み中です..."
+        "no_products": "製品が見つからないか、読み込み中です...",
+        "filter": "検索フィルター"
+    },
+    "toast": {
+        "add_cart_success": "{{name}} をカートに追加しました！",
+        "add_build_success": "構成に追加しました (スロット: {{slot}})",
+        "view_cart": "カートを見る",
+        "view_build": "構成を見る"
+    },
+    "product_detail": {
+        "specs_title": "技術仕様"
+    },
+    "specs": {
+        "socket": "ソケット",
+        "cores": "コア数",
+        "threads": "スレッド数",
+        "base_clock": "ベースクロック",
+        "boost_clock": "ブーストクロック",
+        "series": "シリーズ",
+        "tdp": "TDP (熱設計電力)",
+        "integrated_gpu": "内蔵グラフィックス",
+        "chipset": "チップセット",
+        "form_factor": "フォームファクタ",
+        "ram_type": "メモリタイプ",
+        "ram_slots": "メモリスロット数",
+        "max_ram_speed": "最大メモリ速度",
+        "cpu_sockets": "CPUソケット数",
+        "pci_slots": "PCIスロット数",
+        "m2_slots": "M.2スロット数",
+        "sata_slots": "SATAスロット数",
+        "max_ram": "最大メモリ容量",
+        "slots": "スロット数",
+        "capacity": "容量",
+        "bus": "バス速度",
+        "type": "タイプ",
+        "wattage": "ワット数",
+        "efficiency": "効率 (80 Plus)",
+        "interface": "インターフェース",
+        "rpm": "回転数 (RPM)",
+        "fan_speed": "ファンスピード",
+        "socket_support": "ソケットサポート",
+        "size": "サイズ",
+        "noise_level": "騒音レベル",
+        "color": "色",
+        "vram": "VRAM容量"
+    },
+    "filters": {
+        "labels": {
+            "manufacturer": "メーカー",
+            "socket": "ソケット",
+            "series": "シリーズ",
+            "cores": "コア数",
+            "threads": "スレッド数",
+            "chipset": "チップセット",
+            "form_factor": "フォームファクタ",
+            "ram_type": "メモリタイプ",
+            "capacity_config": "容量構成",
+            "bus_speed": "バス速度",
+            "chipset_manufacturer": "チップセットメーカー",
+            "vram": "VRAM容量",
+            "type": "タイプ",
+            "capacity": "容量",
+            "interface": "インターフェース",
+            "wattage": "ワット数",
+            "efficiency_rating": "効率評価",
+            "modular": "モジュラー式",
+            "radiator_size": "ラジエーターサイズ",
+            "color": "色",
+            "side_panel": "サイドパネル"
+        },
+        "options": {
+            "air_cooler": "空冷クーラー",
+            "aio_liquid": "簡易水冷 (AIO)",
+            "full_modular": "フルモジュラー",
+            "semi_modular": "セミモジュラー",
+            "non_modular": "直付け式",
+            "mid_tower": "ミドルタワー",
+            "full_tower": "フルタワー",
+            "mini_tower": "ミニタワー",
+            "mini_itx": "Mini ITX",
+            "tempered_glass": "強化ガラス",
+            "mesh": "メッシュ",
+            "solid": "ソリッド",
+            "black": "ブラック",
+            "white": "ホワイト",
+            "black_red": "ブラック/レッド",
+            "lcd_screen": "LCDスクリーン"
+        }
     }
 }

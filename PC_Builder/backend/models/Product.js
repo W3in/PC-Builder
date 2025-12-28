@@ -9,14 +9,14 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'vga', 'psu', 'case', 'cooler', 'monitor']
+        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'gpu', 'psu', 'case', 'cooler', 'monitor']
     },
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String },
 
     specs: {
-        type: Map,
-        of: mongoose.Schema.Types.Mixed
+        type: mongoose.Schema.Types.Mixed,
+        default: {}
     }
 }, {
     timestamps: true

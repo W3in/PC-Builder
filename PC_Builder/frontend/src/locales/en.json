@@ -105,22 +105,26 @@
         "add_all_cart": "Add All to Cart",
         "alert_empty": "You haven't selected any components!",
         "table": {
-            "component": "Component",
+            "component": "Components",
             "image": "Image",
             "name": "Product Name",
             "price": "Price",
             "action": "Action"
         },
-        "components": {
-            "cpu": "Processor (CPU)",
+        "slots": {
+            "cpu": "Processor",
+            "cpu_n": "Processor #{{number}}",
             "mainboard": "Motherboard",
             "cooler": "CPU Cooler",
-            "ram": "Memory (RAM)",
-            "gpu": "Graphics Card (Video Card)",
-            "storage": "Storage (SSD/HDD)",
-            "storage2": "Secondary Storage",
-            "psu": "Power Supply (PSU)",
-            "case": "Case"
+            "cooler_n": "Cooler #{{number}}",
+            "ram": "Memory (Slot {{number}})",
+            "gpu": "Video Card",
+            "gpu_n": "Video Card #{{number}}",
+            "storage_os": "Storage (M.2/OS)",
+            "storage_data": "Storage (Additional)",
+            "psu": "Power Supply",
+            "case": "Case",
+            "item": "item"
         },
         "btn_choose": "Choose"
     },
@@ -147,7 +151,17 @@
         "checkout_cod": "Cash on Delivery (COD)",
         "checkout_online": "Pay Online (Visa/Stripe)",
         "apply_coupon": "Apply",
-        "coupon_placeholder": "Enter coupon code"
+        "coupon_placeholder": "Enter coupon code",
+        "invalid_coupon": "Invalid coupon code!",
+        "continue_checkout": "Proceed to Checkout",
+        "full_name": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "address": "Shipping Address",
+        "city": "City",
+        "shipping_info": "Shipping Information",
+        "back_to_cart": "Back to Cart",
+        "order_summary": "Order Summary"
     },
     "payment": {
         "title": "SECURE CHECKOUT",
@@ -163,6 +177,93 @@
     "home": {
         "featured_products": "Featured Components",
         "build_now": "Build PC Now",
-        "no_products": "No products found or loading..."
+        "no_products": "No products found or loading...",
+        "filter": "SEARCH FILTER"
+    },
+    "toast": {
+        "add_cart_success": "Added {{name}} to cart!",
+        "add_build_success": "Added to build (Slot: {{slot}})",
+        "view_cart": "View Cart",
+        "view_build": "View Build"
+    },
+    "product_detail": {
+        "specs_title": "Technical Specifications"
+    },
+    "specs": {
+        "socket": "Socket",
+        "cores": "Cores",
+        "threads": "Threads",
+        "base_clock": "Base Clock",
+        "boost_clock": "Boost Clock",
+        "series": "Series",
+        "tdp": "TDP",
+        "integrated_gpu": "Integrated Graphics",
+        "chipset": "Chipset",
+        "form_factor": "Form Factor",
+        "ram_type": "Memory Type",
+        "ram_slots": "Memory Slots",
+        "max_ram_speed": "Max Memory Speed",
+        "cpu_sockets": "CPU Sockets",
+        "pci_slots": "PCI Slots",
+        "m2_slots": "M.2 Slots",
+        "sata_slots": "SATA Slots",
+        "max_ram": "Max Memory",
+        "slots": "Slots",
+        "capacity": "Capacity",
+        "bus": "Bus Speed",
+        "type": "Type",
+        "wattage": "Wattage",
+        "efficiency": "Efficiency",
+        "interface": "Interface",
+        "rpm": "RPM",
+        "fan_speed": "Fan Speed",
+        "socket_support": "Socket Support",
+        "size": "Size",
+        "noise_level": "Noise Level",
+        "color": "Color",
+        "vram": "VRAM"
+    },
+    "filters": {
+        "labels": {
+            "manufacturer": "Manufacturer",
+            "socket": "Socket",
+            "series": "Series",
+            "cores": "Cores",
+            "threads": "Threads",
+            "chipset": "Chipset",
+            "form_factor": "Form Factor",
+            "ram_type": "Memory Type",
+            "capacity_config": "Capacity Config",
+            "bus_speed": "Bus Speed",
+            "chipset_manufacturer": "Chipset Manufacturer",
+            "vram": "VRAM",
+            "type": "Type",
+            "capacity": "Capacity",
+            "interface": "Interface",
+            "wattage": "Wattage",
+            "efficiency_rating": "Efficiency Rating",
+            "modular": "Modular",
+            "radiator_size": "Radiator Size",
+            "color": "Color",
+            "side_panel": "Side Panel"
+        },
+        "options": {
+            "air_cooler": "Air Cooler",
+            "aio_liquid": "AIO Liquid",
+            "full_modular": "Full Modular",
+            "semi_modular": "Semi Modular",
+            "non_modular": "Non Modular",
+            "mid_tower": "Mid Tower",
+            "full_tower": "Full Tower",
+            "mini_tower": "Mini Tower",
+            "mini_itx": "Mini ITX",
+            "tempered_glass": "Tempered Glass",
+            "mesh": "Mesh",
+            "solid": "Solid",
+            "black": "Black",
+            "white": "White",
+            "black_red": "Black/Red",
+            "lcd_screen": "LCD Screen"
+        }
     }
 }

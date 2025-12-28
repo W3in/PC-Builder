@@ -3,26 +3,50 @@ import { useState } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './context/ThemeContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Import Layouts
 import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
+
+// Import Components
+import AdminRoute from './components/common/AdminRoute';
+import IntroScreen from './components/common/IntroScreen';
+
+// Import Pages
 import HomePage from './pages/HomePage';
 import BuilderPage from './pages/BuilderPage';
-import CartPage from './pages/CartPage';
-import AuthPage from './pages/AuthPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
 import SelectionPage from './pages/SelectionPage';
-import NotFoundPage from './pages/NotFoundPage';
-import ComingSoon from './pages/ComingSoon';
-import IntroScreen from './components/common/IntroScreen';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
 import PaymentPage from './pages/PaymentPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import AuthPage from './pages/AuthPage';
+import ProfilePage from './pages/ProfilePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import NotFoundPage from './pages/NotFoundPage';
+import ComingSoon from './pages/ComingSoon';
+import ShippingPage from './pages/ShippingPage';
+
+//Import Admin Pages
+import DashboardPage from './pages/admin/DashboardPage';
+import ProductListPage from './pages/admin/ProductListPage';
+import ProductEditPage from './pages/admin/ProductEditPage';
+import OrderListPage from './pages/admin/OrderListPage';
+import OrderDetailPage from './pages/admin/OrderDetailPage';
+
 
 function App() {
   const { i18n } = useTranslation();
+
+  // Logic hiển thị Intro
   const [showIntro, setShowIntro] = useState(() => {
     const hasSeen = sessionStorage.getItem('hasSeenIntro');
     return !hasSeen;
   });
+
   return (
     <GoogleOAuthProvider
       clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
@@ -35,38 +59,57 @@ function App() {
         }} />
       ) : (
         <ThemeProvider>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
           <Routes>
-            <Route path="/" element={<MainLayout />}>
-
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<HomePage />} />
               <Route index element={<HomePage />} />
 
               <Route path="builder" element={<BuilderPage />} />
-
               <Route path="builder/select/:category" element={<SelectionPage />} />
+              <Route path="product/:id" element={<ProductDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
 
-              <Route path="cart" element={<CartPage />} />
-
-              <Route path="login" element={<AuthPage />} />
-
+              <Route path="profile" element={<ProfilePage />} />
               <Route path="about" element={<AboutPage />} />
-
               <Route path="contact" element={<ContactPage />} />
 
               <Route path="forum" element={<ComingSoon titleKey="footer.forum" />} />
-
               <Route path="blog" element={<ComingSoon titleKey="footer.blog" />} />
-
-              <Route path="payment" element={<PaymentPage />} />
-
-              <Route path="order-success" element={<OrderSuccessPage />} />
-
-              <Route path="*" element={<NotFoundPage />} />
-
             </Route>
+
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/order-success" element={<OrderSuccessPage />} />
+
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="products" element={<ProductListPage />} />
+                <Route path="product/create" element={<ProductEditPage />} />
+                <Route path="orders" element={<OrderListPage />} />
+                <Route path="order/:id" element={<OrderDetailPage />} />
+              </Route>
+            </Route>
+
+            <Route path="*" element={<NotFoundPage />} />
+
           </Routes>
         </ThemeProvider>
       )}
-    </GoogleOAuthProvider >
+    </GoogleOAuthProvider>
   );
 }
 

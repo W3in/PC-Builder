@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaSearch, FaUserCircle, FaShoppingCart, FaMoon, FaSun, FaWrench, FaMicrochip, FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
+import { FaSearch, FaUserCircle, FaShoppingCart, FaMoon, FaSun, FaWrench, FaMicrochip, FaChevronDown, FaSignOutAlt, FaUserShield } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import '../../assets/styles/Header.css';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useCart } from '../../context/CartContext';
+
 const Header = () => {
     const { t, i18n } = useTranslation();
     const [showLangMenu, setShowLangMenu] = useState(false);
@@ -12,6 +14,10 @@ const Header = () => {
     const { theme, toggleTheme } = useTheme();
     const location = useLocation();
     const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+
+    const { cartItems } = useCart();
+    const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
 
     const isActive = (path) => {
         if (isBrowseOpen) return '';
@@ -43,54 +49,62 @@ const Header = () => {
     const mainComponents = [
         {
             name: t('category.storage'),
-            img: "/images/components/storage.png"
+            img: "/images/components/storage.png",
+            path: "storage"
         },
         {
             name: t('category.gpu'),
-            img: "images/components/graphics-card.png"
+            img: "/images/components/graphics-card.png",
+            path: "gpu"
         },
         {
             name: t('category.psu'),
-            img: "/images/components/power-supply.png"
+            img: "/images/components/power-supply.png",
+            path: "psu"
         },
         {
             name: t('category.case'),
-            img: "/images/components/case.png"
+            img: "/images/components/case.png",
+            path: "case"
         },
         {
             name: t('category.cpu'),
-            img: "/images/components/nav-processor.png"
+            img: "/images/components/nav-processor.png",
+            path: "cpu"
         },
         {
             name: t('category.cooler'),
-            img: "/images/components/cpu-cooler.png"
+            img: "/images/components/cpu-cooler.png",
+            path: "cooler"
         },
         {
             name: t('category.mainboard'),
-            img: "/images/components/motherboard.png"
+            img: "/images/components/motherboard.png",
+            path: "mainboard"
         },
         {
             name: t('category.ram'),
-            img: "/images/components/memory.png"
+            img: "/images/components/memory.png",
+            path: "ram"
         },
     ];
 
     const subCategories = [
         {
-            title: t('subcategory.cooling'),
-            items: [t('subcategory.case_fans'), t('subcategory.thermal')]
+            title: "cooling",
+            items: ["case_fans", "thermal"]
         },
         {
-            title: t('subcategory.expansion'),
-            items: [t('subcategory.sound_card'), t('subcategory.wired_net'), t('subcategory.wifi_net')]
+            title: "expansion",
+            items: ["sound_card", "wired_net", "wifi_net"]
         },
         {
-            title: t('subcategory.peripherals'),
-            items: [t('subcategory.headphones'), t('subcategory.keyboard'), t('subcategory.mouse'), t('subcategory.speakers'), t('subcategory.webcam')]
+            title: "peripherals",
+            items: ["headphones", "keyboard", "mouse", "speakers", "webcam"]
         },
         {
-            title: t('subcategory.software'),
-            items: [t('subcategory.antivirus'), t('subcategory.utilities'), t('subcategory.os')]
+            title: "software",
+            items: ["antivirus", "utilities", "os"]
         }
     ];
     return (
@@ -113,11 +127,26 @@ const Header = () => {
                     <div className="action-item">
                         {user ? (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <FaUserCircle className="icon-btn" style={{ color: '#26a69a' }} />
-                                <div>
-                                    <div style={{ fontSize: '11px', color: '#888' }}>{t('header.welcome')}</div>
-                                    <div style={{ fontWeight: 'bold', color: '#26a69a' }}>{user.name}</div>
-                                </div>
+                                <Link
+                                    to={user.isAdmin ? "/admin/dashboard" : "/profile"}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+                                >
+                                    {user.isAdmin ? (
+                                        <FaUserShield className="icon-btn" style={{ color: '#f1c40f' }} />
+                                    ) : (
+                                        <FaUserCircle className="icon-btn" style={{ color: '#26a69a' }} />
+                                    )}
+
+                                    <div>
+                                        <div style={{ fontSize: '11px', color: '#888' }}>
+                                            {user.isAdmin ? "Administrator" : t('header.welcome')}
+                                        </div>
+                                        <div style={{ fontWeight: 'bold', color: user.isAdmin ? '#f1c40f' : '#26a69a' }}>
+                                            {user.name}
+                                        </div>
+                                    </div>
+                                </Link>
+
                                 <button
                                     onClick={logout}
                                     title={t('header.logout')}
@@ -141,7 +170,17 @@ const Header = () => {
                         <Link to="/cart" style={{ color: 'white', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}>
                             <div style={{ position: 'relative' }}>
                                 <FaShoppingCart className="icon-btn" />
-                                <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'red', fontSize: '10px', padding: '2px 5px', borderRadius: '50%' }}>0</span>
+                                {totalItems > 0 && (
+                                    <span style={{
+                                        position: 'absolute', top: '-8px', right: '-8px',
+                                        background: '#ff4d4d', color: 'white',
+                                        fontSize: '10px', fontWeight: 'bold',
+                                        padding: '2px 6px', borderRadius: '50%',
+                                        minWidth: '18px', textAlign: 'center'
+                                    }}>
+                                        {totalItems}
+                                    </span>
+                                )}
                             </div>
                             <span>{t('header.cart')}</span>
                         </Link>
@@ -201,22 +240,35 @@ const Header = () => {
 
                                 <div className="mega-left">
                                     {mainComponents.map((cat, index) => (
-                                        <div key={index} className="mega-box-item">
+                                        <Link
+                                            to={`/builder/select/${cat.path}`}
+                                            key={index}
+                                            className="mega-box-item"
+                                            style={{ textDecoration: 'none' }}
+                                            onClick={() => setIsBrowseOpen(false)}
+                                        >
                                             <div className="mega-box-title">{cat.name}</div>
                                             <div className="mega-box-img-wrapper">
                                                 <img src={cat.img} alt={cat.name} />
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
 
                                 <div className="mega-right">
                                     {subCategories.map((group, index) => (
                                         <div key={index} className="mega-list-column">
-                                            <h4 className="mega-list-title">{group.title}</h4>
+                                            <h4 className="mega-list-title">{t(`subcategory.${group.title}`)}</h4>
                                             <ul>
                                                 {group.items.map((item, i) => (
-                                                    <li key={i} className="mega-list-item">{item}</li>
+                                                    <li key={i} className="mega-list-item" onClick={() => setIsBrowseOpen(false)}>
+                                                        <Link
+                                                            to={`/builder/select/${item}`}
+                                                            style={{ textDecoration: 'none', color: 'inherit' }}
+                                                        >
+                                                            {t(`subcategory.${item}`)}
+                                                        </Link>
+                                                    </li>
                                                 ))}
                                             </ul>
                                         </div>

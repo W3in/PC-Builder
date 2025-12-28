@@ -1,26 +1,51 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(() => {
-        try {
-            const stored = localStorage.getItem('pc_cart');
-            if (!stored || stored === "undefined") return [];
-            return JSON.parse(stored);
-        } catch (error) {
-            console.error("Lỗi đọc cart từ LocalStorage:", error);
-            localStorage.removeItem('pc_cart');
-            return [];
-        }
-    });
-
+    const { user, loading } = useAuth();
+    const [cartItems, setCartItems] = useState([]);
     const [coupon, setCoupon] = useState(null);
     const [discountAmount, setDiscountAmount] = useState(0);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const getCartKey = () => {
+        if (user && user._id) {
+            return `pc_cart_${user._id}`;
+        }
+        return 'pc_cart_guest';
+    };
+
 
     useEffect(() => {
-        localStorage.setItem('pc_cart', JSON.stringify(cartItems));
-    }, [cartItems]);
+        if (loading) return;
+
+        const key = getCartKey(user);
+        setIsLoaded(false);
+
+        try {
+            const stored = localStorage.getItem(key);
+            if (stored) {
+                setCartItems(JSON.parse(stored));
+            } else {
+                setCartItems([]);
+            }
+        } catch (error) {
+            console.error("Lỗi load cart:", error);
+            setCartItems([]);
+        } finally {
+            setIsLoaded(true);
+        }
+    }, [user, loading]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+
+        const key = getCartKey(user);
+        localStorage.setItem(key, JSON.stringify(cartItems));
+
+    }, [cartItems, user, isLoaded]);
 
     const addToCart = (product) => {
         setCartItems(prev => {
@@ -34,10 +59,32 @@ export const CartProvider = ({ children }) => {
         });
     };
 
-    const addToCartBatch = (products) => {
+    const decreaseQty = (id) => {
         setCartItems(prev => {
-            const newItems = products.map(p => ({ ...p, qty: 1 }));
-            return [...prev, ...newItems];
+            return prev.map(item => {
+                if (item._id === id) {
+                    return { ...item, qty: Math.max(1, item.qty - 1) };
+                }
+                return item;
+            });
+        });
+    };
+
+    const addToCartBatch = (products) => {
+        setCartItems((prev) => {
+            let newCart = prev.map(item => ({ ...item }));
+
+            products.forEach((productFromBuilder) => {
+                const existingIndex = newCart.findIndex((item) => item._id === productFromBuilder._id);
+
+                if (existingIndex > -1) {
+                    newCart[existingIndex].qty += 1;
+                } else {
+                    newCart.push({ ...productFromBuilder, qty: 1 });
+                }
+            });
+
+            return newCart;
         });
     };
 
@@ -57,8 +104,13 @@ export const CartProvider = ({ children }) => {
         return { success: false, msg: "Mã giảm giá không hợp lệ" };
     };
 
+    const clearCart = () => {
+        setCartItems([]);
+        localStorage.removeItem(getCartKey());
+    };
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, addToCartBatch, removeFromCart, subTotal, finalTotal, applyCoupon, discountAmount }}>
+        <CartContext.Provider value={{ cartItems, addToCart, addToCartBatch, removeFromCart, decreaseQty, clearCart, subTotal, finalTotal, applyCoupon, discountAmount }}>
             {children}
         </CartContext.Provider>
     );

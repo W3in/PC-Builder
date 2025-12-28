@@ -99,6 +99,11 @@
     border-radius: 0 0 8px 8px;
 }
 
+.grand-total {
+    color: var(--text-secondary);
+}
+
+
 .grand-total span {
     font-size: 24px;
     color: var(--accent-color);
@@ -207,4 +212,38 @@
     color: #888;
     margin-top: 5px;
     font-style: italic;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.btn-qty {
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-qty:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.qty-number {
+    font-weight: bold;
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
 }

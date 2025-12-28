@@ -33,10 +33,15 @@ const PaymentPage = () => {
         createIntent();
     }, [finalTotal]);
 
+    const appearance = {
+        theme: theme === 'dark' ? 'night' : 'stripe',
+    };
+
     const options = {
         clientSecret,
-        theme: theme === 'dark' ? 'night' : 'stripe',
+        appearance,
         labels: 'floating',
+        locale: i18n.language,
     };
 
     return (
@@ -54,14 +59,12 @@ const PaymentPage = () => {
                 </p>
             </div>
 
-            {clientSecret && finalTotal > 0 ? (
+            {clientSecret && stripePromise ? (
                 <Elements stripe={stripePromise} options={options}>
                     <CheckoutForm />
                 </Elements>
             ) : (
-                <p className="payment-loading-text">
-                    {finalTotal > 0 ? t('payment.processing') : t('cart.empty')}
-                </p>
+                <div>{t('payment.processing')}</div>
             )}
         </div>
     );

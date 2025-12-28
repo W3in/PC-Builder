@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { useTranslation } from 'react-i18next';
-import { formatPrice } from '../utils/format';
+import { formatPrice, getImageUrl } from '../utils/format';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaTrash, FaCreditCard, FaTruck } from 'react-icons/fa';
+import { FaTrash, FaCreditCard, FaTruck, FaMinus, FaPlus } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import '../assets/styles/Builder.css';
 
 const CartPage = () => {
     const { t, i18n } = useTranslation();
-    const { cartItems, removeFromCart, finalTotal, subTotal } = useCart();
+    const { cartItems, removeFromCart, addToCart, decreaseQty, finalTotal, subTotal, applyCoupon, discountAmount, coupon } = useCart();
+    const [couponCode, setCouponCode] = useState("");
     const navigate = useNavigate();
 
     if (cartItems.length === 0) {
@@ -19,6 +21,17 @@ const CartPage = () => {
             </div>
         );
     }
+
+    const handleApplyCoupon = () => {
+        if (!couponCode) return;
+        const result = applyCoupon(couponCode);
+        if (result.success) toast.success(result.msg);
+        else toast.error(result.msg);
+    };
+
+    const handleCheckoutCOD = () => {
+        navigate('/shipping?method=cod');
+    };
 
     return (
         <div className="builder-wrapper" style={{ marginTop: '40px' }}>
@@ -39,11 +52,29 @@ const CartPage = () => {
                         {cartItems.map((item) => (
                             <tr key={item._id}>
                                 <td style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    <img src={item.image} alt="" style={{ width: '50px' }} />
+                                    <img src={getImageUrl(item.image)} alt="" style={{ width: '50px' }} />
                                     <b>{item.name}</b>
                                 </td>
                                 <td>{formatPrice(item.price, i18n.language)}</td>
-                                <td>{item.qty}</td>
+                                <td>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <button
+                                            onClick={() => decreaseQty(item._id)}
+                                            style={{ background: '#eee', border: 'none', width: '25px', height: '25px', cursor: 'pointer', borderRadius: '4px' }}
+                                        >
+                                            <FaMinus size={10} color="#333" />
+                                        </button>
+
+                                        <span style={{ fontWeight: 'bold', width: '20px', textAlign: 'center' }}>{item.qty}</span>
+
+                                        <button
+                                            onClick={() => addToCart(item)}
+                                            style={{ background: '#eee', border: 'none', width: '25px', height: '25px', cursor: 'pointer', borderRadius: '4px' }}
+                                        >
+                                            <FaPlus size={10} color="#333" />
+                                        </button>
+                                    </div>
+                                </td>
                                 <td style={{ color: '#26a69a', fontWeight: 'bold' }}>
                                     {formatPrice(item.price * item.qty, i18n.language)}
                                 </td>
@@ -60,26 +91,24 @@ const CartPage = () => {
 
             {/* Khu vực thanh toán */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '30px' }}>
-                <div style={{ width: '400px', background: '#0b1d2a', padding: '20px', borderRadius: '8px', border: '1px solid #1c2e3e' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <div className="shipping-right">
+                    <div className="summary-row">
                         <span>{t('cart.subtotal')}:</span>
                         <span>{formatPrice(subTotal, i18n.language)}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '20px', fontWeight: 'bold', color: '#26a69a' }}>
+
+                    <div className="summary-row total">
                         <span>{t('cart.final_total')}:</span>
                         <span>{formatPrice(finalTotal, i18n.language)}</span>
                     </div>
 
-                    <button className="btn-buy-now" style={{ width: '100%', marginBottom: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-                        <FaTruck /> {t('cart.checkout_cod')}
-                    </button>
-
                     <button
-                        className="btn-buy-now"
-                        onClick={() => navigate('/payment')}
-                        style={{ width: '100%', background: '#6772e5', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}
+                        onClick={() => navigate('/shipping')}
+                        className="btn-pay btn-pay-stripe"
+                        style={{ background: 'var(--accent-color)' }}
                     >
-                        <FaCreditCard /> {t('cart.checkout_online')}
+                        <FaCreditCard style={{ marginRight: '8px' }} />
+                        {t('cart.continue_checkout')}
                     </button>
                 </div>
             </div>

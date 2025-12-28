@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useBuilder } from '../context/BuilderContext';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../utils/format'; // Import hàm mới
+import { formatPrice, getImageUrl } from '../utils/format';
 import { getRecommendedPrice } from '../utils/budgetRule';
+import { generateSlots, groupComponents } from '../utils/builderHelper';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTrash, FaPlus, FaCalculator } from 'react-icons/fa';
+import { FaShoppingCart, FaTrash, FaPlus, FaCalculator, FaMinus } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import '../assets/styles/Builder.css';
 
-const COMPONENT_KEYS = [
-    'cpu', 'mainboard', 'cooler', 'ram', 'gpu', 'storage', 'storage2', 'psu', 'case'
-];
 
 const DEFAULT_BUDGETS = {
     vi: 20000000,
@@ -20,7 +18,7 @@ const DEFAULT_BUDGETS = {
 
 const BuilderPage = () => {
     const { t, i18n } = useTranslation();
-    const { buildState, totalPrice, removeComponent } = useBuilder();
+    const { buildState, totalPrice, removeComponent, updateQuantity } = useBuilder();
     const { addToCartBatch } = useCart();
     const navigate = useNavigate();
 
@@ -28,12 +26,18 @@ const BuilderPage = () => {
         return DEFAULT_BUDGETS[i18n.language] || DEFAULT_BUDGETS['vi'];
     });
 
+    const rawSlots = useMemo(() => {
+        return generateSlots(buildState, t);
+    }, [buildState, t]);
+
+    const groupedSlots = useMemo(() => {
+        return groupComponents(rawSlots, buildState);
+    }, [rawSlots, buildState]);
     useEffect(() => {
         const newDefault = DEFAULT_BUDGETS[i18n.language] || DEFAULT_BUDGETS['vi'];
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setLocalBudget(newDefault);
     }, [i18n.language]);
-
 
     const handleAddAllToCart = () => {
         const items = Object.values(buildState);
@@ -45,18 +49,19 @@ const BuilderPage = () => {
         navigate('/cart');
     };
 
-    const goToSelection = (key) => {
+
+    const goToSelection = (slotKey, slotType) => {
         const rate = i18n.language === 'en' ? 0.00004 : (i18n.language === 'ja' ? 0.006 : 1);
         const budgetInVND = localBudget / rate;
 
+        const recommendedVND = getRecommendedPrice(budgetInVND, slotType);
 
-        const categoryForCalculation = key === 'storage2' ? 'storage' : key;
-        const recommendedVND = getRecommendedPrice(budgetInVND, categoryForCalculation);
-
-        navigate(`/builder/select/${categoryForCalculation}?budget=${recommendedVND}&slot=${key}`);
+        navigate(`/builder/select/${slotType}?budget=${recommendedVND}&slot=${slotKey}`);
     };
+
     return (
         <div className="builder-wrapper">
+
             <div className="budget-control-panel">
                 <div className="budget-input-group">
                     <label>
@@ -106,11 +111,6 @@ const BuilderPage = () => {
 
             <div className="builder-header-bar">
                 <h1>{t('builder.title')}</h1>
-                <div className="builder-summary">
-                    <span className="total-price">
-                        {t('builder.total')}: {formatPrice(totalPrice, i18n.language)}
-                    </span>
-                </div>
             </div>
 
             <div className="builder-table-container">
@@ -125,22 +125,24 @@ const BuilderPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {COMPONENT_KEYS.map((key) => {
-                            const product = buildState[key];
-                            const label = t(`builder.components.${key}`);
 
-                            const recommendLocal = getRecommendedPrice(localBudget, key);
+                        {groupedSlots.map((group) => {
+                            const { product, qty, slotKeys, type, label, key } = group;
+                            const recommendLocal = getRecommendedPrice(localBudget, type) * (qty || 1);
 
-                            const hintPrice = new Intl.NumberFormat(i18n.language === 'en' ? 'en-US' : (i18n.language === 'ja' ? 'ja-JP' : 'vi-VN'), {
-                                style: 'currency',
-                                currency: i18n.language === 'en' ? 'USD' : (i18n.language === 'ja' ? 'JPY' : 'VND'),
-                                maximumFractionDigits: 0
-                            }).format(recommendLocal);
+                            const hintPrice = new Intl.NumberFormat(
+                                i18n.language === 'en' ? 'en-US' : (i18n.language === 'ja' ? 'ja-JP' : 'vi-VN'),
+                                {
+                                    style: 'currency',
+                                    currency: i18n.language === 'en' ? 'USD' : (i18n.language === 'ja' ? 'JPY' : 'VND'),
+                                    maximumFractionDigits: 0
+                                }
+                            ).format(recommendLocal);
 
                             return (
                                 <tr key={key}>
                                     <td className="comp-label">
-                                        {label}
+                                        {qty > 1 ? `${label.split('(')[0]} (x${qty})` : label}
                                         <div className="price-hint">
                                             {t('builder.suggest')}: ~{hintPrice}
                                         </div>
@@ -149,24 +151,51 @@ const BuilderPage = () => {
                                     {product ? (
                                         <>
                                             <td className="comp-img">
-                                                <img src={product.image} alt={product.name} />
+                                                <img src={getImageUrl(product.image)} alt={product.name} />
                                             </td>
                                             <td className="comp-name">
                                                 <Link to={`/product/${product._id}`}>{product.name}</Link>
+                                                {['ram', 'gpu', 'storage'].includes(type) && (
+                                                    <div className="qty-control">
+                                                        <button
+                                                            className="btn-qty"
+                                                            onClick={() => updateQuantity(product, slotKeys, type, -1)}
+                                                        >
+                                                            <FaMinus size={10} />
+                                                        </button>
+                                                        <span className="qty-number">{qty}</span>
+                                                        <button
+                                                            className="btn-qty"
+                                                            onClick={() => updateQuantity(product, slotKeys, type, 1)}
+                                                        >
+                                                            <FaPlus size={10} />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </td>
                                             <td className="comp-price">
-                                                {formatPrice(product.price, i18n.language)}
+                                                {formatPrice(group.totalPrice, i18n.language)}
+                                                {qty > 1 && (
+                                                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                                                        ({formatPrice(product.price, i18n.language)} / {t('builder.slots.item')})
+                                                    </div>
+                                                )}
                                             </td>
                                             <td className="comp-action">
-                                                <button className="btn-remove" onClick={() => removeComponent(key)}>
+                                                <button className="btn-remove" onClick={() => {
+                                                    slotKeys.forEach(k => removeComponent(k));
+                                                }}>
                                                     <FaTrash />
                                                 </button>
                                             </td>
                                         </>
                                     ) : (
                                         <td colSpan="4" className="comp-empty">
-                                            <button className="btn-add-component" onClick={() => goToSelection(key)}>
-                                                <FaPlus /> {t('builder.btn_choose')} {label}
+                                            <button
+                                                className="btn-add-component"
+                                                onClick={() => goToSelection(key, type)}
+                                            >
+                                                <FaPlus /> {t('builder.btn_choose')} {type.toUpperCase()}
                                             </button>
                                         </td>
                                     )}

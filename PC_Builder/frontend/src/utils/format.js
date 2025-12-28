@@ -29,3 +29,17 @@ export const convertToVND = (amount, language = 'vi') => {
     const rate = EXCHANGE_RATES[language] || 1;
     return amount / rate;
 };
+
+export const getImageUrl = (imagePath) => {
+    if (!imagePath) return "https://via.placeholder.com/150?text=No+Image";
+
+    if (imagePath.startsWith('http')) {
+        return imagePath;
+    }
+    if (imagePath.startsWith('/images')) {
+        return imagePath;
+    }
+
+    const backendUrl = import.meta.env.VITE_API_URL.replace('/api', '');
+    return `${backendUrl}${imagePath}`;
+};

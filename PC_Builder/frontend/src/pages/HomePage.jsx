@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../api/axiosClient';
-import { formatPrice } from '../utils/format';
+import { formatPrice, getImageUrl } from '../utils/format';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import '../assets/styles/Home.css'; // <--- Import file CSS
+import '../assets/styles/Home.css';
 
 const HomePage = () => {
     const { t, i18n } = useTranslation();
@@ -41,7 +41,7 @@ const HomePage = () => {
                     products.map((p) => (
                         <div key={p._id} className="home-product-card">
                             <div className="product-img-wrapper">
-                                <img src={p.image} alt={p.name} />
+                                <img src={getImageUrl(p.image)} alt={p.name} />
                             </div>
 
                             <h3 className="product-name" title={p.name}>
