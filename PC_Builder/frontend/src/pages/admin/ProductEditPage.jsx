@@ -74,9 +74,8 @@ const ProductEditPage = () => {
         formData.append('image', file);
         setUploading(true);
         try {
-            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
             const backendUrl = import.meta.env.VITE_API_URL.replace('/api', '');
-            const { data } = await axios.post(`${backendUrl}/api/upload`, formData, config);
+            const { data } = await axios.post(`${backendUrl}/api/upload`, formData);
             setImage(data);
             setUploading(false);
             toast.success("Upload ảnh thành công!");
@@ -89,10 +88,9 @@ const ProductEditPage = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            const config = { headers: { Authorization: `Bearer ${user.token}` } };
             await axiosClient.post('/products', {
                 name, price, image, brand, category, description, countInStock, specs
-            }, config);
+            });
             toast.success('Tạo sản phẩm thành công');
             navigate('/admin/products');
         } catch (error) {

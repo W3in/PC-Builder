@@ -24,8 +24,7 @@ const DashboardPage = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                const res = await axiosClient.get(`/orders/stats?year=${year}`, config);
+                const res = await axiosClient.get(`/orders/stats?year=${year}`);
 
                 // Cập nhật state với dữ liệu mới từ Backend trả về
                 setData(res.data);

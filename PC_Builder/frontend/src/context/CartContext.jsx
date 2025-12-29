@@ -10,41 +10,51 @@ export const CartProvider = ({ children }) => {
     const [discountAmount, setDiscountAmount] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const getCartKey = () => {
-        if (user && user._id) {
-            return `pc_cart_${user._id}`;
-        }
-        return 'pc_cart_guest';
+    const getCartKey = (currentUser) => {
+        return currentUser && currentUser._id ? `pc_cart_${currentUser._id}` : 'pc_cart_guest';
     };
 
 
     useEffect(() => {
         if (loading) return;
 
-        const key = getCartKey(user);
-        setIsLoaded(false);
+        const guestKey = 'pc_cart_guest';
+        const guestData = localStorage.getItem(guestKey);
+        const guestItems = guestData ? JSON.parse(guestData) : [];
 
-        try {
-            const stored = localStorage.getItem(key);
-            if (stored) {
-                setCartItems(JSON.parse(stored));
+        if (user && user._id) {
+            const userKey = `pc_cart_${user._id}`;
+            const userStored = localStorage.getItem(userKey);
+            let userItems = userStored ? JSON.parse(userStored) : [];
+
+            if (guestItems.length > 0) {
+                const mergedItems = [...userItems];
+                guestItems.forEach(gItem => {
+                    const exist = mergedItems.find(uItem => uItem._id === gItem._id);
+                    if (exist) {
+                        exist.qty += gItem.qty;
+                    } else {
+                        mergedItems.push(gItem);
+                    }
+                });
+
+                setCartItems(mergedItems);
+                localStorage.removeItem(guestKey);
+                localStorage.setItem(userKey, JSON.stringify(mergedItems));
             } else {
-                setCartItems([]);
+                setCartItems(userItems);
             }
-        } catch (error) {
-            console.error("Lỗi load cart:", error);
-            setCartItems([]);
-        } finally {
-            setIsLoaded(true);
+        } else {
+            setCartItems(guestItems);
         }
+
+        setIsLoaded(true);
     }, [user, loading]);
 
     useEffect(() => {
         if (!isLoaded) return;
-
         const key = getCartKey(user);
         localStorage.setItem(key, JSON.stringify(cartItems));
-
     }, [cartItems, user, isLoaded]);
 
     const addToCart = (product) => {

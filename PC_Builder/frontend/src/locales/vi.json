@@ -161,7 +161,8 @@
         "city": "Thành phố",
         "shipping_info": "Thông tin giao hàng",
         "back_to_cart": "Quay lại giỏ hàng",
-        "order_summary": "Tóm tắt đơn hàng"
+        "order_summary": "Tóm tắt đơn hàng",
+        "login_required": "Vui lòng đăng nhập để tiếp tục thanh toán."
     },
     "payment": {
         "title": "THANH TOÁN AN TOÀN",
@@ -184,7 +185,16 @@
         "add_cart_success": "Đã thêm {{name}} vào giỏ hàng!",
         "add_build_success": "Đã thêm vào cấu hình (Vị trí: {{slot}})",
         "view_cart": "Xem giỏ hàng",
-        "view_build": "Xem cấu hình"
+        "view_build": "Xem cấu hình",
+        "form_shipping_incomplete": "Vui lòng điền đầy đủ thông tin giao hàng",
+        "fav_added": "Đã thêm vào yêu thích",
+        "fav_removed": "Đã xóa khỏi yêu thích",
+        "fav_login": "Vui lòng đăng nhập để yêu thích",
+        "login_success": "Đăng nhập thành công!",
+        "update_profile_success": "Cập nhật hồ sơ thành công!",
+        "update_profile_failed": "Cập nhật hồ sơ thất bại!",
+        "pwd_check_failed": "Mật khẩu hiện tại không đúng!",
+        "pwd_update_success": "Đổi mật khẩu thành công!"
     },
     "product_detail": {
         "specs_title": "Thông số kỹ thuật"
@@ -265,5 +275,29 @@
             "black_red": "Đen đỏ",
             "lcd_screen": "Màn hình LCD"
         }
+    },
+    "profile": {
+        "my_account": "Tài khoản của tôi",
+        "order_history": "Lịch sử đơn hàng",
+        "favorites": "Sản phẩm yêu thích",
+        "change_password": "Đổi mật khẩu",
+        "personal_info": "Hồ sơ cá nhân",
+        "manage_security": "Quản lý thông tin bảo mật",
+        "full_name": "Họ và tên",
+        "email_readonly": "Email (Không thể đổi)",
+        "phone": "Số điện thoại",
+        "address": "Địa chỉ giao hàng",
+        "save_changes": "Lưu thay đổi",
+        "current_password": "Mật khẩu hiện tại",
+        "new_password": "Mật khẩu mới",
+        "confirm_new_password": "Xác nhận mật khẩu mới",
+        "no_favorites": "Bạn chưa có sản phẩm yêu thích nào.",
+        "order_id": "Mã đơn hàng",
+        "date": "Ngày đặt",
+        "pay": "Thanh toán",
+        "status": "Trạng thái",
+        "is_paid": "Đã thanh toán",
+        "not_paid": "Chưa thanh toán",
+        "no_orders": "Bạn chưa có đơn hàng nào."
     }
 }

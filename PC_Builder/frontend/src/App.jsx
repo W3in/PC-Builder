@@ -4,6 +4,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastContainer } from 'react-toastify';
+import PrivateRoute from './routes/PrivateRoute';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Import Layouts
@@ -90,9 +91,9 @@ function App() {
             </Route>
 
             <Route path="/login" element={<AuthPage />} />
-            <Route path="/shipping" element={<ShippingPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/order-success" element={<OrderSuccessPage />} />
+            <Route path="/shipping" element={<PrivateRoute><ShippingPage /></PrivateRoute>} />
+            <Route path="/payment" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />
+            <Route path="/order-success" element={<PrivateRoute><OrderSuccessPage /></PrivateRoute>} />
 
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>

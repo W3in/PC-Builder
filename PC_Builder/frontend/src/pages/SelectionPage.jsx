@@ -6,6 +6,7 @@ import { formatPrice, getImageUrl } from '../utils/format';
 import { FaPlus, FaArrowLeft, FaFilter } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import FilterSidebar from '../components/product/FilterSidebar';
+import FavoriteButton from '../components/product/FavoriteButton';
 import '../assets/styles/Selection.css';
 
 const SelectionPage = () => {
@@ -127,6 +128,7 @@ const SelectionPage = () => {
 
                                 return (
                                     <div key={product._id} className={`product-card ${isOverBudget ? 'over-price' : ''}`}>
+                                        <FavoriteButton productId={product._id} />
                                         <div className="card-img">
                                             <Link to={`/product/${product._id}`}
                                                 style={{

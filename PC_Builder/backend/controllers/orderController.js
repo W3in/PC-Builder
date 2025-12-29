@@ -154,4 +154,24 @@ const getOrderById = async (req, res) => {
     }
 };
 
-module.exports = { addOrderItems, getOrderStats, getMyOrders, getOrders, getOrderById };
+const updateOrderToPaid = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (order) {
+            order.isPaid = true;
+            order.paidAt = Date.now();
+            order.paymentResult = { id: req.user._id, status: 'Completed' };
+
+            const updatedOrder = await order.save();
+            res.json(updatedOrder);
+        } else {
+            res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+module.exports = { addOrderItems, getOrderStats, getMyOrders, getOrders, getOrderById, updateOrderToPaid };

@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react'; // Bỏ useEffect thừa
+import { createContext, useState, useContext, useEffect } from 'react';
 import axiosClient from '../api/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
+    const [favorites, setFavorites] = useState([]);
 
     const [user, setUser] = useState(() => {
         try {
@@ -77,11 +78,39 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('pc_user');
         setUser(null);
+        setFavorites([]);
         navigate('/');
     };
 
+    useEffect(() => {
+        const fetchFavoriteIds = async () => {
+            if (user && user.token) {
+                try {
+                    const { data } = await axiosClient.get('/users/favorites/ids');
+                    setFavorites(data);
+                } catch (err) {
+                    console.error("Không thể lấy danh sách yêu thích", err);
+                }
+            } else {
+                setFavorites([]);
+            }
+        };
+        fetchFavoriteIds();
+    }, [user]);
+
+    const toggleFavorite = async (productId) => {
+        if (!user) return false;
+        try {
+            const { data } = await axiosClient.post('/users/favorites', { productId });
+            setFavorites(data.favorites);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, loginGoogle, register, logout, loading, error }}>
+        <AuthContext.Provider value={{ user, login, loginGoogle, register, logout, loading, error, favorites, toggleFavorite }}>
             {children}
         </AuthContext.Provider>
     );

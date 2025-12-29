@@ -161,7 +161,8 @@
         "city": "City",
         "shipping_info": "Shipping Information",
         "back_to_cart": "Back to Cart",
-        "order_summary": "Order Summary"
+        "order_summary": "Order Summary",
+        "login_required": "Please log in to proceed to checkout."
     },
     "payment": {
         "title": "SECURE CHECKOUT",
@@ -184,7 +185,16 @@
         "add_cart_success": "Added {{name}} to cart!",
         "add_build_success": "Added to build (Slot: {{slot}})",
         "view_cart": "View Cart",
-        "view_build": "View Build"
+        "view_build": "View Build",
+        "form_shipping_incomplete": "Please fill in all shipping information",
+        "fav_added": "Added to favorites",
+        "fav_removed": "Removed from favorites",
+        "fav_login": "Please log in to favorite",
+        "login_success": "Log In Successful!",
+        "update_profile_success": "Update Profile Successful!",
+        "update_profile_failed": "Update Profile Failed!",
+        "pwd_check_failed": "Current password is incorrect!",
+        "pwd_update_success": "Password changed successfully!"
     },
     "product_detail": {
         "specs_title": "Technical Specifications"
@@ -265,5 +275,29 @@
             "black_red": "Black/Red",
             "lcd_screen": "LCD Screen"
         }
+    },
+    "profile": {
+        "my_account": "My Account",
+        "order_history": "Order History",
+        "favorites": "Favorite Products",
+        "change_password": "Change Password",
+        "personal_info": "Personal Profile",
+        "manage_security": "Manage security information",
+        "full_name": "Full Name",
+        "email_readonly": "Email (Read-only)",
+        "phone": "Phone Number",
+        "address": "Shipping Address",
+        "save_changes": "Save Changes",
+        "current_password": "Current Password",
+        "new_password": "New Password",
+        "confirm_new_password": "Confirm New Password",
+        "no_favorites": "No favorite products yet.",
+        "order_id": "Order ID",
+        "date": "Order Date",
+        "pay": "Pay",
+        "status": "Status",
+        "is_paid": "Paid",
+        "not_paid": "Not Paid",
+        "no_orders": "You have no orders yet."
     }
 }

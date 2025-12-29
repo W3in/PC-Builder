@@ -5,12 +5,13 @@ import { formatPrice, getImageUrl } from '../utils/format';
 import { FaCreditCard, FaTruck, FaChevronLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axiosClient from '../api/axiosClient';
 import '../assets/styles/Shipping.css';
 
 const ShippingPage = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const { cartItems, finalTotal, subTotal, applyCoupon, discountAmount, coupon } = useCart();
+    const { cartItems, finalTotal, subTotal, applyCoupon, discountAmount, clearCart } = useCart();
 
     const [couponCode, setCouponCode] = useState("");
     const [shippingInfo, setShippingInfo] = useState({
@@ -35,13 +36,13 @@ const ShippingPage = () => {
     const validateForm = () => {
         const { fullName, email, phone, address } = shippingInfo;
         if (!fullName || !email || !phone || !address) {
-            toast.error("Vui lòng điền đầy đủ thông tin giao hàng!");
+            toast.error(t('toast.form_shipping_incomplete'));
             return false;
         }
         return true;
     };
 
-    const handlePayment = (method) => {
+    const handlePayment = async (method) => {
         if (!validateForm()) return;
 
         localStorage.setItem('shippingAddress', JSON.stringify(shippingInfo));
@@ -49,7 +50,27 @@ const ShippingPage = () => {
         if (method === 'stripe') {
             navigate('/payment');
         } else {
-            toast.info("Đang xử lý đơn hàng COD...");
+            try {
+                const orderData = {
+                    orderItems: cartItems,
+                    shippingAddress: shippingInfo,
+                    paymentMethod: 'COD',
+                    totalPrice: finalTotal,
+                    isPaid: false,
+                };
+
+                const { data } = await axiosClient.post('/orders', orderData);
+
+                if (data) {
+                    clearCart();
+                    localStorage.removeItem('shippingAddress');
+
+                    window.location.href = "/order-success";
+                }
+            } catch (error) {
+                console.error("Lỗi đặt hàng COD:", error);
+                toast.error(error.response?.data?.message || `${t('payment.error')}`);
+            }
         }
     };
 

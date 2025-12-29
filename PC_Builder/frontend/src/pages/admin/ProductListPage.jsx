@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../api/axiosClient';
-import { useAuth } from '../../context/AuthContext';
 import { formatPrice } from '../../utils/format';
 import { Link } from 'react-router-dom';
 import { FaTrash, FaPlus } from 'react-icons/fa';
@@ -8,34 +7,35 @@ import { toast } from 'react-toastify';
 import '../../assets/styles/Admin.css';
 
 const ProductListPage = () => {
-    const { user } = useAuth();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchProducts = async () => {
-        try {
-            const { data } = await axiosClient.get('/products?limit=1000');
-            setProducts(data.products || data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const { data } = await axiosClient.get('/products?limit=1000');
+                setProducts(data.products || data);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setLoading(false);
+            }
+        };
+
         fetchProducts();
     }, []);
 
     const handleDelete = async (id) => {
         if (window.confirm('Bạn có chắc chắn muốn xóa không?')) {
             try {
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                await axiosClient.delete(`/products/${id}`, config);
+                await axiosClient.delete(`/products/${id}`);
                 toast.success('Xóa thành công');
-                fetchProducts();
+
+                const { data } = await axiosClient.get('/products?limit=1000');
+                setProducts(data.products || data);
             } catch (error) {
-                toast.error('Lỗi khi xóa');
+                console.error(error);
+                toast.error(error.response?.data?.message || "Lỗi khi xóa");
             }
         }
     };

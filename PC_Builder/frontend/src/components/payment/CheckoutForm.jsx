@@ -44,9 +44,7 @@ const CheckoutForm = () => {
                     isPaid: true,
                 };
 
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-
-                await axiosClient.post('/orders', orderData, config);
+                await axiosClient.post('/orders', orderData);
 
                 clearCart();
 

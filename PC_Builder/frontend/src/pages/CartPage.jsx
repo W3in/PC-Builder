@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { formatPrice, getImageUrl } from '../utils/format';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,8 +10,8 @@ import '../assets/styles/Builder.css';
 
 const CartPage = () => {
     const { t, i18n } = useTranslation();
-    const { cartItems, removeFromCart, addToCart, decreaseQty, finalTotal, subTotal, applyCoupon, discountAmount, coupon } = useCart();
-    const [couponCode, setCouponCode] = useState("");
+    const { user } = useAuth();
+    const { cartItems, removeFromCart, addToCart, decreaseQty, finalTotal, subTotal } = useCart();
     const navigate = useNavigate();
 
     if (cartItems.length === 0) {
@@ -22,15 +23,13 @@ const CartPage = () => {
         );
     }
 
-    const handleApplyCoupon = () => {
-        if (!couponCode) return;
-        const result = applyCoupon(couponCode);
-        if (result.success) toast.success(result.msg);
-        else toast.error(result.msg);
-    };
-
-    const handleCheckoutCOD = () => {
-        navigate('/shipping?method=cod');
+    const handleCheckout = () => {
+        if (!user) {
+            toast.warning(t('cart.login_required') || 'Vui lòng đăng nhập để tiếp tục thanh toán');
+            navigate('/login', { state: { from: '/shipping' } });
+            return
+        }
+        navigate('/shipping');
     };
 
     return (
@@ -89,7 +88,6 @@ const CartPage = () => {
                 </table>
             </div>
 
-            {/* Khu vực thanh toán */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '30px' }}>
                 <div className="shipping-right">
                     <div className="summary-row">
@@ -103,7 +101,7 @@ const CartPage = () => {
                     </div>
 
                     <button
-                        onClick={() => navigate('/shipping')}
+                        onClick={handleCheckout}
                         className="btn-pay btn-pay-stripe"
                         style={{ background: 'var(--accent-color)' }}
                     >

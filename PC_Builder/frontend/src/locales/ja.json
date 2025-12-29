@@ -161,7 +161,8 @@
         "city": "市区町村",
         "shipping_info": "配送情報",
         "back_to_cart": "カートに戻る",
-        "order_summary": "注文概要"
+        "order_summary": "注文概要",
+        "login_required": "お支払いを続行するにはログインしてください。"
     },
     "payment": {
         "title": "安全な支払い",
@@ -184,7 +185,16 @@
         "add_cart_success": "{{name}} をカートに追加しました！",
         "add_build_success": "構成に追加しました (スロット: {{slot}})",
         "view_cart": "カートを見る",
-        "view_build": "構成を見る"
+        "view_build": "構成を見る",
+        "form_shipping_incomplete": "配送情報をすべて入力してください",
+        "fav_added": "お気に入りに追加しました",
+        "fav_removed": "お気に入りから削除しました",
+        "fav_login": "お気に入りに追加するにはログインしてください",
+        "login_success": "ログイン成功！",
+        "update_profile_success": "プロフィールの更新に成功しました！",
+        "update_profile_failed": "プロフィールの更新に失敗しました！",
+        "pwd_check_failed": "現在のパスワードが正しくありません！",
+        "pwd_update_success": "パスワードが正常に変更されました！"
     },
     "product_detail": {
         "specs_title": "技術仕様"
@@ -265,5 +275,29 @@
             "black_red": "ブラック/レッド",
             "lcd_screen": "LCDスクリーン"
         }
+    },
+    "profile": {
+        "my_account": "マイアカウント",
+        "order_history": "注文履歴",
+        "favorites": "お気に入り商品",
+        "change_password": "パスワード変更",
+        "personal_info": "個人プロフィール",
+        "manage_security": "セキュリティ情報の管理",
+        "full_name": "氏名",
+        "email_readonly": "メールアドレス (変更不可)",
+        "phone": "電話番号",
+        "address": "配送先住所",
+        "save_changes": "変更を保存",
+        "current_password": "現在のパスワード",
+        "new_password": "新しいパスワード",
+        "confirm_new_password": "新しいパスワードを確認",
+        "no_favorites": "お気に入り商品がありません。",
+        "order_id": "注文ID",
+        "date": "注文日",
+        "pay": "支払い",
+        "status": "ステータス",
+        "is_paid": "支払い済み",
+        "not_paid": "未払い",
+        "no_orders": "注文履歴がありません。"
     }
 }

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { GoogleLogin } from '@react-oauth/google';
 import { FaGoogle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import '../assets/styles/Auth.css';
 
 const AuthPage = () => {
@@ -17,16 +18,20 @@ const AuthPage = () => {
 
     const { login, register, loginGoogle, user, error } = useAuth();
     const navigate = useNavigate();
-
+    const location = useLocation();
 
     useEffect(() => {
         if (user) navigate('/');
     }, [user, navigate]);
 
+    const redirectPath = location.state?.from || '/';
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLoginMode) {
             await login(email, password);
+            toast.success(t('toast.login_success'));
+            navigate(redirectPath, { replace: true });
         } else {
             await register(name, email, password, phone);
         }

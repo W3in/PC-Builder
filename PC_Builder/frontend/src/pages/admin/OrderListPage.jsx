@@ -14,8 +14,7 @@ const OrderListPage = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                const { data } = await axiosClient.get('/orders', config);
+                const { data } = await axiosClient.get('/orders');
                 setOrders(data);
                 setLoading(false);
             } catch (error) {

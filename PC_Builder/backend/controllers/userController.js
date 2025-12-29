@@ -114,29 +114,109 @@ const googleLogin = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-    const user = await User.findById(req.user._id);
+    try {
+        const user = await User.findById(req.user._id);
 
-    if (user) {
-        user.name = req.body.name || user.name;
-        user.phone = req.body.phone || user.phone;
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.phone = req.body.phone || user.phone;
+            user.address = req.body.address || user.address;
 
-        if (req.body.password) {
-            user.password = req.body.password;
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                phone: updatedUser.phone,
+                address: updatedUser.address,
+                isAdmin: updatedUser.isAdmin,
+                token: generateToken(updatedUser._id),
+            });
+        } else {
+            res.status(404).json({ message: "Không tìm thấy người dùng" });
         }
-
-        const updatedUser = await user.save();
-
-        res.json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            phone: updatedUser.phone,
-            isAdmin: updatedUser.isAdmin,
-            token: generateToken(updatedUser._id),
-        });
-    } else {
-        res.status(404).json({ message: "User not found" });
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi Server", error: error.message });
     }
 };
 
-module.exports = { registerUser, authUser, googleLogin, updateUserProfile };
+const updateUserPassword = async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (user) {
+            const isMatch = await user.matchPassword(currentPassword);
+
+            if (!isMatch) {
+                return res.status(401).json({ message: "Mật khẩu hiện tại không chính xác" });
+            }
+
+            user.password = newPassword;
+            await user.save();
+
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                token: generateToken(user._id),
+                message: "Đổi mật khẩu thành công"
+            });
+        } else {
+            res.status(404).json({ message: "Không tìm thấy người dùng" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi Server", error: error.message });
+    }
+};
+
+const getFavorites = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('favorites');
+
+        if (user) {
+            res.json(user.favorites || []);
+        } else {
+            res.status(404).json({ message: "Không tìm thấy người dùng" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi Server", error: error.message });
+    }
+};
+
+const getFavoriteIds = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        res.json(user.favorites || []);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const toggleFavorite = async (req, res) => {
+    const { productId } = req.body;
+    const user = await User.findById(req.user._id);
+
+    const isFavorite = user.favorites.includes(productId);
+    if (isFavorite) {
+        user.favorites = user.favorites.filter(id => id.toString() !== productId);
+    } else {
+        user.favorites.push(productId);
+    }
+
+    await user.save();
+    res.json({ favorites: user.favorites });
+};
+
+const removeFavorite = async (req, res) => {
+    const user = await User.findById(req.user._id);
+    user.favorites = user.favorites.filter(id => id.toString() !== req.params.id);
+    await user.save();
+    res.json(user.favorites);
+};
+
+
+module.exports = { registerUser, authUser, googleLogin, updateUserProfile, updateUserPassword, getFavorites, getFavoriteIds, toggleFavorite, removeFavorite };

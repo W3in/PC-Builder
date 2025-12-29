@@ -93,3 +93,101 @@
     color: var(--text-primary);
     border-radius: 4px;
 }
+
+.favorites-kanban-grid {
+    display: grid;
+    /* repeat(4, 1fr) đôi khi bị vỡ nếu content quá to, dùng minmax(0, 1fr) sẽ an toàn hơn */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.fav-product-card {
+    background: var(--bg-container);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Quan trọng: Không cho nội dung tràn ra ngoài */
+    transition: 0.3s;
+}
+
+.fav-card-img {
+    width: 100%;
+    height: 160px;
+    /* Cố định chiều cao ảnh */
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.fav-card-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* Giữ nguyên tỉ lệ ảnh */
+}
+
+.fav-card-body {
+    padding: 12px;
+    background: var(--bg-container);
+    flex-grow: 1;
+}
+
+.fav-card-body h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    /* Giới hạn tên sản phẩm trong 2 dòng */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 40px;
+}
+
+.fav-card-price {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* Pagination Style */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.page-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-container);
+    color: var(--text-primary);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.page-btn.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+@media (max-width: 1024px) {
+    .favorites-kanban-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .favorites-kanban-grid {
+        grid-template-columns: 1fr;
+    }
+}

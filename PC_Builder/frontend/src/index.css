@@ -63,3 +63,40 @@ button,
 .logo-icon {
     font-family: 'Chakra Petch', sans-serif;
 }
+
+.favorite-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.btn-favorite {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-favorite:hover {
+    transform: scale(1.1);
+    background: white;
+}
+
+.btn-favorite svg {
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+/* Dark mode support */
+[data-theme='dark'] .btn-favorite {
+    background: rgba(11, 29, 42, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
