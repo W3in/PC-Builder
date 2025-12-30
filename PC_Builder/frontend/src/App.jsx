@@ -18,6 +18,7 @@ import IntroScreen from './components/common/IntroScreen';
 // Import Pages
 import HomePage from './pages/HomePage';
 import BuilderPage from './pages/BuilderPage';
+import PreBuiltPage from './pages/PreBuiltPage';
 import SelectionPage from './pages/SelectionPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
@@ -79,6 +80,7 @@ function App() {
 
               <Route path="builder" element={<BuilderPage />} />
               <Route path="builder/select/:category" element={<SelectionPage />} />
+              <Route path="prebuilt" element={<PreBuiltPage />} />
               <Route path="product/:id" element={<ProductDetailPage />} />
               <Route path="/cart" element={<CartPage />} />
 
@@ -99,6 +101,7 @@ function App() {
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="products" element={<ProductListPage />} />
+                <Route path="product/:id/edit" element={<ProductEditPage />} />
                 <Route path="product/create" element={<ProductEditPage />} />
                 <Route path="orders" element={<OrderListPage />} />
                 <Route path="order/:id" element={<OrderDetailPage />} />

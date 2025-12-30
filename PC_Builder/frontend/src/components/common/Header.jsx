@@ -100,7 +100,11 @@ const Header = () => {
         },
         {
             title: "peripherals",
-            items: ["headphones", "keyboard", "mouse", "speakers", "webcam"]
+            items: ["headphones", "keyboard", "mouse", "speakers"]
+        },
+        {
+            title: "display",
+            items: ["monitor", "webcam"]
         },
         {
             title: "software",

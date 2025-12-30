@@ -68,6 +68,7 @@ const ProfilePage = () => {
             const updatedUser = { ...user, ...data };
             localStorage.setItem('pc_user', JSON.stringify(updatedUser));
             if (setUser) setUser(updatedUser);
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast.error(t('toast.update_profile_failed'));
         }

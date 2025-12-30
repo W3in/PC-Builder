@@ -28,6 +28,7 @@
         "wired_net": "Mạng dây (LAN)",
         "wifi_net": "Mạng không dây (WiFi)",
         "peripherals": "Thiết bị ngoại vi",
+        "display": "Thiết bị hiển thị",
         "headphones": "Tai nghe",
         "keyboard": "Bàn phím",
         "mouse": "Chuột",
@@ -36,7 +37,8 @@
         "software": "Phần mềm",
         "antivirus": "Diệt Virus",
         "utilities": "Tiện ích",
-        "os": "Hệ điều hành"
+        "os": "Hệ điều hành",
+        "monitor": "Màn hình"
     },
     "auth": {
         "login_title": "ĐĂNG NHẬP HỆ THỐNG",
@@ -179,7 +181,15 @@
         "featured_products": "Danh sách linh kiện nổi bật",
         "build_now": "Build PC Ngay",
         "no_products": "Không có sản phẩm nào hoặc đang tải...",
-        "filter": "BỘ LỌC TÌM KIẾM"
+        "filter": "BỘ LỌC TÌM KIẾM",
+        "hero_build_title": "TỰ TAY XÂY DỰNG CẤU HÌNH PC",
+        "hero_build_desc": "Công cụ hỗ trợ chọn linh kiện tương thích 100%.",
+        "hero_prebuilt_title": "DÀN MÁY BUILD SẴN TỐI ƯU",
+        "hero_prebuilt_desc": "Được lắp ráp bởi chuyên gia, bảo hành tận nơi.",
+        "for_you": "DÀNH RIÊNG CHO BẠN",
+        "prebuilt_section": "PC BỘ TỐI ƯU SẴN",
+        "view_all": "Xem tất cả",
+        "pre_built_section_desc": "Tiết kiệm thời gian, tối ưu hiệu năng với các bộ máy được cấu hình sẵn cho mọi nhu cầu."
     },
     "toast": {
         "add_cart_success": "Đã thêm {{name}} vào giỏ hàng!",
@@ -200,6 +210,16 @@
         "specs_title": "Thông số kỹ thuật"
     },
     "specs": {
+        "cpu": "Bộ vi xử lý (CPU)",
+        "gpu": "Card đồ họa (GPU)",
+        "ram": "Bộ nhớ (RAM)",
+        "mainboard": "Bo mạch chủ",
+        "ssd": "Ổ cứng SSD",
+        "hdd": "Ổ cứng HDD",
+        "psu": "Nguồn (PSU)",
+        "case": "Vỏ máy (Case)",
+        "cooler": "Tản nhiệt",
+        "monitor": "Màn hình",
         "socket": "Socket",
         "cores": "Số nhân",
         "threads": "Số luồng",

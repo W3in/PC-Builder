@@ -9,8 +9,6 @@ import { FaShoppingCart, FaWrench, FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import '../assets/styles/ProductDetail.css';
 
-import { FILTER_OPTIONS } from '../utils/filterOptions';
-
 const MsgWithLink = ({ msg, linkText, to, navigate }) => (
     <div className="toast-msg-container">
         <span>{msg}</span>
@@ -117,18 +115,35 @@ const ProductDetailPage = () => {
                 <h3>{t('product_detail.specs_title')}</h3>
                 <table className="pd-specs-table">
                     <tbody>
-                        {product.specs && Object.entries(product.specs).map(([key, value]) => {
-                            const label = i18n.exists(`specs.${key}`)
-                                ? t(`specs.${key}`)
-                                : key.replace(/_/g, ' ').toUpperCase();
+                        {product.category === 'prebuilt' && product.buildParts?.length > 0 ? (
+                            product.buildParts.map((item, index) => {
+                                const componentLabel = t(`specs.${item.component.toLowerCase()}`) !== `specs.${item.component.toLowerCase()}`
+                                    ? t(`specs.${item.component.toLowerCase()}`)
+                                    : item.component;
 
-                            return (
-                                <tr key={key}>
-                                    <td>{label}</td>
-                                    <td>{value}</td>
-                                </tr>
-                            );
-                        })}
+                                return (
+                                    <tr key={index}>
+                                        <td style={{ fontWeight: 'bold', color: 'var(--accent-color)', width: '200px' }}>
+                                            {componentLabel}
+                                        </td>
+                                        <td>{item.name}</td>
+                                    </tr>
+                                );
+                            })
+                        ) : (
+                            product.specs && Object.entries(product.specs).map(([key, value]) => {
+                                const label = i18n.exists(`specs.${key}`)
+                                    ? t(`specs.${key}`)
+                                    : key.replace(/_/g, ' ').toUpperCase();
+
+                                return (
+                                    <tr key={key}>
+                                        <td style={{ fontWeight: 'bold' }}>{label}</td>
+                                        <td>{value}</td>
+                                    </tr>
+                                );
+                            })
+                        )}
                     </tbody>
                 </table>
 
@@ -136,9 +151,11 @@ const ProductDetailPage = () => {
                     <button className="btn-main btn-cart" onClick={handleAddToCart}>
                         <FaShoppingCart className="btn-icon" /> {t('builder.add_all_cart').replace('Toàn bộ', '')}
                     </button>
-                    <button className="btn-main btn-builder" onClick={handleAddToBuilder}>
-                        <FaWrench className="btn-icon" /> {t('selection.add_to_build')}
-                    </button>
+                    {product.category !== 'prebuilt' && (
+                        <button className="btn-main btn-builder" onClick={handleAddToBuilder}>
+                            <FaWrench className="btn-icon" /> {t('selection.add_to_build')}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

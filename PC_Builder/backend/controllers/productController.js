@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const User = require('../models/User');
 
 const getProducts = async (req, res) => {
     try {
@@ -60,7 +61,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const { name, price, image, brand, category, countInStock, description, specs } = req.body;
+        const { name, price, image, brand, category, countInStock, description, specs, buildParts } = req.body;
 
         if (!name || !price || !category) {
             return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin bắt buộc" });
@@ -89,7 +90,8 @@ const createProduct = async (req, res) => {
             category,
             countInStock,
             description,
-            specs
+            specs,
+            buildParts,
         });
 
         const createdProduct = await product.save();
@@ -106,6 +108,28 @@ const createProduct = async (req, res) => {
     }
 };
 
+const updateProduct = async (req, res) => {
+    const { name, price, description, image, brand, category, countInStock, specs, buildParts } = req.body;
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+        product.name = name || product.name;
+        product.price = price || product.price;
+        product.description = description || product.description;
+        product.image = image || product.image;
+        product.brand = brand || product.brand;
+        product.category = category || product.category;
+        product.countInStock = countInStock || product.countInStock;
+        product.specs = specs || product.specs;
+        product.buildParts = buildParts || product.buildParts;
+
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
+    } else {
+        res.status(404).json({ message: 'Không thấy sản phẩm' });
+    }
+};
+
 const deleteProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
@@ -116,9 +140,57 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const getRecommendations = async (req, res) => {
+    try {
+        const { id } = req.params;
+        let recommendedProducts = [];
+
+        // TRƯỜNG HỢP 1: Gợi ý sản phẩm tương tự (Detail Page)
+        if (id) {
+            const currentProduct = await Product.findById(id);
+            if (currentProduct) {
+                recommendedProducts = await Product.find({
+                    category: currentProduct.category,
+                    _id: { $ne: id } // Không hiện lại chính nó
+                }).limit(8);
+            }
+        }
+
+        // TRƯỜNG HỢP 2: Gợi ý cho người dùng (Homepage)
+        else if (req.user) {
+            const user = await User.findById(req.user._id).populate('favorites');
+            if (user && user.favorites.length > 0) {
+                const favCategories = [...new Set(user.favorites.map(p => p.category))];
+                recommendedProducts = await Product.find({
+                    category: { $in: favCategories },
+                    _id: { $nin: user.favorites.map(p => p._id) } // Gợi ý món chưa thích
+                }).limit(8);
+            }
+        }
+
+        // TRƯỜNG HỢP 3: Mặc định (Nếu các trường hợp trên không đủ 4 sản phẩm)
+        if (recommendedProducts.length < 4) {
+            const existingIds = recommendedProducts.map(p => p._id);
+            const extraProducts = await Product.find({
+                _id: { $nin: existingIds, $ne: id }
+            })
+                .sort({ createdAt: -1 }) // Ưu tiên hàng mới về
+                .limit(8 - recommendedProducts.length);
+
+            recommendedProducts = [...recommendedProducts, ...extraProducts];
+        }
+
+        res.json(recommendedProducts);
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi lấy gợi ý", error: error.message });
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
     createProduct,
-    deleteProduct
+    updateProduct,
+    deleteProduct,
+    getRecommendations,
 };

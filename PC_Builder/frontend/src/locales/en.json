@@ -28,6 +28,7 @@
         "wired_net": "Wired Networking",
         "wifi_net": "Wireless Networking",
         "peripherals": "Peripherals",
+        "display": "Display",
         "headphones": "Headphones",
         "keyboard": "Keyboards",
         "mouse": "Mouse",
@@ -36,7 +37,8 @@
         "software": "Software",
         "antivirus": "Antivirus",
         "utilities": "Utilities",
-        "os": "Operating Systems"
+        "os": "Operating Systems",
+        "monitor": "Monitors"
     },
     "auth": {
         "login_title": "SYSTEM LOGIN",
@@ -179,7 +181,15 @@
         "featured_products": "Featured Components",
         "build_now": "Build PC Now",
         "no_products": "No products found or loading...",
-        "filter": "SEARCH FILTER"
+        "filter": "SEARCH FILTER",
+        "hero_build_title": "BUILD YOUR OWN PC",
+        "hero_build_desc": "A tool to help you choose 100% compatible components.",
+        "hero_prebuilt_title": "OPTIMIZED PRE-BUILT PC SYSTEMS",
+        "hero_prebuilt_desc": "Assembled by experts, with on-site warranty.",
+        "for_you": "FOR YOU",
+        "prebuilt_section": "PRE-BUILT PC SYSTEMS",
+        "view_all": "View All",
+        "pre_built_section_desc": "Save time and optimize performance with pre-configured systems for every need."
     },
     "toast": {
         "add_cart_success": "Added {{name}} to cart!",
@@ -200,6 +210,16 @@
         "specs_title": "Technical Specifications"
     },
     "specs": {
+        "cpu": "CPU",
+        "gpu": "GPU",
+        "ram": "RAM",
+        "mainboard": "Mainboard",
+        "ssd": "SSD",
+        "hdd": "HDD",
+        "psu": "PSU",
+        "case": "Case",
+        "cooler": "Cooler",
+        "monitor": "Monitor",
         "socket": "Socket",
         "cores": "Cores",
         "threads": "Threads",

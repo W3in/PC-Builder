@@ -145,7 +145,7 @@ export const FILTER_OPTIONS = {
         {
             label: "Manufacturer",
             key: "brand",
-            options: ["Corsair", "Seasonic", "MSI", "Asus", "Cooler Master", "Thermaltake", "Deepcool", "FSP", "NZXT", "Super Flower"]
+            options: ["Corsair", "Seasonic", "MSI", "Asus", "Cooler Master", "Thermaltake", "Deepcool", "FSP", "NZXT", "Super Flower", "be quiet!"]
         },
         {
             label: "Wattage",
@@ -167,7 +167,7 @@ export const FILTER_OPTIONS = {
         {
             label: "Manufacturer",
             key: "brand",
-            options: ["Thermalright", "Deepcool", "NZXT", "Corsair", "Cooler Master", "Noctua", "Arctic", "Lian Li", "Xigmatek", "ID-Cooling", "Valkyrie"]
+            options: ["Thermalright", "Deepcool", "NZXT", "Corsair", "Cooler Master", "Noctua", "Arctic", "Lian Li", "Xigmatek", "ID-Cooling", "Valkyrie", "be quiet!"]
         },
         {
             label: "Type",

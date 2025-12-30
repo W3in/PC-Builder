@@ -1,101 +1,354 @@
-.home-wrapper {
-    padding: 40px 20px;
-    max-width: 1200px;
+/* Home.css - Đã tinh chỉnh */
+
+.container {
+    max-width: 1240px;
     margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
 }
 
-.home-title {
-    font-family: 'Chakra Petch', sans-serif;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    color: var(--text-primary);
+.home-page {
+    background-color: var(--bg-body);
+    min-height: 100vh;
+    padding-bottom: 50px;
 }
 
+.hero-slider {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 40px;
+    position: relative;
+}
 
-.home-products-grid {
+.main-home-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.slide-build {
+    background-image: url('https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=2070');
+}
+
+.slide-prebuilt {
+    background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
+}
+
+.slide-overlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.1));
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    align-items: center;
 }
 
-.home-product-card {
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    width: 220px;
-    border-radius: 8px;
-    background: var(--bg-container);
+.slide-content-box {
+    max-width: 600px;
+    padding: 20px;
+    animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-overlay h1 {
+    font-size: 48px;
+    color: white;
+    font-family: 'Chakra Petch', sans-serif;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.slide-overlay p {
+    font-size: 20px;
+    color: #ddd;
+    margin-bottom: 30px;
+}
+
+.section-margin {
+    margin: 60px auto;
+}
+
+.section-title {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.section-title h2 {
+    font-family: 'Chakra Petch';
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
     color: var(--text-primary);
-    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.icon-red {
+    color: #ff4d4d;
+}
+
+.products-kanban-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.home-card {
+    background: var(--bg-container);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
-.home-product-card:hover {
+.home-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     border-color: var(--accent-color);
 }
 
-.product-img-wrapper {
-    height: 150px;
+.home-card-img {
+    width: 100%;
+    height: 200px;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
-    background: white;
-    border-radius: 4px;
-    padding: 5px;
+    padding: 15px;
 }
 
-.product-img-wrapper img {
+.home-card-img img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
 }
 
-.product-name {
-    font-size: 16px;
-    height: 44px;
-    overflow: hidden;
-    margin-bottom: 5px;
+.home-card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.home-card-body h4 {
+    font-size: 14px;
     font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-primary);
     line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
-.product-price {
+.home-card-price {
     color: var(--accent-color);
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
+    margin-top: auto;
+}
+
+.prebuilt-highlight {
+    background: var(--bg-container);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 60px 0;
+}
+
+.prebuilt-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.prebuilt-info h2 {
+    font-size: 32px;
+    font-family: 'Chakra Petch';
     margin-bottom: 15px;
 }
 
-.btn-build-now {
-    display: block;
-    background: var(--accent-color);
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 4px;
-    text-decoration: none;
+.prebuilt-info p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.btn-text {
+    color: var(--accent-color);
     font-weight: bold;
-    margin-top: auto;
-    transition: opacity 0.2s;
-    text-transform: uppercase;
-    font-family: 'Chakra Petch', sans-serif;
+    text-decoration: none;
+}
+
+.build-guides-section {
+    background-color: #4a4e69;
+    /* Màu nền tím xám đậm như ảnh */
+    padding: 80px 0;
+    color: white;
+}
+
+.build-guides-flex {
+    display: flex;
+    gap: 40px;
+}
+
+.guides-intro {
+    flex: 0 0 300px;
+}
+
+.guides-intro h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.btn-view-guides {
+    background: #2185d0;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.guides-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.guide-card {
+    background: white;
+    border-radius: 6px;
+    color: #333;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.guide-card:hover {
+    transform: translateY(-10px);
+}
+
+.guide-card-top {
+    position: relative;
+    height: 180px;
+    padding: 10px;
+    text-align: center;
+}
+
+.main-pc-img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.guide-card-body {
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.guide-card-body h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #2185d0;
+}
+
+.parts-list {
+    list-style: none;
+    font-size: 12px;
+    color: #666;
+}
+
+.parts-list li {
+    margin-bottom: 4px;
+}
+
+.guide-card-footer {
+    padding: 10px 15px;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.guide-price {
+    font-weight: bold;
     font-size: 14px;
 }
 
-.btn-build-now:hover {
-    opacity: 0.9;
+.btn-hero {
+    background: var(--accent-color);
+    color: white;
+    padding: 14px 40px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.no-products {
-    width: 100%;
-    text-align: center;
-    padding: 50px;
-    font-style: italic;
-    color: var(--text-secondary);
+.btn-hero:hover {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+.btn-hero-outline {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 30px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Chakra Petch';
+}
+
+@media (max-width: 1024px) {
+    .products-kanban-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .prebuilt-box {
+        grid-template-columns: 1fr;
+    }
+
+    .slide-overlay h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .products-kanban-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-slider {
+        height: 350px;
+    }
 }

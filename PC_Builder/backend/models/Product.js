@@ -9,15 +9,25 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'gpu', 'psu', 'case', 'cooler', 'monitor']
+        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'gpu', 'psu', 'case', 'cooler', 'monitor', 'prebuilt']
     },
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String },
-
+    buildParts: [
+        {
+            component: { type: String },
+            name: { type: String }
+        }
+    ],
     specs: {
         type: mongoose.Schema.Types.Mixed,
         default: {}
-    }
+    },
+    usage: {
+        type: String,
+        enum: ['office', 'gaming', 'streaming', 'workstation'],
+        default: 'gaming'
+    },
 }, {
     timestamps: true
 });

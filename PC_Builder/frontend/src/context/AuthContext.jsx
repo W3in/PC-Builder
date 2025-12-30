@@ -104,7 +104,8 @@ export const AuthProvider = ({ children }) => {
             const { data } = await axiosClient.post('/users/favorites', { productId });
             setFavorites(data.favorites);
             return true;
-        } catch (err) {
+            // eslint-disable-next-line no-unused-vars
+        } catch (error) {
             return false;
         }
     };

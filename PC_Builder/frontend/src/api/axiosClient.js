@@ -5,11 +5,16 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
-        config.headers.Authorization = `Bearer ${user.token}`;
+    const storedData = localStorage.getItem('pc_user');
+
+    if (storedData && storedData !== "undefined") {
+        const userData = JSON.parse(storedData);
+        if (userData && userData.token) {
+            config.headers.Authorization = `Bearer ${userData.token}`;
+        }
     }
     return config;
+}, (error) => {
+    return Promise.reject(error);
 });
-
 export default axiosClient;

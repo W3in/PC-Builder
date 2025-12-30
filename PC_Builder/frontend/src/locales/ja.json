@@ -28,6 +28,7 @@
         "wired_net": "有線LAN",
         "wifi_net": "無線LAN / Wi-Fi",
         "peripherals": "周辺機器",
+        "display": "ディスプレイ機器",
         "headphones": "ヘッドホン",
         "keyboard": "キーボード",
         "mouse": "マウス",
@@ -36,7 +37,8 @@
         "software": "ソフトウェア",
         "antivirus": "アンチウイルス",
         "utilities": "ユーティリティ",
-        "os": "オペレーティングシステム"
+        "os": "オペレーティングシステム",
+        "monitor": "モニター"
     },
     "auth": {
         "login_title": "システムログイン",
@@ -179,7 +181,15 @@
         "featured_products": "おすすめパーツ一覧",
         "build_now": "今すぐPCを組む",
         "no_products": "製品が見つからないか、読み込み中です...",
-        "filter": "検索フィルター"
+        "filter": "検索フィルター",
+        "hero_build_title": "自分だけのPCを組み立てる",
+        "hero_build_desc": "100%互換性のあるコンポーネントを選ぶのに役立つツールです。",
+        "hero_prebuilt_title": "最適化されたプレビルドPC",
+        "hero_prebuilt_desc": "専門家による組み立て、オンサイト保証付き。",
+        "for_you": "あなただけのために",
+        "prebuilt_section": "完成品PC",
+        "view_all": "すべて表示",
+        "pre_built_section_desc": "時間を節約し、あらゆるニーズに対応した事前構成済みシステムでパフォーマンスを最適化します。"
     },
     "toast": {
         "add_cart_success": "{{name}} をカートに追加しました！",
@@ -200,6 +210,16 @@
         "specs_title": "技術仕様"
     },
     "specs": {
+        "cpu": "CPU (プロセッサー)",
+        "gpu": "GPU (グラフィックスカード)",
+        "ram": "RAM (メモリ)",
+        "mainboard": "マザーボード",
+        "ssd": "SSD (ソリッドステートドライブ)",
+        "hdd": "HDD (ハードディスクドライブ)",
+        "psu": "電源ユニット (PSU)",
+        "case": "PCケース",
+        "cooler": "クーラー",
+        "monitor": "モニター",
         "socket": "ソケット",
         "cores": "コア数",
         "threads": "スレッド数",
