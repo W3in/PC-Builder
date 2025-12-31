@@ -22,46 +22,16 @@ const CATEGORY_TEMPLATES = {
 };
 
 const COMPONENT_TYPES = [
-    {
-        label: 'Vi xử lý',
-        value: 'cpu'
-    },
-    {
-        label: 'Bo mạch chủ',
-        value: 'mainboard'
-    },
-    {
-        label: 'RAM',
-        value: 'ram'
-    },
-    {
-        label: 'Card đồ họa',
-        value: 'gpu'
-    },
-    {
-        label: 'Nguồn máy tính',
-        value: 'psu'
-    },
-    {
-        label: 'Vỏ máy tính',
-        value: 'case'
-    },
-    {
-        label: 'SSD',
-        value: 'ssd'
-    },
-    {
-        label: 'HDD',
-        value: 'hdd'
-    },
-    {
-        label: 'Tản nhiệt',
-        value: 'cooler'
-    },
-    {
-        label: 'Màn hình',
-        value: 'monitor'
-    }
+    { label: 'Vi xử lý', value: 'cpu' },
+    { label: 'Bo mạch chủ', value: 'mainboard' },
+    { label: 'RAM', value: 'ram' },
+    { label: 'Card đồ họa', value: 'gpu' },
+    { label: 'Nguồn máy tính', value: 'psu' },
+    { label: 'Vỏ máy tính', value: 'case' },
+    { label: 'SSD', value: 'ssd' },
+    { label: 'HDD', value: 'hdd' },
+    { label: 'Tản nhiệt', value: 'cooler' },
+    { label: 'Màn hình', value: 'monitor' }
 ];
 
 const ProductEditPage = () => {
@@ -79,16 +49,14 @@ const ProductEditPage = () => {
     const [countInStock, setCountInStock] = useState(0);
     const [description, setDescription] = useState('');
     const [uploading, setUploading] = useState(false);
+    const [usage, setUsage] = useState('gaming');
 
-    // State cho linh kiện lẻ (Specs)
     const [specs, setSpecs] = useState({});
     const [manualFields, setManualFields] = useState({});
     const [isBrandManual, setIsBrandManual] = useState(false);
 
-    // State cho PC bộ (Build Parts)
     const [buildParts, setBuildParts] = useState([{ component: '', name: '' }]);
 
-    // 1. Fetch dữ liệu nếu ở chế độ Edit
     useEffect(() => {
         if (isEditMode) {
             const fetchProduct = async () => {
@@ -102,8 +70,11 @@ const ProductEditPage = () => {
                     setCountInStock(data.countInStock);
                     setDescription(data.description || '');
                     setSpecs(data.specs || {});
+                    setUsage(data.usage || 'gaming');
                     if (data.buildParts && data.buildParts.length > 0) {
                         setBuildParts(data.buildParts);
+                    } else {
+                        setBuildParts([{ component: '', name: '' }]);
                     }
                 } catch (error) {
                     toast.error("Không thể tải thông tin sản phẩm");
@@ -114,7 +85,6 @@ const ProductEditPage = () => {
         }
     }, [id, isEditMode, navigate]);
 
-    // 2. Xử lý logic Pre-built Parts
     const handleAddPart = () => setBuildParts([...buildParts, { component: '', name: '' }]);
 
     const handleRemovePart = (index) => {
@@ -186,7 +156,8 @@ const ProductEditPage = () => {
         const productData = {
             name, price, image, brand, category, description, countInStock,
             specs: category === 'prebuilt' ? {} : specs,
-            buildParts: category === 'prebuilt' ? buildParts : []
+            buildParts: category === 'prebuilt' ? buildParts : [],
+            usage: category === 'prebuilt' ? usage : undefined,
         };
 
         try {
@@ -283,6 +254,25 @@ const ProductEditPage = () => {
                 <div className="form-section">
                     {category === 'prebuilt' ? (
                         <div className="form-section-full">
+                            {/* --- PHẦN USAGE MỚI THÊM VÀO ĐÂY --- */}
+                            <h3 className="form-section-title">Cấu hình máy bộ</h3>
+
+                            <div className="form-control" style={{ marginBottom: '20px' }}>
+                                <label className="form-label" style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>
+                                    Nhu cầu sử dụng chính
+                                </label>
+                                <select
+                                    className="form-select"
+                                    value={usage}
+                                    onChange={(e) => setUsage(e.target.value)}
+                                >
+                                    <option value="office">Văn phòng - Học tập</option>
+                                    <option value="gaming">Gaming / Trò chơi</option>
+                                    <option value="streaming">Live Stream </option>
+                                    <option value="workstation">Đồ họa chuyên nghiệp</option>
+                                </select>
+                            </div>
+
                             <h3 className="form-section-title">Danh sách linh kiện lắp sẵn (Build Parts)</h3>
                             <div className="build-parts-container">
                                 {buildParts.map((part, index) => (

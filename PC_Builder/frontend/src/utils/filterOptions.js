@@ -206,5 +206,76 @@ export const FILTER_OPTIONS = {
             key: "side_panel",
             options: ["Tempered Glass", "Mesh", "Solid"]
         }
+    ],
+    case_fans: [
+        { label: "Manufacturer", key: "brand", options: ["Corsair", "Lian Li", "Noctua", "Arctic", "Cooler Master", "be quiet!", "NZXT", "Thermalright"] },
+        { label: "Fan Size", key: "size", options: ["120mm", "140mm", "200mm", "80mm"] },
+        { label: "Color", key: "color", options: ["Black", "White", "RGB", "ARGB"] },
+    ],
+    thermal: [
+        { label: "Manufacturer", key: "brand", options: ["Thermal Grizzly", "Arctic", "Noctua", "Cooler Master", "Deepcool"] },
+        { label: "Type", key: "type", options: ["Paste", "Thermal Pad", "Liquid Metal"] }
+    ],
+    sound_card: [
+        { label: "Manufacturer", key: "brand", options: ["Creative", "Asus", "EVGA"] },
+        { label: "Interface", key: "interface", options: ["PCIe x1", "External USB"] },
+        { label: "Channels", key: "channels", options: ["5.1", "7.1", "Stereo"] }
+    ],
+    wired_net: [
+        { label: "Manufacturer", key: "brand", options: ["TP-Link", "Intel", "Asus", "D-Link"] },
+        { label: "Speed", key: "speed", options: ["1 Gbps", "2.5 Gbps", "10 Gbps"] },
+        { label: "Interface", key: "interface", options: ["PCIe", "USB 3.0"] }
+    ],
+    wifi_net: [
+        { label: "Manufacturer", key: "brand", options: ["Asus", "TP-Link", "Gigabyte", "Netgear", "Intel"] },
+        { label: "Standard", key: "standard", options: ["Wi-Fi 7", "Wi-Fi 6E", "Wi-Fi 6", "Wi-Fi 5"] },
+        { label: "Interface", key: "interface", options: ["PCIe Card", "USB Dongle"] }
+    ],
+    headphones: [
+        { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "HyperX", "Corsair", "Sennheiser", "Audio-Technica", "Sony"] },
+        { label: "Type", key: "type", options: ["Over-ear", "In-ear", "On-ear"] },
+        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless (2.4GHz)", "Bluetooth", "Wired/Wireless"] }
+    ],
+    keyboard: [
+        { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "Corsair", "Keychron", "Akko", "SteelSeries", "Ducky"] },
+        { label: "Switch Type", key: "switch_type", options: ["Mechanical", "Membrane", "Optical", "Low Profile"] },
+        { label: "Size/Layout", key: "layout", options: ["Full Size (100%)", "TKL (80%)", "75%", "65%", "60%"] },
+        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless", "Bluetooth"] }
+    ],
+    mouse: [
+        { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "Zowie", "Glorious", "Corsair", "Pulsar"] },
+        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless", "Wired/Wireless"] },
+        { label: "Sensor Type", key: "sensor", options: ["Optical", "Laser"] },
+        { label: "Handedness", key: "handedness", options: ["Right-handed", "Ambidextrous", "Left-handed"] }
+    ],
+    speakers: [
+        { label: "Manufacturer", key: "brand", options: ["Logitech", "Edifier", "Creative", "Razer", "Bose"] },
+        { label: "Configuration", key: "config", options: ["2.0", "2.1", "5.1", "Soundbar"] }
+    ],
+
+    monitor: [
+        { label: "Manufacturer", key: "brand", options: ["Dell", "LG", "Asus", "Samsung", "AOC", "MSI", "Gigabyte", "ViewSonic", "BenQ"] },
+        { label: "Resolution", key: "resolution", options: ["1920 x 1080", "2560 x 1440", "3840 x 2160 (4K)", "3440 x 1440 (UW)"] },
+        { label: "Refresh Rate", key: "refresh_rate", options: ["60Hz", "75Hz", "144Hz", "165Hz", "240Hz", "360Hz+"] },
+        { label: "Panel Type", key: "panel_type", options: ["IPS", "VA", "TN", "OLED"] },
+        { label: "Screen Size", key: "size", options: ["24\"", "27\"", "32\"", "34\"+", "Under 22\""] }
+    ],
+    webcam: [
+        { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "Elgato", "Microsoft"] },
+        { label: "Resolution", key: "resolution", options: ["720p", "1080p", "4K"] }
+    ],
+
+    antivirus: [
+        { label: "Manufacturer", key: "brand", options: ["Kaspersky", "Bitdefender", "Norton", "McAfee", "ESET"] },
+        { label: "License", key: "license", options: ["1 Year", "2 Years", "Lifetime"] }
+    ],
+    os: [
+        { label: "Manufacturer", key: "brand", options: ["Microsoft"] },
+        { label: "Edition", key: "edition", options: ["Home", "Pro", "Enterprise"] },
+        { label: "Version", key: "version", options: ["Windows 11", "Windows 10"] }
+    ],
+    prebuilt: [
+        { label: "Usage", key: "usage", options: ["office", "gaming", "streaming", "workstation"] },
+        { label: "Price Range", key: "price_range", options: ["under_15m", "range_15_30m", "above_30m"] }
     ]
 };

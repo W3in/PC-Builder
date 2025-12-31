@@ -108,7 +108,7 @@ const Header = () => {
         },
         {
             title: "software",
-            items: ["antivirus", "utilities", "os"]
+            items: ["antivirus", "os"]
         }
     ];
     return (

@@ -13,12 +13,22 @@ const getProducts = async (req, res) => {
             query.category = req.query.category;
         }
 
+        if (req.query.usage) {
+            query.usage = req.query.usage;
+        }
+
+        if (req.query.minPrice || req.query.maxPrice) {
+            query.price = {};
+            if (req.query.minPrice) query.price.$gte = Number(req.query.minPrice);
+            if (req.query.maxPrice) query.price.$lte = Number(req.query.maxPrice);
+        }
+
         if (req.query.brand) {
             const brands = req.query.brand.split(',');
             query.brand = { $in: brands };
         }
 
-        const excludeFields = ['page', 'limit', 'keyword', 'category', 'brand', 'sort'];
+        const excludeFields = ['page', 'limit', 'keyword', 'category', 'brand', 'sort', 'minPrice', 'maxPrice', 'usage'];
         const queryObj = { ...req.query };
 
         excludeFields.forEach(el => delete queryObj[el]);
@@ -61,7 +71,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const { name, price, image, brand, category, countInStock, description, specs, buildParts } = req.body;
+        const { name, price, image, brand, category, countInStock, description, specs, buildParts, usage } = req.body;
 
         if (!name || !price || !category) {
             return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin bắt buộc" });
@@ -92,6 +102,7 @@ const createProduct = async (req, res) => {
             description,
             specs,
             buildParts,
+            usage
         });
 
         const createdProduct = await product.save();
@@ -109,7 +120,7 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-    const { name, price, description, image, brand, category, countInStock, specs, buildParts } = req.body;
+    const { name, price, description, image, brand, category, countInStock, specs, buildParts, usage } = req.body;
     const product = await Product.findById(req.params.id);
 
     if (product) {
@@ -122,6 +133,7 @@ const updateProduct = async (req, res) => {
         product.countInStock = countInStock || product.countInStock;
         product.specs = specs || product.specs;
         product.buildParts = buildParts || product.buildParts;
+        product.usage = usage || product.usage;
 
         const updatedProduct = await product.save();
         res.json(updatedProduct);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { FaHeart, FaEye, FaComment } from 'react-icons/fa';
+import { FaHeart, FaEye } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import axiosClient from '../api/axiosClient';
@@ -112,7 +112,6 @@ const HomePage = () => {
 
             <section className="build-guides-section">
                 <div className="container build-guides-flex">
-                    {/* Bên trái: Tiêu đề & Giới thiệu */}
                     <div className="guides-intro">
                         <h1>{t('home.prebuilt_section')}</h1>
                         <p>{t('home.pre_built_section_desc')}</p>
@@ -121,7 +120,6 @@ const HomePage = () => {
                         </button>
                     </div>
 
-                    {/* Bên phải: Danh sách Card */}
                     <div className="guides-grid">
                         {preBuilt.slice(0, 3).map(pc => (
                             <div key={pc._id} className="guide-card" onClick={() => navigate(`/product/${pc._id}`)}>
@@ -138,7 +136,6 @@ const HomePage = () => {
                                 </div>
                                 <div className="guide-card-footer">
                                     <span className="guide-price">{formatPrice(pc.price, i18n.language)}</span>
-                                    <span className="guide-comments"><FaComment /> 59</span>
                                 </div>
                             </div>
                         ))}

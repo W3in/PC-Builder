@@ -20,11 +20,18 @@ const FilterSidebar = ({ category, selectedFilters, onFilterChange }) => {
     };
 
     const getTranslatedOption = (opt) => {
-        if (!isNaN(opt) || opt.includes("GB") || opt.includes("MHz") || opt.includes("Hz")) return opt;
+        const translated = t(`filters.options.${opt}`);
+        if (translated !== `filters.options.${opt}`) {
+            return translated;
+        }
 
-        const key = opt.toLowerCase().replace(/[\s/]/g, '_').replace(/[()]/g, '');
-
-        return t(`filters.options.${key}`, opt);
+        if (!isNaN(opt) ||
+            /GB|MHz|Hz|W|RTX|RX|Core|Ryzen|LGA|AM\d/i.test(opt)
+        ) {
+            return opt;
+        }
+        const fallbackKey = opt.toLowerCase().replace(/[\s/]/g, '_').replace(/[()]/g, '');
+        return t(`filters.options.${fallbackKey}`, opt);
     };
 
     return (

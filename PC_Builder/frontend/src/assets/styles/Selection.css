@@ -39,6 +39,7 @@
 }
 
 .product-card {
+    position: relative;
     background: var(--bg-container);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -204,4 +205,46 @@
     background: var(--accent-color);
     color: white;
     border-color: var(--accent-color);
+}
+
+.usage-ribbon {
+    position: absolute;
+    top: 12px;
+    right: -32px;
+    width: 120px;
+    background: var(--accent-color);
+    color: white;
+    text-align: center;
+    transform: rotate(45deg);
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.usage-ribbon.gaming {
+    background: #e74c3c;
+}
+
+.usage-ribbon.workstation {
+    background: #9b59b6;
+}
+
+.usage-ribbon.office {
+    background: #3498db;
+}
+
+.usage-ribbon.streaming {
+    background: #f1c40f;
+    color: #333;
+}
+
+.product-card .favorite-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 6;
 }
