@@ -5,9 +5,15 @@ const getProducts = async (req, res) => {
     try {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 20;
+        const keyword = req.query.keyword ? {
+            name: {
+                $regex: req.query.keyword,
+                $options: 'i',
+            },
+        } : {};
         const skip = (page - 1) * limit;
 
-        const query = {};
+        const query = { ...keyword };
 
         if (req.query.category) {
             query.category = req.query.category;
@@ -75,6 +81,11 @@ const createProduct = async (req, res) => {
 
         if (!name || !price || !category) {
             return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin bắt buộc" });
+        }
+
+        const productExists = await Product.findOne({ name: { $regex: `^${name}$`, $options: 'i' } });
+        if (productExists) {
+            return res.status(400).json({ message: "Sản phẩm này đã tồn tại trong hệ thống!" });
         }
 
         const generateSlug = (str) => {

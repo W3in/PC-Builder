@@ -210,7 +210,7 @@ export const FILTER_OPTIONS = {
     case_fans: [
         { label: "Manufacturer", key: "brand", options: ["Corsair", "Lian Li", "Noctua", "Arctic", "Cooler Master", "be quiet!", "NZXT", "Thermalright"] },
         { label: "Fan Size", key: "size", options: ["120mm", "140mm", "200mm", "80mm"] },
-        { label: "Color", key: "color", options: ["Black", "White", "RGB", "ARGB"] },
+        { label: "Color", key: "color", options: ["black", "white", "RGB", "ARGB"] },
     ],
     thermal: [
         { label: "Manufacturer", key: "brand", options: ["Thermal Grizzly", "Arctic", "Noctua", "Cooler Master", "Deepcool"] },
@@ -234,19 +234,19 @@ export const FILTER_OPTIONS = {
     headphones: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "HyperX", "Corsair", "Sennheiser", "Audio-Technica", "Sony"] },
         { label: "Type", key: "type", options: ["Over-ear", "In-ear", "On-ear"] },
-        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless (2.4GHz)", "Bluetooth", "Wired/Wireless"] }
+        { label: "Connectivity", key: "connectivity", options: ["wired", "Bluetooth", "wired/wireless"] }
     ],
     keyboard: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "Corsair", "Keychron", "Akko", "SteelSeries", "Ducky"] },
         { label: "Switch Type", key: "switch_type", options: ["Mechanical", "Membrane", "Optical", "Low Profile"] },
         { label: "Size/Layout", key: "layout", options: ["Full Size (100%)", "TKL (80%)", "75%", "65%", "60%"] },
-        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless", "Bluetooth"] }
+        { label: "Connectivity", key: "connectivity", options: ["wired", "wireless", "Bluetooth"] }
     ],
     mouse: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "Zowie", "Glorious", "Corsair", "Pulsar"] },
-        { label: "Connectivity", key: "connectivity", options: ["Wired", "Wireless", "Wired/Wireless"] },
+        { label: "Connectivity", key: "connectivity", options: ["wired", "wireless", "wired/wireless"] },
         { label: "Sensor Type", key: "sensor", options: ["Optical", "Laser"] },
-        { label: "Handedness", key: "handedness", options: ["Right-handed", "Ambidextrous", "Left-handed"] }
+        { label: "Handedness", key: "handedness", options: ["right_handed", "Ambidextrous", "left_handed"] }
     ],
     speakers: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Edifier", "Creative", "Razer", "Bose"] },

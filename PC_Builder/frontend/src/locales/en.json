@@ -313,6 +313,7 @@
             "membrane": "Membrane",
             "optical": "Optical",
             "right_handed": "Right-handed",
+            "left_handed": "Left-handed",
             "ambidextrous": "Ambidextrous",
             "ips": "IPS Panel",
             "va": "VA Panel",

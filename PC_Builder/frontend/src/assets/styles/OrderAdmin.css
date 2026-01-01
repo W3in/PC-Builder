@@ -28,7 +28,7 @@
     font-size: 28px;
     font-family: 'Chakra Petch', sans-serif;
     margin-bottom: 25px;
-    color: var(--text-primary);
+    color: var(--text-secondary);
 }
 
 .order-info-grid {

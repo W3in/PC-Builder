@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { FaTrash, FaPlus, FaSave, FaArrowLeft, FaUpload } from 'react-icons/fa';
+import { useTranslation } from "react-i18next";
 import '../../assets/styles/Admin.css';
 
 import { FILTER_OPTIONS } from '../../utils/filterOptions';
@@ -18,23 +19,33 @@ const CATEGORY_TEMPLATES = {
     case: ['form_factor', 'side_panel_type', 'max_gpu_length'],
     storage: ['type', 'capacity', 'interface', 'read_speed', 'write_speed'],
     cooler: ['type', 'socket_support', 'fan_speed', 'size', 'color', 'noise_level'],
+    case_fans: ['fan_size', 'fan_speed', 'airflow', 'noise_level', 'led_color'],
+    thermal: ['thermal_conductivity', 'weight'],
+    mouse: ['sensor_type', 'dpi', 'connectivity', 'buttons', 'weight'],
+    keyboard: ['switch_type', 'layout', 'connectivity', 'backlight', 'keycap_material'],
+    headphones: ['driver_size', 'impedance', 'frequency_range', 'connectivity', 'mic_included'],
+    monitor: ['screen_size', 'resolution', 'refresh_rate', 'panel_type', 'brightness', 'aspect_ratio'],
+    webcam: ['resolution', 'frame_rate', 'field_of_view', 'connection'],
+    antivirus: ['license_duration', 'devices_supported', 'platform'],
+    os: ['version', 'edition', 'bit_architecture'],
     prebuilt: []
 };
 
 const COMPONENT_TYPES = [
-    { label: 'Vi xử lý', value: 'cpu' },
-    { label: 'Bo mạch chủ', value: 'mainboard' },
+    { label: 'CPU', value: 'cpu' },
+    { label: 'Mainboard', value: 'mainboard' },
     { label: 'RAM', value: 'ram' },
-    { label: 'Card đồ họa', value: 'gpu' },
-    { label: 'Nguồn máy tính', value: 'psu' },
-    { label: 'Vỏ máy tính', value: 'case' },
+    { label: 'GPU', value: 'gpu' },
+    { label: 'PSU', value: 'psu' },
+    { label: 'Case', value: 'case' },
     { label: 'SSD', value: 'ssd' },
     { label: 'HDD', value: 'hdd' },
-    { label: 'Tản nhiệt', value: 'cooler' },
-    { label: 'Màn hình', value: 'monitor' }
+    { label: 'Cooler', value: 'cooler' },
+    { label: 'Monitor', value: 'monitor' }
 ];
 
 const ProductEditPage = () => {
+    const { t } = useTranslation();
     const { id } = useParams();
     const isEditMode = Boolean(id);
     const navigate = useNavigate();
@@ -98,7 +109,6 @@ const ProductEditPage = () => {
         setBuildParts(newParts);
     };
 
-    // 3. Các hàm xử lý Specs (giữ nguyên logic của bạn)
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
         setSpecs({});
@@ -117,21 +127,6 @@ const ProductEditPage = () => {
         handleSpecChange(key, '');
     };
 
-    const getOptionsForSpec = (specKey) => {
-        const categoryFilters = FILTER_OPTIONS[category];
-        if (!categoryFilters) return null;
-        const filterItem = categoryFilters.find(f => f.key === specKey);
-        return filterItem ? filterItem.options : null;
-    };
-
-    const getBrandOptions = () => {
-        const categoryFilters = FILTER_OPTIONS[category];
-        if (!categoryFilters) return null;
-        const brandFilter = categoryFilters.find(f => f.key === 'brand');
-        return brandFilter ? brandFilter.options : null;
-    };
-
-    // 4. Upload File
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -149,7 +144,6 @@ const ProductEditPage = () => {
         }
     };
 
-    // 5. Submit Form (Create hoặc Update)
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -174,8 +168,12 @@ const ProductEditPage = () => {
         }
     };
 
-    const currentSpecFields = CATEGORY_TEMPLATES[category] || [];
-    const brandOptions = getBrandOptions();
+    const categoryConfig = FILTER_OPTIONS[category] || [];
+
+    const brandConfig = categoryConfig.find(f => f.key === 'brand');
+    const brandOptions = brandConfig ? brandConfig.options : null;
+
+    const currentSpecConfig = categoryConfig.filter(item => item.key !== 'brand');
 
     return (
         <div className="product-edit-wrapper">
@@ -254,7 +252,6 @@ const ProductEditPage = () => {
                 <div className="form-section">
                     {category === 'prebuilt' ? (
                         <div className="form-section-full">
-                            {/* --- PHẦN USAGE MỚI THÊM VÀO ĐÂY --- */}
                             <h3 className="form-section-title">Cấu hình máy bộ</h3>
 
                             <div className="form-control" style={{ marginBottom: '20px' }}>
@@ -310,24 +307,43 @@ const ProductEditPage = () => {
                         <>
                             <h3 className="form-section-title">Thông số kỹ thuật chi tiết</h3>
                             <div className="specs-grid-scroll">
-                                {currentSpecFields.map((field) => {
-                                    const options = getOptionsForSpec(field);
-                                    const isManual = manualFields[field];
+                                {currentSpecConfig.map((field) => {
+                                    const isManual = manualFields[field.key];
+
                                     return (
-                                        <div key={field} className="form-control">
-                                            <label className="form-label-small">{field.toUpperCase()}:</label>
+                                        <div key={field.key} className="form-control">
+                                            <label className="form-label-small">
+                                                {t(`filters.labels.${field.key.toLowerCase()}`, field.label).toUpperCase()}:
+                                            </label>
+
                                             <div className="spec-input-group">
-                                                {options && !isManual ? (
-                                                    <select className="form-select-sm" value={specs[field] || ''} onChange={(e) => handleSpecChange(field, e.target.value)}>
-                                                        <option value="">-- Chọn --</option>
-                                                        {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                                                {field.options && !isManual ? (
+                                                    <select
+                                                        className="form-select-sm"
+                                                        value={specs[field.key] || ''}
+                                                        onChange={(e) => handleSpecChange(field.key, e.target.value)}
+                                                    >
+                                                        <option value="">-- Chọn {field.label} --</option>
+                                                        {field.options.map(opt => (
+                                                            <option key={opt} value={opt}>{opt}</option>
+                                                        ))}
                                                     </select>
                                                 ) : (
-                                                    <input type="text" className="form-input-sm" value={specs[field] || ''} onChange={(e) => handleSpecChange(field, e.target.value)} />
+                                                    <input
+                                                        type="text"
+                                                        className="form-input-sm"
+                                                        value={specs[field.key] || ''}
+                                                        onChange={(e) => handleSpecChange(field.key, e.target.value)}
+                                                        placeholder={`Nhập ${field.label.toLowerCase()}...`}
+                                                    />
                                                 )}
-                                                {options && (
-                                                    <button type="button" className="btn-toggle-input-sm" onClick={() => toggleManualInput(field)}>
-                                                        {isManual ? "List" : "Tay"}
+                                                {field.options && (
+                                                    <button
+                                                        type="button"
+                                                        className="btn-toggle-input-sm"
+                                                        onClick={() => toggleManualInput(field.key)}
+                                                    >
+                                                        {isManual ? "Dùng List" : "Gõ tay"}
                                                     </button>
                                                 )}
                                             </div>

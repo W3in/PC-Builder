@@ -313,6 +313,7 @@
             "membrane": "メンブレンキーボード",
             "optical": "光学センサー",
             "right_handed": "右利き",
+            "left_handed": "左利き",
             "ambidextrous": "両利き",
             "ips": "IPSパネル",
             "va": "VAパネル",

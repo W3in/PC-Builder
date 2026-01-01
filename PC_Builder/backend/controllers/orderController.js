@@ -3,15 +3,27 @@ const User = require('../models/User');
 
 const getOrders = async (req, res) => {
     try {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const total = await Order.countDocuments({});
         const orders = await Order.find({})
             .populate('user', 'id name email')
-            .sort({ createdAt: -1 });
-        res.json(orders);
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .skip(skip);
+
+        res.json({
+            orders,
+            page,
+            pages: Math.ceil(total / limit),
+            total
+        });
     } catch (error) {
         res.status(500).json({ message: "Lỗi lấy danh sách đơn hàng" });
     }
 };
-
 const addOrderItems = async (req, res) => {
     try {
         const {

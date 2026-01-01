@@ -9,7 +9,10 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'gpu', 'psu', 'case', 'cooler', 'monitor', 'prebuilt']
+        enum: ['cpu', 'mainboard', 'ram', 'hdd', 'storage', 'ssd', 'gpu', 'psu', 'case', 'cooler', 'monitor', 'prebuilt',
+            'case_fans', 'thermal', 'sound_card', 'wired_net', 'wifi_net', 'headphones', 'keyboard', 'mouse', 'speakers',
+            'webcam', 'antivirus', 'os'
+        ]
     },
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String },
