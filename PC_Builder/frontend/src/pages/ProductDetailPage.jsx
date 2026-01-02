@@ -132,14 +132,33 @@ const ProductDetailPage = () => {
                             })
                         ) : (
                             product.specs && Object.entries(product.specs).map(([key, value]) => {
+                                if (key === 'performance_score' || key === '_id' || value === null || value === undefined) return null;
                                 const label = i18n.exists(`specs.${key}`)
                                     ? t(`specs.${key}`)
                                     : key.replace(/_/g, ' ').toUpperCase();
 
+                                let displayValue = value;
+
+                                if (typeof value === 'boolean') {
+                                    displayValue = value ? t('specs.yes') : t('specs.no');
+                                }
+                                else if (Array.isArray(value)) {
+                                    displayValue = value.join(', ');
+                                }
+                                else if (key === 'tdp' || key === 'wattage') {
+                                    displayValue = `${value} W`;
+                                }
+                                else if (key === 'base_clock' || key === 'boost_clock') {
+                                    displayValue = `${value} GHz`;
+                                }
+                                else if (key === 'vram') {
+                                    displayValue = `${value} GB`;
+                                }
+
                                 return (
                                     <tr key={key}>
                                         <td style={{ fontWeight: 'bold' }}>{label}</td>
-                                        <td>{value}</td>
+                                        <td>{displayValue}</td>
                                     </tr>
                                 );
                             })

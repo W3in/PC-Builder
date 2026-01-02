@@ -1,5 +1,60 @@
 const mongoose = require('mongoose');
 
+const specsSchema = new mongoose.Schema({
+    // --- THÔNG SỐ CHUNG (General) ---
+    brand: { type: String },
+    model: { type: String },
+    color: { type: String },
+    warranty: { type: String },
+
+    // --- HIỆU NĂNG & ĐIỆN NĂNG (Quan trọng cho AI & Builder) ---
+    tdp: { type: Number },
+    performance_score: { type: Number, default: 0 },
+
+    // --- CPU & MAINBOARD & COOLER ---
+    socket: { type: String },
+    chipset: { type: String },
+    series: { type: String },
+    core_count: { type: Number },
+    thread_count: { type: Number },
+    base_clock: { type: Number },
+    boost_clock: { type: Number },
+    integrated_graphics: { type: Boolean, default: false },
+    max_ram_capacity: { type: Number },
+    ram_type: { type: String },
+
+    // --- RAM & STORAGE ---
+    type: { type: String },
+    capacity: { type: Number },
+    speed: { type: Number },
+    kit: { type: String },
+    cas_latency: { type: Number },
+    interface: { type: String },
+
+    // --- GPU (VGA) ---
+    vram: { type: Number },
+    length: { type: Number },
+    recommended_psu: { type: Number },
+    series: { type: String },
+
+    // --- PSU (Nguồn) ---
+    wattage: { type: Number },
+    efficiency: { type: String },
+    modular: { type: String },
+
+    // --- CASE (Vỏ máy) ---
+    form_factor: { type: String },
+    supported_motherboards: [{ type: String }],
+    max_gpu_length: { type: Number },
+    max_cpu_cooler_height: { type: Number },
+
+    // --- MONITOR (Màn hình) ---
+    screen_size: { type: Number },
+    resolution: { type: String },
+    refresh_rate: { type: Number },
+    panel_type: { type: String },
+}, { _id: false });
+
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
@@ -23,7 +78,7 @@ const productSchema = new mongoose.Schema({
         }
     ],
     specs: {
-        type: mongoose.Schema.Types.Mixed,
+        type: specsSchema,
         default: {}
     },
     usage: {
@@ -31,6 +86,8 @@ const productSchema = new mongoose.Schema({
         enum: ['office', 'gaming', 'streaming', 'workstation'],
         default: 'gaming'
     },
+    numReviews: { type: Number, default: 0 },
+    rating: { type: Number, default: 0 },
 }, {
     timestamps: true
 });

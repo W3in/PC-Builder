@@ -2,11 +2,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useBuilder } from '../context/BuilderContext';
 import { useCart } from '../context/CartContext';
 import { formatPrice, getImageUrl } from '../utils/format';
-import { getRecommendedPrice } from '../utils/budgetRule';
+import { getRecommendedPrice, getUsageList } from '../utils/budgetRule';
 import { generateSlots, groupComponents } from '../utils/builderHelper';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTrash, FaPlus, FaCalculator, FaMinus } from 'react-icons/fa';
+import { FaShoppingCart, FaTrash, FaPlus, FaCalculator, FaMinus, FaTools } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import BuildAnalysis from '../components/builder/BuildAnalysis';
 import '../assets/styles/Builder.css';
 
 
@@ -18,9 +19,11 @@ const DEFAULT_BUDGETS = {
 
 const BuilderPage = () => {
     const { t, i18n } = useTranslation();
-    const { buildState, totalPrice, removeComponent, updateQuantity } = useBuilder();
+    const { buildState, totalPrice, usageMode, setUsageMode, removeComponent, updateQuantity } = useBuilder();
     const { addToCartBatch } = useCart();
     const navigate = useNavigate();
+
+    const selectedItems = useMemo(() => Object.values(buildState), [buildState]);
 
     const [localBudget, setLocalBudget] = useState(() => {
         return DEFAULT_BUDGETS[i18n.language] || DEFAULT_BUDGETS['vi'];
@@ -54,30 +57,50 @@ const BuilderPage = () => {
         const rate = i18n.language === 'en' ? 0.00004 : (i18n.language === 'ja' ? 0.006 : 1);
         const budgetInVND = localBudget / rate;
 
-        const recommendedVND = getRecommendedPrice(budgetInVND, slotType);
+        const recommendedVND = getRecommendedPrice(budgetInVND, slotType, usageMode);
 
-        navigate(`/builder/select/${slotType}?budget=${recommendedVND}&slot=${slotKey}`);
+        navigate(`/builder/select/${slotType}?budget=${recommendedVND}&slot=${slotKey}&usage=${usageMode}`);
     };
 
     return (
         <div className="builder-wrapper">
-
             <div className="budget-control-panel">
-                <div className="budget-input-group">
-                    <label>
-                        <FaCalculator style={{ marginBottom: '-2px', marginRight: '5px' }} />
-                        {t('builder.budget')}:
-                    </label>
-                    <input
-                        type="number"
-                        value={localBudget}
-                        onChange={(e) => setLocalBudget(Number(e.target.value))}
-                        step={i18n.language === 'vi' ? 500000 : 10}
-                    />
-                    <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>
-                        {i18n.language === 'en' ? 'USD' : i18n.language === 'ja' ? 'JPY' : 'VND'}
-                    </span>
+                <div className="control-left">
+                    <div className="budget-input-group">
+                        <label>
+                            <FaCalculator style={{ marginBottom: '-2px', marginRight: '5px' }} />
+                            {t('builder.budget')}:
+                        </label>
+                        <input
+                            type="number"
+                            value={localBudget}
+                            onChange={(e) => setLocalBudget(Number(e.target.value))}
+                            step={i18n.language === 'vi' ? 500000 : 10}
+                        />
+                        <span className="currency-label">
+                            {i18n.language === 'en' ? 'USD' : i18n.language === 'ja' ? 'JPY' : 'VND'}
+                        </span>
+                    </div>
+
+                    <div className="usage-select-group">
+                        <label>
+                            <FaTools style={{ marginBottom: '-2px', marginRight: '5px' }} />
+                            {t('builder.usage_info')}:
+                        </label>
+                        <select
+                            value={usageMode}
+                            onChange={(e) => setUsageMode(e.target.value)}
+                            className="usage-dropdown"
+                        >
+                            {getUsageList(t).map((mode) => (
+                                <option key={mode.id} value={mode.id}>
+                                    {mode.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
+
                 <div className="budget-info">
                     <p>
                         {t('builder.spent')}: <span className="spent">
@@ -88,7 +111,6 @@ const BuilderPage = () => {
                         const rate = i18n.language === 'en' ? 0.00004 : (i18n.language === 'ja' ? 0.006 : 1);
                         const spentLocal = totalPrice * rate;
                         const remain = localBudget - spentLocal;
-
                         const remainFormatted = new Intl.NumberFormat(
                             i18n.language === 'en' ? 'en-US' : (i18n.language === 'ja' ? 'ja-JP' : 'vi-VN'),
                             {
@@ -113,6 +135,10 @@ const BuilderPage = () => {
                 <h1>{t('builder.title')}</h1>
             </div>
 
+            <div className="container" style={{ marginBottom: '20px' }}>
+                <BuildAnalysis cartItems={selectedItems} />
+            </div>
+
             <div className="builder-table-container">
                 <table className="builder-table">
                     <thead>
@@ -128,7 +154,8 @@ const BuilderPage = () => {
 
                         {groupedSlots.map((group) => {
                             const { product, qty, slotKeys, type, label, key } = group;
-                            const recommendLocal = getRecommendedPrice(localBudget, type) * (qty || 1);
+
+                            const recommendLocal = getRecommendedPrice(localBudget, type, usageMode) * (qty || 1);
 
                             const hintPrice = new Intl.NumberFormat(
                                 i18n.language === 'en' ? 'en-US' : (i18n.language === 'ja' ? 'ja-JP' : 'vi-VN'),

@@ -7,6 +7,7 @@ export const BuilderProvider = ({ children }) => {
     const { user } = useAuth();
     const [buildState, setBuildState] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
+    const [usageMode, setUsageMode] = useState('gaming');
 
     const getBuilderKey = () => {
         return user && user._id ? `pc_build_${user._id}` : 'pc_build_guest';
@@ -21,24 +22,21 @@ export const BuilderProvider = ({ children }) => {
         });
     };
 
-    // Hàm bỏ chọn linh kiện
     const removeComponent = (category) => {
         setBuildState((prev) => {
             const newState = { ...prev };
-            delete newState[category]; // Xóa key đó đi
+            delete newState[category];
 
             calculateTotal(newState);
             return newState;
         });
     };
 
-    // Hàm tính tổng tiền nội bộ
     const calculateTotal = (currentState) => {
         const total = Object.values(currentState).reduce((sum, item) => sum + (item.price || 0), 0);
         setTotalPrice(total);
     };
 
-    // Hàm thay đổi số lượng linh kiện (Dành cho RAM, GPU...)
     const updateQuantity = (product, currentSlotKeys, type, change) => {
         setBuildState((prev) => {
             const newState = { ...prev };
@@ -76,11 +74,18 @@ export const BuilderProvider = ({ children }) => {
         try {
             const stored = localStorage.getItem(key);
             if (stored) {
-                const parsedBuild = JSON.parse(stored);
-                setBuildState(parsedBuild);
-                calculateTotal(parsedBuild);
+                const parsedData = JSON.parse(stored);
+                if (parsedData.buildState) {
+                    setBuildState(parsedData.buildState);
+                    setUsageMode(parsedData.usageMode || 'gaming');
+                    calculateTotal(parsedData.buildState);
+                } else {
+                    setBuildState(parsedData);
+                    calculateTotal(parsedData);
+                }
             } else {
                 setBuildState({});
+                setUsageMode('gaming');
                 setTotalPrice(0);
             }
         } catch (error) {
@@ -90,17 +95,20 @@ export const BuilderProvider = ({ children }) => {
 
     useEffect(() => {
         const key = getBuilderKey();
-        localStorage.setItem(key, JSON.stringify(buildState));
-    }, [buildState, user]);
+        const dataToSave = {
+            buildState: buildState,
+            usageMode: usageMode
+        };
+        localStorage.setItem(key, JSON.stringify(dataToSave));
+    }, [buildState, usageMode, user]);
 
     return (
-        <BuilderContext.Provider value={{ buildState, totalPrice, addComponent, removeComponent, updateQuantity }}>
+        <BuilderContext.Provider value={{ buildState, totalPrice, usageMode, setUsageMode, addComponent, removeComponent, updateQuantity }}>
             {children}
         </BuilderContext.Provider>
     );
 };
 
-// 3. Hook để các trang con gọi ra dùng cho nhanh
 // eslint-disable-next-line react-refresh/only-export-components
 export const useBuilder = () => {
     return useContext(BuilderContext);

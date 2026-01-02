@@ -8,30 +8,18 @@ export const FILTER_OPTIONS = {
         {
             label: "Socket",
             key: "socket",
-            options: [
-                "LGA1851 (Arrow Lake)", "LGA1700 (Alder/Raptor Lake)", "LGA1200", "LGA2066",
-                "AM5 (Ryzen 7000/9000)", "AM4 (Ryzen 5000)", "sTR5 (Threadripper)"
-            ]
+            options: ["LGA1851", "LGA1700", "LGA1200", "AM5", "AM4"]
         },
         {
             label: "Series",
             key: "series",
-            options: [
-                "Core Ultra 9", "Core Ultra 7", "Core Ultra 5",
-                "Core i9", "Core i7", "Core i5", "Core i3",
-                "Ryzen 9", "Ryzen 7", "Ryzen 5", "Ryzen 3", "Threadripper"
-            ]
+            options: ["Core i9", "Core i7", "Core i5", "Core i3", "Ryzen 9", "Ryzen 7", "Ryzen 5"]
         },
         {
             label: "Cores",
-            key: "cores",
-            options: ["4", "6", "8", "10", "12", "14", "16", "20", "24"]
+            key: "core_count",
+            options: [4, 6, 8, 10, 12, 14, 16, 20, 24]
         },
-        {
-            label: "Threads",
-            key: "threads",
-            options: ["4", "6", "8", "10", "12", "14", "16", "20", "24"]
-        }
     ],
     mainboard: [
         {
@@ -40,22 +28,19 @@ export const FILTER_OPTIONS = {
             options: ["Asus", "MSI", "Gigabyte", "ASRock", "NZXT", "EVGA", "Biostar"]
         },
         {
+            label: "Chipset",
+            key: "chipset",
+            options: ["Z790", "B760", "H610", "X670E", "B650", "X570", "B550"]
+        },
+        {
             label: "Socket",
             key: "socket",
             options: ["LGA1851", "LGA1700", "LGA1200", "AM5", "AM4"]
         },
         {
-            label: "Chipset",
-            key: "chipset",
-            options: [
-                "Z890", "B860", "Z790", "B760", "Z690", "B660", "H610",
-                "X870E", "X870", "X670E", "X670", "B650E", "B650", "A620", "X570", "B550"
-            ]
-        },
-        {
             label: "Form Factor",
             key: "form_factor",
-            options: ["E-ATX", "ATX", "mATX (Micro ATX)", "Mini ITX"]
+            options: ["ATX", "mATX", "ITX"]
         },
         {
             label: "RAM Type",
@@ -77,18 +62,12 @@ export const FILTER_OPTIONS = {
         {
             label: "Capacity Config",
             key: "capacity",
-            options: [
-                "16GB (2x8GB)", "32GB (2x16GB)", "64GB (2x32GB)", "96GB (2x48GB)",
-                "8GB", "16GB", "32GB", "64GB"
-            ]
+            options: [8, 16, 32, 64]
         },
         {
             label: "Bus Speed",
-            key: "bus",
-            options: [
-                "3200MHz", "3600MHz",
-                "5200MHz", "5600MHz", "6000MHz", "6400MHz", "7200MHz", "8000MHz+"
-            ]
+            key: "speed",
+            options: [3200, 3600, 5200, 5600, 6000]
         }
     ],
     gpu: [
@@ -116,7 +95,7 @@ export const FILTER_OPTIONS = {
         {
             label: "VRAM",
             key: "vram",
-            options: ["8GB", "10GB", "12GB", "16GB", "20GB", "24GB"]
+            options: [8, 10, 12, 16, 20, 24]
         }
     ],
     storage: [
@@ -125,20 +104,12 @@ export const FILTER_OPTIONS = {
             key: "brand",
             options: ["Samsung", "Western Digital", "Kingston", "Seagate", "Crucial", "Lexar", "Sabrent", "Corsair", "Gigabyte", "MSI"]
         },
-        {
-            label: "Type",
-            key: "type",
-            options: ["SSD", "HDD"]
-        },
-        {
-            label: "Capacity",
-            key: "capacity",
-            options: ["250GB", "500GB", "1TB", "2TB", "4TB", "8TB+"]
-        },
+        { label: "Type", key: "type", options: ["SSD", "HDD"] },
+        { label: "Capacity(GB)", key: "capacity", options: [256, 512, 1024, 2048] },
         {
             label: "Interface",
             key: "interface",
-            options: ["M.2 NVMe Gen 5", "M.2 NVMe Gen 4", "M.2 NVMe Gen 3", "SATA 2.5\"", "SATA 3.5\""]
+            options: ["M.2 NVMe Gen 4", "M.2 NVMe Gen 3", "SATA 3.5\""]
         }
     ],
     psu: [
@@ -150,7 +121,7 @@ export const FILTER_OPTIONS = {
         {
             label: "Wattage",
             key: "wattage",
-            options: ["550W", "650W", "750W", "850W", "1000W", "1200W", "1300W", "1600W+"]
+            options: [550, 650, 750, 850, 1000, 1200]
         },
         {
             label: "Efficiency Rating",
@@ -160,7 +131,7 @@ export const FILTER_OPTIONS = {
         {
             label: "Modular",
             key: "modular",
-            options: ["Full Modular", "Semi Modular", "Non Modular"]
+            options: ["Full Modular", "Non Modular"]
         }
     ],
     cooler: [
@@ -175,21 +146,21 @@ export const FILTER_OPTIONS = {
             options: ["Air Cooler", "AIO Liquid"]
         },
         {
-            label: "Radiator Size",
+            label: "Size / Radiator",
             key: "size",
-            options: ["120mm", "240mm", "280mm", "360mm", "420mm"]
+            options: [120, 240, 280, 360]
         },
         {
             label: "Color",
             key: "color",
-            options: ["Black", "White", "LCD Screen"]
+            options: ["Black", "White", "Silver", "LCD Screen"]
         }
     ],
     case: [
         {
             label: "Manufacturer",
             key: "brand",
-            options: ["NZXT", "Corsair", "Lian Li", "Hyte", "Montech", "Deepcool", "Phanteks", "Fractal Design", "Cooler Master", "Antec", "Thermaltake"]
+            options: ["NZXT", "Corsair", "Lian Li", "Hyte", "Montech", "Deepcool", "Phanteks", "Fractal Design", "Cooler Master", "Antec", "Thermaltake", "Xigmatek"]
         },
         {
             label: "Form Factor",
@@ -201,11 +172,6 @@ export const FILTER_OPTIONS = {
             key: "color",
             options: ["Black", "White", "Black/Red"]
         },
-        {
-            label: "Side Panel",
-            key: "side_panel",
-            options: ["Tempered Glass", "Mesh", "Solid"]
-        }
     ],
     case_fans: [
         { label: "Manufacturer", key: "brand", options: ["Corsair", "Lian Li", "Noctua", "Arctic", "Cooler Master", "be quiet!", "NZXT", "Thermalright"] },

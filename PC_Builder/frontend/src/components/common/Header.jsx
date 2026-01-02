@@ -6,6 +6,7 @@ import '../../assets/styles/Header.css';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
+import SearchBar from './SearchBar';
 
 const Header = () => {
     const { t, i18n } = useTranslation();
@@ -122,8 +123,7 @@ const Header = () => {
                 </div>
 
                 <div className="search-bar">
-                    <FaSearch className="search-icon" />
-                    <input type="text" placeholder={t('header.search_placeholder')} className="search-input" />
+                    <SearchBar />
                 </div>
 
 

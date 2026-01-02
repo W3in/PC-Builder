@@ -4,24 +4,20 @@ const User = require('../models/User');
 const getProducts = async (req, res) => {
     try {
         const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 20;
+        const limit = Number(req.query.limit) || 12;
+        const skip = (page - 1) * limit;
+
         const keyword = req.query.keyword ? {
             name: {
                 $regex: req.query.keyword,
                 $options: 'i',
             },
         } : {};
-        const skip = (page - 1) * limit;
 
         const query = { ...keyword };
 
-        if (req.query.category) {
-            query.category = req.query.category;
-        }
-
-        if (req.query.usage) {
-            query.usage = req.query.usage;
-        }
+        if (req.query.category) query.category = req.query.category;
+        if (req.query.usage) query.usage = req.query.usage;
 
         if (req.query.minPrice || req.query.maxPrice) {
             query.price = {};
@@ -30,25 +26,50 @@ const getProducts = async (req, res) => {
         }
 
         if (req.query.brand) {
-            const brands = req.query.brand.split(',');
-            query.brand = { $in: brands };
+            query.brand = { $in: req.query.brand.split(',') };
         }
 
         const excludeFields = ['page', 'limit', 'keyword', 'category', 'brand', 'sort', 'minPrice', 'maxPrice', 'usage'];
-        const queryObj = { ...req.query };
 
-        excludeFields.forEach(el => delete queryObj[el]);
+        for (const key in req.query) {
+            if (excludeFields.includes(key)) continue;
 
-        for (const key in queryObj) {
-            const values = queryObj[key].split(',');
-            query[`specs.${key}`] = { $in: values };
+            const rawValue = req.query[key];
+            if (!rawValue) continue;
+
+            const valueArray = rawValue.split(',');
+
+            const parsedValues = valueArray.map(val => {
+                return !isNaN(val) ? Number(val) : val;
+            });
+            const queryKey = key.startsWith('specs.') ? key : `specs.${key}`;
+
+            query[queryKey] = { $in: parsedValues };
         }
 
         const total = await Product.countDocuments(query);
+
+        let sortOption = { createdAt: -1 };
+        if (req.query.sort) {
+            switch (req.query.sort) {
+                case 'price_asc':
+                    sortOption = { price: 1 };
+                    break;
+                case 'price_desc':
+                    sortOption = { price: -1 };
+                    break;
+                case 'top_rated':
+                    sortOption = { rating: -1 };
+                    break;
+                default:
+                    sortOption = { createdAt: -1 };
+            }
+        }
+
         const products = await Product.find(query)
             .limit(limit)
             .skip(skip)
-            .sort({ createdAt: -1 });
+            .sort(sortOption);
 
         res.json({
             products,
@@ -58,6 +79,7 @@ const getProducts = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Filter Error:", error);
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
@@ -167,37 +189,33 @@ const getRecommendations = async (req, res) => {
     try {
         const { id } = req.params;
         let recommendedProducts = [];
-
-        // TRƯỜNG HỢP 1: Gợi ý sản phẩm tương tự (Detail Page)
         if (id) {
             const currentProduct = await Product.findById(id);
             if (currentProduct) {
                 recommendedProducts = await Product.find({
                     category: currentProduct.category,
-                    _id: { $ne: id } // Không hiện lại chính nó
+                    _id: { $ne: id }
                 }).limit(8);
             }
         }
 
-        // TRƯỜNG HỢP 2: Gợi ý cho người dùng (Homepage)
         else if (req.user) {
             const user = await User.findById(req.user._id).populate('favorites');
             if (user && user.favorites.length > 0) {
                 const favCategories = [...new Set(user.favorites.map(p => p.category))];
                 recommendedProducts = await Product.find({
                     category: { $in: favCategories },
-                    _id: { $nin: user.favorites.map(p => p._id) } // Gợi ý món chưa thích
+                    _id: { $nin: user.favorites.map(p => p._id) }
                 }).limit(8);
             }
         }
 
-        // TRƯỜNG HỢP 3: Mặc định (Nếu các trường hợp trên không đủ 4 sản phẩm)
         if (recommendedProducts.length < 4) {
             const existingIds = recommendedProducts.map(p => p._id);
             const extraProducts = await Product.find({
                 _id: { $nin: existingIds, $ne: id }
             })
-                .sort({ createdAt: -1 }) // Ưu tiên hàng mới về
+                .sort({ createdAt: -1 })
                 .limit(8 - recommendedProducts.length);
 
             recommendedProducts = [...recommendedProducts, ...extraProducts];
@@ -209,6 +227,46 @@ const getRecommendations = async (req, res) => {
     }
 };
 
+const searchSuggestions = async (req, res) => {
+    try {
+        const keyword = req.query.keyword;
+        const userId = req.user ? req.user._id : null;
+
+        if (!keyword) {
+            return res.json([]);
+        }
+
+        let products = await Product.find({
+            name: { $regex: keyword, $options: 'i' }
+        })
+            .select('name image price slug category')
+            .limit(20);
+
+        if (userId && products.length > 0) {
+            const user = await User.findById(userId).populate('favorites');
+
+            if (user && user.favorites && user.favorites.length > 0) {
+                const favoriteCategories = user.favorites.map(p => p.category);
+                products.sort((a, b) => {
+                    const aIsFav = favoriteCategories.includes(a.category);
+                    const bIsFav = favoriteCategories.includes(b.category);
+                    return (bIsFav === true) - (aIsFav === true);
+                });
+            } else {
+                products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+        } else {
+            products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        res.json(products.slice(0, 8));
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Search Error" });
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
@@ -216,4 +274,5 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getRecommendations,
+    searchSuggestions
 };

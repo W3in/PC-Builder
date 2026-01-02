@@ -36,6 +36,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 const dirname = path.resolve();
 app.use('/uploads', express.static(path.join(dirname, '/uploads')));

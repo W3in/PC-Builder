@@ -127,35 +127,56 @@
 }
 
 .budget-control-panel {
-    background: var(--bg-container);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: var(--bg-container);
+    padding: 15px 20px;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.budget-input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 800;
+.control-left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.budget-input-group,
+.usage-select-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.budget-input-group label,
+.usage-select-group label {
+    font-weight: 600;
     color: var(--text-primary);
-    text-transform: uppercase;
-    font-size: 14px;
+    display: flex;
+    align-items: center;
 }
 
 .budget-input-group input {
-    padding: 10px;
-    border-radius: 4px;
+    padding: 8px 12px;
     border: 1px solid var(--border-color);
+    border-radius: 6px;
     background: var(--input-bg);
     color: var(--text-primary);
-    font-size: 18px;
-    font-weight: bold;
-    width: 250px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    width: 140px;
+}
+
+.currency-label {
+    font-weight: 700;
+    color: var(--text-secondary);
 }
 
 .budget-input-group span {
@@ -163,12 +184,11 @@
     font-weight: 900;
 }
 
-.budget-info p {
-    margin: 5px 0;
+.budget-info {
+    display: flex;
+    gap: 20px;
     font-size: 16px;
-    text-align: right;
-    color: var(--text-secondary);
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .budget-info .spent {
@@ -246,4 +266,38 @@
     font-size: 14px;
     min-width: 20px;
     text-align: center;
+}
+
+.usage-dropdown {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    min-width: 150px;
+    outline: none;
+}
+
+.usage-dropdown:focus {
+    border-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    .budget-control-panel {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .control-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .budget-input-group input,
+    .usage-dropdown {
+        width: 100%;
+    }
 }
