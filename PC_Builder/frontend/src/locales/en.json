@@ -414,5 +414,25 @@
         "is_paid": "Paid",
         "not_paid": "Not Paid",
         "no_orders": "You have no orders yet."
+    },
+    "coupon": {
+        "title": "クーポンウォレット",
+        "code": "クーポンコード",
+        "discount": "割引",
+        "min_order": "最低注文額",
+        "max_discount": "最大割引",
+        "expiry": "有効期限",
+        "apply": "適用",
+        "manage_title": "クーポン管理",
+        "create_new": "新規作成",
+        "type_percent": "パーセンテージ (%)",
+        "type_fixed": "定額",
+        "usage_limit": "使用制限",
+        "status": "ステータス",
+        "active": "有効",
+        "expired": "期限切れ",
+        "save": "保存",
+        "delete": "削除",
+        "condition_not_met": "条件を満たしていません"
     }
 }

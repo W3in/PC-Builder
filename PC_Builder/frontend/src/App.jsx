@@ -38,6 +38,8 @@ import ProductListPage from './pages/admin/ProductListPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import OrderListPage from './pages/admin/OrderListPage';
 import OrderDetailPage from './pages/admin/OrderDetailPage';
+import CouponListPage from './pages/admin/CouponListPage';
+import CouponEditPage from './pages/admin/CouponEditPage';
 
 
 function App() {
@@ -105,6 +107,9 @@ function App() {
                 <Route path="product/create" element={<ProductEditPage />} />
                 <Route path="orders" element={<OrderListPage />} />
                 <Route path="order/:id" element={<OrderDetailPage />} />
+                <Route path="coupons" element={<CouponListPage />} />
+                <Route path="coupon/create" element={<CouponEditPage />} />
+                <Route path="coupon/:id/edit" element={<CouponEditPage />} />
               </Route>
             </Route>
 

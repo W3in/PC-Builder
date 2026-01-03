@@ -1,0 +1,42 @@
+.coupon-wrapper-limit {
+    max-width: 600px !important;
+    margin: 30px auto;
+}
+
+.coupon-form-single {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.coupon-row-group {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.coupon-row-group .form-control {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.btn-submit-coupon {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--accent-color, #27ae60);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-submit-coupon:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}

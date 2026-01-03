@@ -1,0 +1,196 @@
+.coupon-container {
+    background-color: #f5f5f5;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.coupon-card {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.coupon-left {
+    width: 80px;
+    background-color: #ee4d2d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-direction: column;
+    border-right: 1px dashed #e0e0e0;
+}
+
+.coupon-icon {
+    font-size: 24px;
+}
+
+.coupon-content {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.coupon-code {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.coupon-desc {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 4px 0;
+}
+
+.coupon-meta {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.coupon-action {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #f0f0f0;
+}
+
+.btn-apply-coupon {
+    background-color: #fff;
+    border: 1px solid #ee4d2d;
+    color: #ee4d2d;
+    padding: 5px 15px;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-apply-coupon:hover {
+    background-color: #fef6f5;
+}
+
+.coupon-card.disabled {
+    opacity: 0.6;
+    background-color: #fafafa;
+}
+
+.coupon-card.disabled .coupon-left {
+    background-color: #ccc;
+}
+
+.coupon-card.disabled .btn-apply-coupon {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.admin-coupon-form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content-custom {
+    background: white;
+    padding: 0;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-header-custom {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.modal-body-custom {
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}

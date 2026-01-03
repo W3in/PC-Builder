@@ -6,7 +6,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const { user, loading } = useAuth();
     const [cartItems, setCartItems] = useState([]);
-    const [coupon, setCoupon] = useState(null);
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [discountAmount, setDiscountAmount] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -105,13 +105,34 @@ export const CartProvider = ({ children }) => {
     const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
     const finalTotal = subTotal - discountAmount;
 
-    const applyCoupon = (code) => {
-        if (code === 'PCBUILDER10') {
-            setDiscountAmount(subTotal * 0.1);
-            setCoupon(code);
-            return { success: true, msg: "Áp dụng mã giảm 10% thành công!" };
+    const applyCoupon = (couponData) => {
+        if (!couponData) {
+            setAppliedCoupon(null);
+            setDiscountAmount(0);
+            return { success: false, msg: "Hủy mã giảm giá" };
         }
-        return { success: false, msg: "Mã giảm giá không hợp lệ" };
+
+        if (subTotal < couponData.minOrderValue) {
+            return { success: false, msg: `Đơn hàng chưa đủ ${couponData.minOrderValue.toLocaleString()}đ` };
+        }
+
+        let calculatedDiscount = 0;
+
+        if (couponData.discountType === 'percent') {
+            calculatedDiscount = (subTotal * couponData.discountValue) / 100;
+            if (couponData.maxDiscountAmount > 0 && calculatedDiscount > couponData.maxDiscountAmount) {
+                calculatedDiscount = couponData.maxDiscountAmount;
+            }
+        } else if (couponData.discountType === 'fixed') {
+            calculatedDiscount = couponData.discountValue;
+        }
+
+        if (calculatedDiscount > subTotal) calculatedDiscount = subTotal;
+
+        setDiscountAmount(calculatedDiscount);
+        setAppliedCoupon(couponData);
+
+        return { success: true, msg: `Áp dụng mã ${couponData.code} thành công!` };
     };
 
     const clearCart = () => {
@@ -120,7 +141,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, addToCartBatch, removeFromCart, decreaseQty, clearCart, subTotal, finalTotal, applyCoupon, discountAmount }}>
+        <CartContext.Provider value={{ cartItems, addToCart, addToCartBatch, removeFromCart, decreaseQty, clearCart, subTotal, finalTotal, applyCoupon, appliedCoupon, discountAmount }}>
             {children}
         </CartContext.Provider>
     );

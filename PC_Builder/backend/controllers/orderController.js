@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Coupon = require('../models/Coupon');
 
 const getOrders = async (req, res) => {
     try {
@@ -24,32 +25,77 @@ const getOrders = async (req, res) => {
         res.status(500).json({ message: "Lỗi lấy danh sách đơn hàng" });
     }
 };
+
 const addOrderItems = async (req, res) => {
     try {
         const {
             orderItems,
             shippingAddress,
             paymentMethod,
-            totalPrice,
-            isPaid
+            itemsPrice,
+            couponCode,
+            isPaid,
+            paymentResult
         } = req.body;
 
         if (orderItems && orderItems.length === 0) {
-            return res.status(400).json({ message: 'Không có sản phẩm' });
+            return res.status(400).json({ message: 'Không có sản phẩm nào' });
+        } else {
+            const dbOrderItems = orderItems.map((item) => ({
+                ...item,
+                product: item._id || item.product,
+                _id: undefined
+            }));
+
+            let finalItemsPrice = Number(itemsPrice);
+            let finalDiscountAmount = 0;
+            let appliedCouponId = null;
+
+            if (couponCode) {
+                const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() });
+
+                if (coupon &&
+                    coupon.isActive &&
+                    new Date() <= coupon.expirationDate &&
+                    coupon.usedCount < coupon.usageLimit &&
+                    finalItemsPrice >= coupon.minOrderValue
+                ) {
+                    if (coupon.discountType === 'percent') {
+                        finalDiscountAmount = (finalItemsPrice * coupon.discountValue) / 100;
+                        if (coupon.maxDiscountAmount > 0 && finalDiscountAmount > coupon.maxDiscountAmount) {
+                            finalDiscountAmount = coupon.maxDiscountAmount;
+                        }
+                    } else if (coupon.discountType === 'fixed') {
+                        finalDiscountAmount = coupon.discountValue;
+                    }
+
+                    coupon.usedCount += 1;
+                    await coupon.save();
+
+                    appliedCouponId = coupon._id;
+                }
+            }
+
+            const shippingPrice = req.body.shippingPrice || 0;
+            const calculatedTotalPrice = finalItemsPrice + Number(shippingPrice) - finalDiscountAmount;
+
+            const order = new Order({
+                user: req.user._id,
+                orderItems: dbOrderItems,
+                shippingAddress,
+                paymentMethod,
+                itemsPrice: finalItemsPrice,
+                discountAmount: finalDiscountAmount,
+                coupon: appliedCouponId,
+                totalPrice: calculatedTotalPrice,
+                isPaid: isPaid || false,
+                paidAt: isPaid ? Date.now() : null,
+                paymentResult: paymentResult
+            });
+
+            const createdOrder = await order.save();
+            res.status(201).json(createdOrder);
         }
-
-        const order = new Order({
-            user: req.user._id,
-            orderItems,
-            shippingAddress,
-            paymentMethod,
-            totalPrice,
-            isPaid: isPaid || false,
-            paidAt: isPaid ? Date.now() : null
-        });
-
-        const createdOrder = await order.save();
-        res.status(201).json(createdOrder);
     } catch (error) {
         console.error("Lỗi tạo đơn hàng:", error);
         res.status(500).json({ message: "Lỗi Server khi tạo đơn hàng", error: error.message });

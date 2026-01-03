@@ -5,15 +5,18 @@ import { formatPrice, getImageUrl } from '../utils/format';
 import { FaCreditCard, FaTruck, FaChevronLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CouponSelector from '../components/common/CouponSelector';
 import axiosClient from '../api/axiosClient';
 import '../assets/styles/Shipping.css';
 
 const ShippingPage = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const { cartItems, finalTotal, subTotal, applyCoupon, discountAmount, clearCart } = useCart();
+    const { cartItems, finalTotal, subTotal, applyCoupon, appliedCoupon, discountAmount, clearCart } = useCart();
 
-    const [couponCode, setCouponCode] = useState("");
+    const [showCouponModal, setShowCouponModal] = useState(false);
+
+
     const [shippingInfo, setShippingInfo] = useState({
         fullName: '',
         email: '',
@@ -26,11 +29,15 @@ const ShippingPage = () => {
         setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
     };
 
-    const handleApplyCoupon = () => {
-        if (!couponCode) return;
-        const result = applyCoupon(couponCode);
-        if (result.success) toast.success(result.msg);
-        else toast.error(result.msg);
+    const handleSelectCoupon = (coupon) => {
+        const result = applyCoupon(coupon);
+
+        if (result.success) {
+            setShowCouponModal(false);
+            toast.success(result.msg);
+        } else {
+            toast.error(result.msg);
+        }
     };
 
     const validateForm = () => {
@@ -55,7 +62,10 @@ const ShippingPage = () => {
                     orderItems: cartItems,
                     shippingAddress: shippingInfo,
                     paymentMethod: 'COD',
+                    itemsPrice: subTotal,
+                    discountAmount: discountAmount,
                     totalPrice: finalTotal,
+                    couponCode: appliedCoupon ? appliedCoupon.code : null,
                     isPaid: false,
                 };
 
@@ -65,7 +75,7 @@ const ShippingPage = () => {
                     clearCart();
                     localStorage.removeItem('shippingAddress');
 
-                    window.location.href = "/order-success";
+                    navigate("/order-success");
                 }
             } catch (error) {
                 console.error("Lỗi đặt hàng COD:", error);
@@ -152,14 +162,42 @@ const ShippingPage = () => {
                     ))}
                 </div>
 
-                <div className="coupon-box">
-                    <input
-                        type="text" className="coupon-input"
-                        placeholder={t('cart.coupon_placeholder')}
-                        value={couponCode}
-                        onChange={(e) => setCouponCode(e.target.value)}
-                    />
-                    <button className="btn-apply" onClick={handleApplyCoupon}>{t('cart.apply_coupon')}</button>
+                <div className="coupon-box" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>Mã giảm giá</label>
+
+                    <div
+                        className="coupon-selector-btn"
+                        onClick={() => setShowCouponModal(true)}
+                        style={{
+                            border: '1px solid #ddd',
+                            padding: '10px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            background: '#fff'
+                        }}
+                    >
+                        {appliedCoupon ? (
+                            <span style={{ color: '#28a745', fontWeight: 'bold' }}>
+                                Đã dùng: {appliedCoupon.code} (-{formatPrice(discountAmount, i18n.language)})
+                            </span>
+                        ) : (
+                            <span style={{ color: '#666' }}>{t('cart.coupon_placeholder') || "Chọn hoặc nhập mã"}</span>
+                        )}
+                        <span>&gt;</span>
+                    </div>
+
+                    {appliedCoupon && (
+                        <button
+                            type="button"
+                            onClick={() => applyCoupon(null)}
+                            style={{ fontSize: '12px', color: 'red', background: 'none', border: 'none', alignSelf: 'flex-start', cursor: 'pointer', padding: 0 }}
+                        >
+                            Bỏ chọn mã
+                        </button>
+                    )}
                 </div>
 
                 <div className="summary-row">
@@ -189,6 +227,13 @@ const ShippingPage = () => {
                     </button>
                 </div>
             </div>
+
+            <CouponSelector
+                show={showCouponModal}
+                onHide={() => setShowCouponModal(false)}
+                cartTotal={subTotal}
+                onApplyCoupon={handleSelectCoupon}
+            />
         </div>
     );
 };

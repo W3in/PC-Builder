@@ -2,14 +2,12 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-// Hàm tạo Token (Hết hạn sau 30 ngày)
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
     });
 };
 
-// 1. Đăng ký (Register)
 const registerUser = async (req, res) => {
     const { name, email, password, phone } = req.body;
 
@@ -44,7 +42,6 @@ const registerUser = async (req, res) => {
     }
 };
 
-// 2. Đăng nhập (Login)
 const authUser = async (req, res) => {
     const { email, password } = req.body;
 

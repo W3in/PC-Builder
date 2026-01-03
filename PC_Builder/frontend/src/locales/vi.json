@@ -413,5 +413,25 @@
         "is_paid": "Đã thanh toán",
         "not_paid": "Chưa thanh toán",
         "no_orders": "Bạn chưa có đơn hàng nào."
+    },
+    "coupon": {
+        "title": "Kho Voucher",
+        "code": "Mã giảm giá",
+        "discount": "Mức giảm",
+        "min_order": "Đơn tối thiểu",
+        "max_discount": "Giảm tối đa",
+        "expiry": "HSD",
+        "apply": "Áp dụng",
+        "manage_title": "Quản lý Mã giảm giá",
+        "create_new": "Tạo mã mới",
+        "type_percent": "Theo phần trăm (%)",
+        "type_fixed": "Theo số tiền (VND)",
+        "usage_limit": "Lượt dùng",
+        "status": "Trạng thái",
+        "active": "Đang hoạt động",
+        "expired": "Hết hạn",
+        "save": "Lưu mã",
+        "delete": "Xóa",
+        "condition_not_met": "Chưa đủ điều kiện"
     }
 }
