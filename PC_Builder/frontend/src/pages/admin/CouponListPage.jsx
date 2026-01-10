@@ -4,11 +4,9 @@ import { formatPrice } from '../../utils/format';
 import { Link } from 'react-router-dom';
 import { FaTrash, FaPlus, FaEdit } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 import '../../assets/styles/Admin.css';
 
 const CouponListPage = () => {
-    const { t, i18n } = useTranslation();
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -53,9 +51,9 @@ const CouponListPage = () => {
     return (
         <div className="admin-container">
             <div className="product-list-header">
-                <h1>{t('coupon.manage_title') || 'Quản lý Mã Giảm Giá'}</h1>
+                <h1>Quản lý Mã Giảm Giá</h1>
                 <Link to="/admin/coupon/create" className="btn-add-product">
-                    <FaPlus /> {t('coupon.create_new') || 'Thêm mã mới'}
+                    <FaPlus /> Thêm mã mới
                 </Link>
             </div>
 
@@ -64,10 +62,10 @@ const CouponListPage = () => {
                     <thead>
                         <tr>
                             <th>Code</th>
-                            <th>{t('coupon.discount') || 'Giảm giá'}</th>
-                            <th>{t('coupon.min_order') || 'Đơn tối thiểu'}</th>
-                            <th>{t('coupon.usage_limit') || 'Lượt dùng'}</th>
-                            <th>{t('coupon.expiry') || 'Hết hạn'}</th>
+                            <th>Giảm giá</th>
+                            <th>Đơn tối thiểu</th>
+                            <th>Lượt dùng</th>
+                            <th>Hết hạn</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -79,22 +77,22 @@ const CouponListPage = () => {
                                 <td>
                                     {coupon.discountType === 'percent'
                                         ? `${coupon.discountValue}%`
-                                        : formatPrice(coupon.discountValue, i18n.language)
+                                        : formatPrice(coupon.discountValue, 'vi')
                                     }
                                     {coupon.discountType === 'percent' && coupon.maxDiscountAmount > 0 && (
                                         <div style={{ fontSize: '12px', color: '#666' }}>
-                                            (Max: {formatPrice(coupon.maxDiscountAmount, i18n.language)})
+                                            (Tối đa: {formatPrice(coupon.maxDiscountAmount, 'vi')})
                                         </div>
                                     )}
                                 </td>
 
-                                <td>{formatPrice(coupon.minOrderValue, i18n.language)}</td>
+                                <td>{formatPrice(coupon.minOrderValue, 'vi')}</td>
 
                                 <td>
                                     {coupon.usedCount} / {coupon.usageLimit}
                                 </td>
 
-                                <td>{new Date(coupon.expirationDate).toLocaleDateString()}</td>
+                                <td>{new Date(coupon.expirationDate).toLocaleDateString('vi-VN')}</td>
 
                                 <td>
                                     <div style={{ display: 'flex', gap: '10px' }}>

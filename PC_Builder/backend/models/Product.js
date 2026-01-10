@@ -11,6 +11,12 @@ const specsSchema = new mongoose.Schema({
     tdp: { type: Number },
     performance_score: { type: Number, default: 0 },
 
+    // --- KÍCH THƯỚC & KẾT NỐI (Thêm mới) ---
+    size: { type: String },
+    weight: { type: String },
+    connectivity: { type: String },
+    interface: { type: String },
+
     // --- CPU & MAINBOARD & COOLER ---
     socket: { type: String },
     chipset: { type: String },
@@ -53,6 +59,34 @@ const specsSchema = new mongoose.Schema({
     resolution: { type: String },
     refresh_rate: { type: Number },
     panel_type: { type: String },
+
+    // --- MẠNG (Wifi/Lan) ---
+    standard: { type: String },
+    bluetooth: { type: String },
+
+    // --- PHẦN MỀM (OS, Antivirus) ---
+    edition: { type: String },
+    version: { type: String },
+    license: { type: String },
+    format: { type: String },
+
+    // --- BÀN PHÍM (Keyboard) ---
+    switch_type: { type: String },
+    layout: { type: String },
+    led: { type: String },
+
+    // --- CHUỘT (Mouse) ---
+    sensor: { type: String },
+    handedness: { type: String },
+    dpi: { type: String },
+
+    // --- TAI NGHE (Headphones) ---
+    surround_sound: { type: String },
+    feature: { type: String },
+    battery: { type: String },
+
+    // --- KEO TẢN NHIỆT ---
+    conductivity: { type: String },
 }, { _id: false });
 
 const productSchema = new mongoose.Schema({

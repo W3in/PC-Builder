@@ -306,6 +306,252 @@ const Products = [
     name: "Seagate Barracuda 2TB", slug: "seagate-barracuda-2tb", price: 1200000,
     image: "/images/products/hdd_seagate_baracuda_2tb.png", brand: "Seagate", category: "storage", countInStock: 50,
     specs: { type: "HDD", interface: "SATA 3.5\"", capacity: 2048, rpm: 7200, cache: 256 }
+  },
+  {
+    name: "Corsair iCUE SP120 RGB ELITE Performance 120mm",
+    slug: "corsair-sp120-rgb-elite",
+    image: "/images/products/case-fan-corsair.png",
+    description: "Quạt tản nhiệt hiệu suất cao với đèn RGB rực rỡ, công nghệ AirGuide giúp tập trung luồng khí.",
+    brand: "Corsair",
+    category: "case_fans",
+    price: 450000,
+    countInStock: 50,
+    specs: {
+      size: "120mm",
+      color: "black",
+      led: "RGB",
+      rpm: 1500,
+      noise_level: "18 dBA"
+    }
+  },
+  {
+    name: "Noctua NF-A12x25 PWM",
+    slug: "noctua-nf-a12x25",
+    image: "/images/products/case-fan-noctua.png",
+    description: "Quạt tản nhiệt cao cấp, hoạt động cực êm, tối ưu luồng khí cho vỏ máy và tản nhiệt.",
+    brand: "Noctua",
+    category: "case_fans",
+    price: 890000,
+    countInStock: 30,
+    specs: {
+      size: "120mm",
+      color: "brown",
+      led: "RGB",
+      rpm: 2000,
+      noise_level: "22.6 dBA"
+    }
+  },
+
+  // 2. Keo tản nhiệt (thermal)
+  {
+    name: "Arctic MX-4 (4g)",
+    slug: "arctic-mx-4-4g",
+    image: "/images/products/thermal-mx4.png",
+    description: "Keo tản nhiệt hiệu suất cao, dễ sử dụng, độ bền lên đến 8 năm.",
+    brand: "Arctic",
+    category: "thermal",
+    price: 150000,
+    countInStock: 100,
+    specs: {
+      type: "Paste",
+      weight: "4g",
+      conductivity: "8.5 W/mK"
+    }
+  },
+  {
+    name: "Thermal Grizzly Kryonaut (1g)",
+    slug: "thermal-grizzly-kryonaut-1g",
+    image: "/images/products/thermal-kryonaut.png",
+    description: "Keo tản nhiệt dành cho ép xung, dẫn nhiệt cực tốt.",
+    brand: "Thermal Grizzly",
+    category: "thermal",
+    price: 220000,
+    countInStock: 80,
+    specs: {
+      type: "Paste",
+      weight: "1g",
+      conductivity: "12.5 W/mK"
+    }
+  },
+
+  // --- THIẾT BỊ NGOẠI VI (Peripherals) ---
+  {
+    name: "Logitech G Pro X Superlight",
+    slug: "logitech-g-pro-x-superlight",
+    image: "/images/products/mouse-gpro.png",
+    description: "Chuột chơi game không dây siêu nhẹ, cảm biến HERO 25K chính xác.",
+    brand: "Logitech",
+    category: "mouse",
+    price: 2990000,
+    countInStock: 25,
+    specs: {
+      connectivity: "wireless",
+      handedness: "right_handed",
+      sensor: "Optical",
+      dpi: "25600 DPI",
+      weight: "63g",
+      color: "black"
+    }
+  },
+  {
+    name: "Razer DeathAdder V3",
+    slug: "razer-deathadder-v3",
+    image: "/images/products/mouse-razer.png",
+    description: "Thiết kế công thái học huyền thoại, siêu nhẹ, kết nối dây ổn định.",
+    brand: "Razer",
+    category: "mouse",
+    price: 1690000,
+    countInStock: 40,
+    specs: {
+      connectivity: "wired",
+      handedness: "right_handed",
+      sensor: "Optical",
+      dpi: "30000 DPI",
+      weight: "59g",
+      color: "black"
+    }
+  },
+
+  // 4. Bàn phím (keyboard)
+  {
+    name: "Keychron K2 Pro Mechanical Keyboard",
+    slug: "keychron-k2-pro",
+    image: "/images/products/keyboard-keychron.png",
+    description: "Bàn phím cơ không dây custom, hỗ trợ QMK/VIA, hot-swap.",
+    brand: "Keychron",
+    category: "keyboard",
+    price: 2490000,
+    countInStock: 35,
+    specs: {
+      connectivity: "wired/wireless",
+      switch_type: "Mechanical",
+      layout: "75%",
+      sensor: "Optical",
+      led: "RGB"
+    }
+  },
+  {
+    name: "Logitech K120 Business",
+    slug: "logitech-k120",
+    image: "/images/products/keyboard-logitech.png",
+    description: "Bàn phím văn phòng bền bỉ, gõ êm, chống tràn nước.",
+    brand: "Logitech",
+    category: "keyboard",
+    price: 180000,
+    countInStock: 200,
+    specs: {
+      connectivity: "wired",
+      switch_type: "Membrane",
+      layout: "Full Size (100%)",
+      sensor: "Laser",
+      led: "No"
+    }
+  },
+
+  // 5. Tai nghe (headphones)
+  {
+    name: "HyperX Cloud II",
+    slug: "hyperx-cloud-ii",
+    image: "/images/products/headphone-hyperx.png",
+    description: "Tai nghe gaming giả lập âm thanh vòm 7.1, đệm tai êm ái.",
+    brand: "HyperX",
+    category: "headphones",
+    price: 1890000,
+    countInStock: 60,
+    specs: {
+      connectivity: "wired",
+      type: "Over-ear",
+      surround_sound: "7.1",
+      color: "red_black"
+    }
+  },
+  {
+    name: "Sony WH-1000XM5",
+    slug: "sony-wh-1000xm5",
+    image: "/images/products/headphone-sony.png",
+    description: "Tai nghe chống ồn chủ động hàng đầu thế giới, chất âm tuyệt hảo.",
+    brand: "Sony",
+    category: "headphones",
+    price: 7490000,
+    countInStock: 15,
+    specs: {
+      connectivity: "wireless",
+      type: "Over-ear",
+      feature: "Noise Cancelling",
+      battery: "30 hours"
+    }
+  },
+
+  // --- THIẾT BỊ HIỂN THỊ (Display) ---
+  {
+    name: "LG UltraGear 27GP850-B",
+    slug: "lg-ultragear-27gp850b",
+    image: "/images/products/monitor-lg.png",
+    description: "Màn hình Gaming Nano IPS 2K, tần số quét 165Hz (OC 180Hz), 1ms.",
+    brand: "LG",
+    category: "monitor",
+    price: 8900000,
+    countInStock: 20,
+    specs: {
+      screen_size: 27,
+      resolution: "2560 x 1440",
+      refresh_rate: 165,
+      panel_type: "IPS",
+      response_time: "1ms"
+    }
+  },
+  {
+    name: "Dell UltraSharp U2422H",
+    slug: "dell-ultrasharp-u2422h",
+    image: "/images/products/monitor-dell.png",
+    description: "Màn hình đồ họa chuyên nghiệp, màu sắc chuẩn xác, thiết kế sang trọng.",
+    brand: "Dell",
+    category: "monitor",
+    price: 5500000,
+    countInStock: 40,
+    specs: {
+      screen_size: 24,
+      resolution: "1920 x 1080",
+      refresh_rate: 60,
+      panel_type: "IPS",
+      color_gamut: "100% sRGB"
+    }
+  },
+
+  // --- MẠNG (Expansion & Net) ---
+  {
+    name: "TP-Link Archer TX3000E",
+    slug: "tp-link-archer-tx3000e",
+    image: "/images/products/wifi-tplink.png",
+    description: "Card mạng PCI-E WiFi 6 chuẩn AX3000 kèm Bluetooth 5.0.",
+    brand: "TP-Link",
+    category: "wifi_net",
+    price: 990000,
+    countInStock: 50,
+    specs: {
+      interface: "PCIe Card",
+      standard: "Wi-Fi 6E",
+      speed: 3000,
+      bluetooth: "5.0"
+    }
+  },
+
+  // --- PHẦN MỀM (Software) ---
+  {
+    name: "Windows 11 Home 64-bit (OEI)",
+    slug: "windows-11-home-64bit",
+    image: "/images/products/win11.png",
+    description: "Hệ điều hành Windows mới nhất, giao diện hiện đại, tối ưu cho game.",
+    brand: "Microsoft",
+    category: "os",
+    price: 2690000,
+    countInStock: 50,
+    specs: {
+      edition: "Home",
+      version: "Windows 11",
+      license_duration: "lifetime",
+      format: "DVD/USB"
+    }
   }
 ];
 

@@ -41,7 +41,6 @@ const AdminLayout = () => {
                 </button>
             </aside>
 
-            {/* NỘI DUNG BÊN PHẢI */}
             <main className="admin-content">
                 <Outlet />
             </main>

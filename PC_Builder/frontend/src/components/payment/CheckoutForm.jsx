@@ -68,10 +68,8 @@ const CheckoutForm = () => {
                     }
                 };
 
-                // Gọi Backend để lưu đơn hàng
                 await axiosClient.post('/orders', orderData);
 
-                // Xóa giỏ hàng và chuyển hướng
                 clearCart();
                 navigate("/order-success");
 

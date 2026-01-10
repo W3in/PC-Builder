@@ -1,10 +1,13 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import { useTranslation } from 'react-i18next';
+import { formatPrice } from '../utils/format';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const { user, loading } = useAuth();
+    const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
     const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [discountAmount, setDiscountAmount] = useState(0);
@@ -109,13 +112,16 @@ export const CartProvider = ({ children }) => {
         if (!couponData) {
             setAppliedCoupon(null);
             setDiscountAmount(0);
-            return { success: false, msg: "Hủy mã giảm giá" };
+            return { success: false, msg: t('coupon.remove_success') };
         }
 
         if (subTotal < couponData.minOrderValue) {
-            return { success: false, msg: `Đơn hàng chưa đủ ${couponData.minOrderValue.toLocaleString()}đ` };
+            const requiredAmount = formatPrice(couponData.minOrderValue, i18n.language);
+            return {
+                success: false,
+                msg: t('coupon.min_order_error', { amount: requiredAmount })
+            };
         }
-
         let calculatedDiscount = 0;
 
         if (couponData.discountType === 'percent') {
@@ -132,12 +138,18 @@ export const CartProvider = ({ children }) => {
         setDiscountAmount(calculatedDiscount);
         setAppliedCoupon(couponData);
 
-        return { success: true, msg: `Áp dụng mã ${couponData.code} thành công!` };
+        return {
+            success: true,
+            msg: t('coupon.apply_success', { code: couponData.code })
+        };
     };
 
     const clearCart = () => {
         setCartItems([]);
-        localStorage.removeItem(getCartKey());
+        setAppliedCoupon(null);
+        setDiscountAmount(0);
+        const key = user && user._id ? `pc_cart_${user._id}` : 'pc_cart_guest';
+        localStorage.removeItem(key);
     };
 
     return (

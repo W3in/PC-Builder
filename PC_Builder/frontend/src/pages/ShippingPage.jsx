@@ -163,7 +163,7 @@ const ShippingPage = () => {
                 </div>
 
                 <div className="coupon-box" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <label style={{ fontWeight: 'bold' }}>Mã giảm giá</label>
+                    <label style={{ fontWeight: 'bold' }}>{t('coupon.code')}</label>
 
                     <div
                         className="coupon-selector-btn"
@@ -181,7 +181,7 @@ const ShippingPage = () => {
                     >
                         {appliedCoupon ? (
                             <span style={{ color: '#28a745', fontWeight: 'bold' }}>
-                                Đã dùng: {appliedCoupon.code} (-{formatPrice(discountAmount, i18n.language)})
+                                {t('coupon.apply')}: {appliedCoupon.code} (-{formatPrice(discountAmount, i18n.language)})
                             </span>
                         ) : (
                             <span style={{ color: '#666' }}>{t('cart.coupon_placeholder') || "Chọn hoặc nhập mã"}</span>
@@ -195,7 +195,7 @@ const ShippingPage = () => {
                             onClick={() => applyCoupon(null)}
                             style={{ fontSize: '12px', color: 'red', background: 'none', border: 'none', alignSelf: 'flex-start', cursor: 'pointer', padding: 0 }}
                         >
-                            Bỏ chọn mã
+                            {t('coupon.cancel_coupon')}
                         </button>
                     )}
                 </div>

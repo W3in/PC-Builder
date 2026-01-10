@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axiosClient from '../../api/axiosClient'; // Dùng axiosClient của bạn
+import { formatPrice } from '../../utils/format';
+import axiosClient from '../../api/axiosClient';
 import '../../assets/styles/Coupon.css';
 
 const CouponSelector = ({ cartTotal, onApplyCoupon, show, onHide }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
@@ -20,10 +21,6 @@ const CouponSelector = ({ cartTotal, onApplyCoupon, show, onHide }) => {
             fetchCoupons();
         }
     }, [show]);
-
-    const formatCurrency = (val) => {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
-    };
 
     if (!show) return null;
 
@@ -49,12 +46,12 @@ const CouponSelector = ({ cartTotal, onApplyCoupon, show, onHide }) => {
                                     <div className="coupon-desc">
                                         {coupon.discountType === 'percent'
                                             ? `${t('coupon.discount')} ${coupon.discountValue}%`
-                                            : `${t('coupon.discount')} ${formatCurrency(coupon.discountValue)}`}
+                                            : `${t('coupon.discount')} ${formatPrice(coupon.discountValue, i18n.language)}`}
                                     </div>
                                     {coupon.maxDiscountAmount > 0 && coupon.discountType === 'percent' && (
-                                        <div className="coupon-meta">{t('coupon.max_discount')}: {formatCurrency(coupon.maxDiscountAmount)}</div>
+                                        <div className="coupon-meta">{t('coupon.max_discount')}: {formatPrice(coupon.maxDiscountAmount, i18n.language)}</div>
                                     )}
-                                    <div className="coupon-meta">{t('coupon.min_order')}: {formatCurrency(coupon.minOrderValue)}</div>
+                                    <div className="coupon-meta">{t('coupon.min_order')}: {formatPrice(coupon.minOrderValue, i18n.language)}</div>
                                 </div>
                                 <div className="coupon-action">
                                     {isEligible && (
@@ -66,7 +63,7 @@ const CouponSelector = ({ cartTotal, onApplyCoupon, show, onHide }) => {
                             </div>
                         );
                     })}
-                    {coupons.length === 0 && <p className="text-center p-3">Không có mã nào khả dụng</p>}
+                    {coupons.length === 0 && <p className="text-center p-3">{t('coupon.no_coupons_available')}</p>}
                 </div>
             </div>
         </div>

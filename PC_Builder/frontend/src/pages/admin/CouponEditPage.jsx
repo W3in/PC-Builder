@@ -3,12 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/axiosClient';
 import { toast } from 'react-toastify';
 import { FaSave, FaArrowLeft } from 'react-icons/fa';
-import { useTranslation } from "react-i18next";
 import '../../assets/styles/Admin.css';
 import '../../assets/styles/CouponAdmin.css';
 
 const CouponEditPage = () => {
-    const { t } = useTranslation();
     const { id } = useParams();
     const isEditMode = Boolean(id);
     const navigate = useNavigate();
@@ -73,7 +71,7 @@ const CouponEditPage = () => {
             <form onSubmit={handleSubmit} className="coupon-form-single">
 
                 <div className="form-control">
-                    <label className="form-label">{t('coupon.code') || 'Mã Code'}</label>
+                    <label className="form-label">Mã Code</label>
                     <input
                         type="text"
                         className="form-input"
@@ -86,7 +84,7 @@ const CouponEditPage = () => {
                 </div>
 
                 <div className="form-control">
-                    <label className="form-label">{t('coupon.expiry') || 'Ngày hết hạn'}</label>
+                    <label className="form-label">Ngày hết hạn</label>
                     <input
                         type="date"
                         className="form-input"
@@ -98,7 +96,7 @@ const CouponEditPage = () => {
 
                 <div className="coupon-row-group">
                     <div className="form-control">
-                        <label className="form-label">{t('coupon.discount') || 'Loại giảm giá'}</label>
+                        <label className="form-label">Loại giảm giá</label>
                         <select
                             className="form-select"
                             value={formData.discountType}
@@ -124,7 +122,7 @@ const CouponEditPage = () => {
 
                 {formData.discountType === 'percent' && (
                     <div className="form-control">
-                        <label className="form-label">{t('coupon.max_discount') || 'Giảm tối đa'} (VND)</label>
+                        <label className="form-label">Giảm tối đa(VND)</label>
                         <input
                             type="number"
                             className="form-input"
@@ -138,7 +136,7 @@ const CouponEditPage = () => {
 
                 <div className="coupon-row-group">
                     <div className="form-control">
-                        <label className="form-label">{t('coupon.min_order') || 'Đơn tối thiểu'} (VND)</label>
+                        <label className="form-label">Đơn tối thiểu (VND)</label>
                         <input
                             type="number"
                             className="form-input"
@@ -148,7 +146,7 @@ const CouponEditPage = () => {
                     </div>
 
                     <div className="form-control">
-                        <label className="form-label">{t('coupon.usage_limit') || 'Số lượng mã'}</label>
+                        <label className="form-label">Số lượng mã</label>
                         <input
                             type="number"
                             className="form-input"

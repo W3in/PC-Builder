@@ -105,7 +105,7 @@ export const FILTER_OPTIONS = {
             options: ["Samsung", "Western Digital", "Kingston", "Seagate", "Crucial", "Lexar", "Sabrent", "Corsair", "Gigabyte", "MSI"]
         },
         { label: "Type", key: "type", options: ["SSD", "HDD"] },
-        { label: "Capacity(GB)", key: "capacity", options: [256, 512, 1024, 2048] },
+        { label: "Capacity", key: "capacity", options: [256, 512, 1024, 2048] },
         {
             label: "Interface",
             key: "interface",
@@ -146,7 +146,7 @@ export const FILTER_OPTIONS = {
             options: ["Air Cooler", "AIO Liquid"]
         },
         {
-            label: "Size / Radiator",
+            label: "Size",
             key: "size",
             options: [120, 240, 280, 360]
         },
@@ -176,7 +176,7 @@ export const FILTER_OPTIONS = {
     case_fans: [
         { label: "Manufacturer", key: "brand", options: ["Corsair", "Lian Li", "Noctua", "Arctic", "Cooler Master", "be quiet!", "NZXT", "Thermalright"] },
         { label: "Fan Size", key: "size", options: ["120mm", "140mm", "200mm", "80mm"] },
-        { label: "Color", key: "color", options: ["black", "white", "RGB", "ARGB"] },
+        { label: "Color", key: "color", options: ["black", "white", "brown"] },
     ],
     thermal: [
         { label: "Manufacturer", key: "brand", options: ["Thermal Grizzly", "Arctic", "Noctua", "Cooler Master", "Deepcool"] },
@@ -199,19 +199,19 @@ export const FILTER_OPTIONS = {
     ],
     headphones: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "HyperX", "Corsair", "Sennheiser", "Audio-Technica", "Sony"] },
-        { label: "Type", key: "type", options: ["Over-ear", "In-ear", "On-ear"] },
+        { label: "Type", key: "type", options: ["over-ear", "in-ear", "on-ear"] },
         { label: "Connectivity", key: "connectivity", options: ["wired", "Bluetooth", "wired/wireless"] }
     ],
     keyboard: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "Corsair", "Keychron", "Akko", "SteelSeries", "Ducky"] },
-        { label: "Switch Type", key: "switch_type", options: ["Mechanical", "Membrane", "Optical", "Low Profile"] },
-        { label: "Size/Layout", key: "layout", options: ["Full Size (100%)", "TKL (80%)", "75%", "65%", "60%"] },
-        { label: "Connectivity", key: "connectivity", options: ["wired", "wireless", "Bluetooth"] }
+        { label: "Switch Type", key: "switch_type", options: ["Mechanical", "Membrane", "Optical"] },
+        { label: "Size", key: "layout", options: ["Full Size (100%)", "TKL (80%)", "75%", "65%", "60%"] },
+        { label: "Connectivity", key: "connectivity", options: ["wired", "wireless", "Bluetooth", "wired/wireless"] }
     ],
     mouse: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "SteelSeries", "Zowie", "Glorious", "Corsair", "Pulsar"] },
         { label: "Connectivity", key: "connectivity", options: ["wired", "wireless", "wired/wireless"] },
-        { label: "Sensor Type", key: "sensor", options: ["Optical", "Laser"] },
+        { label: "Sensor", key: "sensor", options: ["Optical", "Laser"] },
         { label: "Handedness", key: "handedness", options: ["right_handed", "Ambidextrous", "left_handed"] }
     ],
     speakers: [
@@ -222,9 +222,9 @@ export const FILTER_OPTIONS = {
     monitor: [
         { label: "Manufacturer", key: "brand", options: ["Dell", "LG", "Asus", "Samsung", "AOC", "MSI", "Gigabyte", "ViewSonic", "BenQ"] },
         { label: "Resolution", key: "resolution", options: ["1920 x 1080", "2560 x 1440", "3840 x 2160 (4K)", "3440 x 1440 (UW)"] },
-        { label: "Refresh Rate", key: "refresh_rate", options: ["60Hz", "75Hz", "144Hz", "165Hz", "240Hz", "360Hz+"] },
+        { label: "Refresh Rate", key: "refresh_rate", options: [60, 75, 144, 165, 240, 360] },
         { label: "Panel Type", key: "panel_type", options: ["IPS", "VA", "TN", "OLED"] },
-        { label: "Screen Size", key: "size", options: ["24\"", "27\"", "32\"", "34\"+", "Under 22\""] }
+        { label: "Screen Size", key: "screen_size", options: [22, 24, 27, 32, 34] }
     ],
     webcam: [
         { label: "Manufacturer", key: "brand", options: ["Logitech", "Razer", "Elgato", "Microsoft"] },

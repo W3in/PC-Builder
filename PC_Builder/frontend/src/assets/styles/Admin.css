@@ -258,7 +258,7 @@
     width: 100% !important;
     background-color: var(--bg-body) !important;
     color: var(--text-primary) !important;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Chakra Petch', sans-serif;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -352,6 +352,8 @@
 .product-edit-wrapper .form-label-small {
     font-weight: 700;
     color: var(--text-primary);
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 14px;
     margin-bottom: 8px;
     display: block;
 }
@@ -506,13 +508,11 @@ p {
     background: var(--bg-container);
     border: 1px solid var(--border-color);
     border-radius: 50px;
-    /* Tạo hình viên thuốc */
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Hiệu ứng khi nhấn vào ô tìm kiếm */
 .search-input-group:focus-within {
     border-color: var(--accent-color);
     box-shadow: 0 4px 12px rgba(38, 166, 154, 0.2);
@@ -522,11 +522,10 @@ p {
 .search-input {
     flex: 1;
     border: none !important;
-    /* Xóa viền mặc định */
     padding: 12px 20px !important;
     background: transparent !important;
     color: var(--text-primary);
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Chakra Petch', sans-serif;
     font-size: 15px;
     outline: none;
 }
