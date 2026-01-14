@@ -455,5 +455,22 @@
         "remove_success": "Coupon removed",
         "min_order_error": "Order must be at least {{amount}} to use this coupon",
         "apply_success": "Coupon {{code}} applied successfully!"
+    },
+    "chat": {
+        "welcome": "Hello! I'm AI Support. Do you need advice on building a PC or finding any components?",
+        "placeholder": "Enter your question...",
+        "error": "The system is busy, please try again later."
+    },
+    "ai_config": {
+        "sys_prompt": "You are a professional PC sales assistant. Style: Helpful, concise.",
+        "label_id": "ID",
+        "label_name": "Name",
+        "label_price": "Price",
+        "label_status": "Status",
+        "in_stock": "In Stock",
+        "out_stock": "Out of Stock",
+        "label_desc": "Description",
+        "currency": "VND",
+        "error_msg": "Sorry, I didn't catch that."
     }
 }

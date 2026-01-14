@@ -41,6 +41,23 @@ const addOrderItems = async (req, res) => {
         if (orderItems && orderItems.length === 0) {
             return res.status(400).json({ message: 'Không có sản phẩm nào' });
         } else {
+
+            for (const item of orderItems) {
+                const productId = item._id || item.product;
+
+                const productExist = await Product.findById(productId);
+
+                if (!productExist) {
+                    return res.status(404).json({ message: `Sản phẩm không tồn tại: ${item.name}` });
+                }
+
+                if (productExist.countInStock < item.qty) {
+                    return res.status(400).json({
+                        message: `Sản phẩm ${item.name} chỉ còn ${productExist.countInStock} cái, không đủ để đặt ${item.qty} cái.`
+                    });
+                }
+            }
+
             const dbOrderItems = orderItems.map((item) => ({
                 ...item,
                 product: item._id || item.product,
@@ -94,6 +111,15 @@ const addOrderItems = async (req, res) => {
             });
 
             const createdOrder = await order.save();
+
+            await Promise.all(orderItems.map(async (item) => {
+                const productId = item._id || item.product;
+
+                await Product.findByIdAndUpdate(productId, {
+                    $inc: { countInStock: -item.qty }
+                });
+            }));
+
             res.status(201).json(createdOrder);
         }
     } catch (error) {
@@ -108,7 +134,6 @@ const getOrderStats = async (req, res) => {
         const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
         const endDate = new Date(`${year}-12-31T23:59:59.999Z`);
 
-        // 1. Thống kê Doanh thu theo tháng
         const monthlyStats = await Order.aggregate([
             {
                 $match: {
@@ -132,7 +157,6 @@ const getOrderStats = async (req, res) => {
             };
         });
 
-        // 2. Thống kê Tỷ lệ thanh toán
         const paymentStats = await Order.aggregate([
             {
                 $group: {
@@ -163,7 +187,6 @@ const getOrderStats = async (req, res) => {
             createdAt: { $gte: startDate, $lte: endDate }
         });
         const allTimeOrders = await Order.countDocuments();
-        // Lấy số lượng User và Product thật (nếu có model)
         const allTimeUsers = await User.countDocuments();
 
         res.json({

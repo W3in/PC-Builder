@@ -14,6 +14,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const couponRoutes = require('./routes/couponRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 const app = express();
 
 // 3. Middleware 
@@ -41,6 +42,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/api/coupons', couponRoutes);
 const dirname = path.resolve();
 app.use('/uploads', express.static(path.join(dirname, '/uploads')));
+app.use('/api/chat', chatRoutes);
 
 // 6. Start server
 const PORT = process.env.PORT || 5000;
