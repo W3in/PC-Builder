@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
+const { indexProducts } = require('../services/vectorService');
 
 const getProducts = async (req, res) => {
     try {
@@ -267,6 +268,31 @@ const searchSuggestions = async (req, res) => {
     }
 };
 
+const reindexProducts = async (req, res) => {
+    try {
+        const products = await Product.find({}).lean();
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({ message: 'Không tìm thấy sản phẩm nào để index' });
+        }
+
+        console.log(`Đang bắt đầu index ${products.length} sản phẩm...`);
+
+        await indexProducts(products);
+
+        res.status(200).json({
+            success: true,
+            message: `Đã nạp thành công ${products.length} sản phẩm vào bộ nhớ AI (Pinecone).`
+        });
+
+    } catch (error) {
+        console.error('Lỗi khi Re-index:', error);
+        res.status(500).json({
+            message: 'Lỗi Server khi index dữ liệu',
+            error: error.message
+        });
+    }
+};
 module.exports = {
     getProducts,
     getProductById,
@@ -274,5 +300,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getRecommendations,
-    searchSuggestions
+    searchSuggestions,
+    reindexProducts
 };

@@ -454,5 +454,22 @@
         "remove_success": "Đã hủy mã giảm giá",
         "min_order_error": "Đơn hàng chưa đủ {{amount}} để áp dụng mã này",
         "apply_success": "Áp dụng mã {{code}} thành công!"
+    },
+    "chat": {
+        "welcome": "Xin chào! Mình là AI Support. Bạn cần tư vấn build PC hay tìm linh kiện nào không?",
+        "placeholder": "Nhập câu hỏi...",
+        "error": "Hệ thống đang bận, vui lòng thử lại sau."
+    },
+    "ai_config": {
+        "sys_prompt": "Bạn là nhân viên tư vấn bán PC chuyên nghiệp tại Việt Nam. Phong cách: Thân thiện, nhiệt tình.",
+        "label_id": "Mã SP",
+        "label_name": "Tên",
+        "label_price": "Giá",
+        "label_status": "Tình trạng",
+        "in_stock": "Còn hàng",
+        "out_stock": "Hết hàng",
+        "label_desc": "Mô tả",
+        "currency": "VNĐ",
+        "error_msg": "Xin lỗi, tôi chưa hiểu ý bạn."
     }
 }

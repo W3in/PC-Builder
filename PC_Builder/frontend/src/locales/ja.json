@@ -455,5 +455,22 @@
         "remove_success": "クーポンを削除しました",
         "min_order_error": "このクーポンを使用するには、注文額が {{amount}} 以上である必要があります",
         "apply_success": "クーポン {{code}} が適用されました！"
+    },
+    "chat": {
+        "welcome": "こんにちは！私はAIサポートです。PCの組み立てや部品探しの相談が必要ですか？",
+        "placeholder": "質問を入力してください...",
+        "error": "システムが混雑しています。後でもう一度お試しください。"
+    },
+    "ai_config": {
+        "sys_prompt": "あなたはプロのPC販売アシスタントです。スタイル：親切で簡潔です。",
+        "label_id": "ID",
+        "label_name": "名前",
+        "label_price": "価格",
+        "label_status": "ステータス",
+        "in_stock": "在庫あり",
+        "out_stock": "在庫切れ",
+        "label_desc": "説明",
+        "currency": "VND",
+        "error_msg": "申し訳ありませんが、聞き取れませんでした。"
     }
 }
