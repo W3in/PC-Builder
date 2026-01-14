@@ -1,0 +1,59 @@
+language: "en-US" 
+
+tone_instructions: "Review the code with a strict, assertive, and professional tone. Do not sugarcoat issues. Focus on critical analysis of performance, security, and architectural integrity. Point out any violations of clean code principles (SOLID, DRY) directly."
+
+reviews:
+  profile: "assertive" 
+  request_changes_workflow: true 
+  
+  high_level_summary: true
+  poem: false 
+  
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches: ["develop", "main"] 
+
+  instructions: |
+    You are a Senior Full-stack Developer reviewing a MERN Stack project (MongoDB, Express, React, Node.js).
+    
+    In addition to line-by-line comments, you MUST append a "Quality Assurance Checklist" at the end of your High-level Summary. 
+    Evaluate the PR against these criteria and mark them as [x] (Pass) or [ ] (Fail/Needs Improvement):
+
+    ### 🛡️ Quality Assurance Checklist:
+    1. **Performance Optimization**: 
+       - React: Are there unnecessary re-renders? Are `useMemo`/`useCallback` used correctly?
+       - Node.js: Are database queries optimized (indexing, lean queries)? Is there any N+1 problem?
+    2. **Security & Validation**: 
+       - Are inputs sanitized/validated (e.g., ensuring no Injection risks)? 
+       - Are sensitive data (API keys, passwords) handled securely?
+       - Are API endpoints protected by authentication/authorization middleware?
+    3. **Code Quality (DRY & SOLID)**: 
+       - Is there any duplicated code? 
+       - Are functions doing one thing only? 
+       - Are variable/function names descriptive?
+    4. **Error Handling**: 
+       - Are `try/catch` blocks used effectively? 
+       - Does the backend return proper HTTP status codes (400 vs 500)?
+       - Does the frontend handle loading and error states gracefully?
+    5. **Scalability**: 
+       - Is the logic capable of handling high traffic?
+       - Is the file structure maintainable?
+
+chat:
+  auto_reply: true 
+
+plugins:
+  ast_grep:
+    enabled: true
+    packages:
+      - javascript
+      - typescript
+      - react
+      - html
+  
+  eslint:
+    enabled: true
+    
+  gitleaks:
+    enabled: true
