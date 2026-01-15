@@ -108,7 +108,7 @@ const deleteCoupon = async (req, res) => {
         const coupon = await Coupon.findById(req.params.id);
 
         if (coupon) {
-            await coupon.deleteOne(); // Hoặc coupon.remove() tùy version mongoose
+            await coupon.deleteOne();
             res.json({ message: "Đã xóa mã giảm giá thành công" });
         } else {
             res.status(404).json({ message: "Không tìm thấy mã giảm giá" });

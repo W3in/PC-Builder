@@ -7,11 +7,11 @@ const specsSchema = new mongoose.Schema({
     color: { type: String },
     warranty: { type: String },
 
-    // --- HIỆU NĂNG & ĐIỆN NĂNG (Quan trọng cho AI & Builder) ---
+    // --- HIỆU NĂNG & ĐIỆN NĂNG---
     tdp: { type: Number },
     performance_score: { type: Number, default: 0 },
 
-    // --- KÍCH THƯỚC & KẾT NỐI (Thêm mới) ---
+    // --- KÍCH THƯỚC & KẾT NỐI---
     size: { type: String },
     weight: { type: String },
     connectivity: { type: String },
@@ -48,39 +48,39 @@ const specsSchema = new mongoose.Schema({
     efficiency: { type: String },
     modular: { type: String },
 
-    // --- CASE (Vỏ máy) ---
+    // --- CASE---
     form_factor: { type: String },
     supported_motherboards: [{ type: String }],
     max_gpu_length: { type: Number },
     max_cpu_cooler_height: { type: Number },
 
-    // --- MONITOR (Màn hình) ---
+    // --- MONITOR---
     screen_size: { type: Number },
     resolution: { type: String },
     refresh_rate: { type: Number },
     panel_type: { type: String },
 
-    // --- MẠNG (Wifi/Lan) ---
+    // --- MẠNG---
     standard: { type: String },
     bluetooth: { type: String },
 
-    // --- PHẦN MỀM (OS, Antivirus) ---
+    // --- PHẦN MỀM---
     edition: { type: String },
     version: { type: String },
     license: { type: String },
     format: { type: String },
 
-    // --- BÀN PHÍM (Keyboard) ---
+    // --- BÀN PHÍM---
     switch_type: { type: String },
     layout: { type: String },
     led: { type: String },
 
-    // --- CHUỘT (Mouse) ---
+    // --- CHUỘT---
     sensor: { type: String },
     handedness: { type: String },
     dpi: { type: String },
 
-    // --- TAI NGHE (Headphones) ---
+    // --- TAI NGHE---
     surround_sound: { type: String },
     feature: { type: String },
     battery: { type: String },

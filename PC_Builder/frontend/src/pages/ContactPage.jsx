@@ -6,7 +6,7 @@ import '../assets/styles/Contact.css';
 const ContactPage = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-    const [status, setStatus] = useState(null); // null, 'loading', 'success', 'error'
+    const [status, setStatus] = useState(null);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

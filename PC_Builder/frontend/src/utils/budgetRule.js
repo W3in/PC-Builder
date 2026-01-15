@@ -1,5 +1,4 @@
 const USAGE_RATIOS = {
-    // Gaming: Ưu tiên GPU (40%), CPU (20%)
     gaming: {
         cpu: 0.20,
         mainboard: 0.12,
@@ -11,7 +10,6 @@ const USAGE_RATIOS = {
         case: 0.05,
         cooler: 0.03
     },
-    // Office: Ưu tiên bền, nhanh (SSD), CPU on-board (GPU = 0)
     office: {
         cpu: 0.35,
         mainboard: 0.15,
@@ -23,7 +21,6 @@ const USAGE_RATIOS = {
         case: 0.05,
         cooler: 0
     },
-    // Workstation (Edit Video/Code): Cần CPU mạnh, RAM nhiều
     workstation: {
         cpu: 0.30,
         mainboard: 0.15,
@@ -35,7 +32,6 @@ const USAGE_RATIOS = {
         case: 0.05,
         cooler: 0.10
     },
-    // Streaming: Cân bằng giữa CPU (Encode) và GPU (Game)
     streaming: {
         cpu: 0.25,
         mainboard: 0.12,

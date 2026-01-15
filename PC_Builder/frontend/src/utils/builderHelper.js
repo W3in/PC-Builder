@@ -7,7 +7,6 @@ export const generateSlots = (buildState, t) => {
 
     let slots = [];
 
-    // 1. CPU
     for (let i = 0; i < cpuSockets; i++) {
         slots.push({
             key: `cpu_${i}`,
@@ -16,10 +15,8 @@ export const generateSlots = (buildState, t) => {
         });
     }
 
-    // 2. Mainboard
     slots.push({ key: 'mainboard', type: 'mainboard', label: t('builder.slots.mainboard') });
 
-    // 3. Cooler
     for (let i = 0; i < cpuSockets; i++) {
         slots.push({
             key: `cooler_${i}`,
@@ -28,7 +25,6 @@ export const generateSlots = (buildState, t) => {
         });
     }
 
-    // 4. RAM
     for (let i = 0; i < ramSlots; i++) {
         slots.push({
             key: `ram_${i}`,
@@ -37,7 +33,6 @@ export const generateSlots = (buildState, t) => {
         });
     }
 
-    // 5. GPU
     for (let i = 0; i < gpuSlots; i++) {
         slots.push({
             key: `gpu_${i}`,
@@ -46,12 +41,10 @@ export const generateSlots = (buildState, t) => {
         });
     }
 
-    // 6. Storage
     slots.push({ key: 'storage_0', type: 'storage', label: t('builder.slots.storage_os') });
     slots.push({ key: 'storage_1', type: 'storage', label: t('builder.slots.storage_data') });
     slots.push({ key: 'storage_2', type: 'storage', label: t('builder.slots.storage_data') });
 
-    // 7. PSU & Case
     slots.push({ key: 'psu', type: 'psu', label: t('builder.slots.psu') });
     slots.push({ key: 'case', type: 'case', label: t('builder.slots.case') });
 
@@ -126,14 +119,12 @@ export const analyzeBuild = (cartItems, t) => {
     const casePc = cartItems.find(i => i.category === 'case');
     const cooler = cartItems.find(i => i.category === 'cooler');
 
-    // 1. Check Socket CPU & Main
     if (cpu && main) {
         if (cpu.specs?.socket !== main.specs?.socket) {
             report.errors.push(`${t('builder.analysis.error_socket')} ${t('category.cpu')} (${cpu.specs?.socket}) ${t('builder.analysis.and')} ${t('category.mainboard')} (${main.specs?.socket})`);
         }
     }
 
-    // 2. Check RAM & Main
     if (main && ramList.length > 0) {
         const ramType = ramList[0].specs?.type;
         const mainRamType = main.specs?.ram_type;
@@ -143,7 +134,6 @@ export const analyzeBuild = (cartItems, t) => {
         }
     }
 
-    // 3. Check Kích thước Case & Main
     if (casePc && main) {
         const supported = casePc.specs?.supported_motherboards || [];
         const mainForm = main.specs?.form_factor;
@@ -155,7 +145,6 @@ export const analyzeBuild = (cartItems, t) => {
         }
     }
 
-    // 4. Check Độ dài GPU & Case
     if (casePc && gpu) {
         const maxLen = casePc.specs?.max_gpu_length || 300;
         const gpuLen = gpu.specs?.length || 250;
@@ -165,7 +154,6 @@ export const analyzeBuild = (cartItems, t) => {
         }
     }
 
-    // --- TÍNH TOÁN NGUỒN (POWER) ---
     let totalTDP = 0;
     if (cpu?.specs?.tdp) totalTDP += Number(cpu.specs.tdp);
     if (gpu?.specs?.tdp) totalTDP += Number(gpu.specs.tdp);
@@ -189,7 +177,6 @@ export const analyzeBuild = (cartItems, t) => {
         }
     }
 
-    // --- BENCHMARK BOTTLENECK (GIẢ LẬP) ---
     if (cpu && gpu) {
         const cpuScore = Number(cpu.specs?.performance_score || 0);
         const gpuScore = Number(gpu.specs?.performance_score || 0);

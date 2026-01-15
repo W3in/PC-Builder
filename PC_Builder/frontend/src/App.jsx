@@ -7,15 +7,15 @@ import { ToastContainer } from 'react-toastify';
 import PrivateRoute from './routes/PrivateRoute';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Import Layouts
+
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 
-// Import Components
+
 import AdminRoute from './components/common/AdminRoute';
 import IntroScreen from './components/common/IntroScreen';
 
-// Import Pages
+
 import HomePage from './pages/HomePage';
 import BuilderPage from './pages/BuilderPage';
 import PreBuiltPage from './pages/PreBuiltPage';
@@ -32,7 +32,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ComingSoon from './pages/ComingSoon';
 import ShippingPage from './pages/ShippingPage';
 
-//Import Admin Pages
+
 import DashboardPage from './pages/admin/DashboardPage';
 import ProductListPage from './pages/admin/ProductListPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
@@ -45,7 +45,7 @@ import CouponEditPage from './pages/admin/CouponEditPage';
 function App() {
   const { i18n } = useTranslation();
 
-  // Logic hiển thị Intro
+
   const [showIntro, setShowIntro] = useState(() => {
     const hasSeen = sessionStorage.getItem('hasSeenIntro');
     return !hasSeen;

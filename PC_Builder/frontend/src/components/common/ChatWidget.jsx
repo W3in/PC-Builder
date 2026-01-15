@@ -73,7 +73,6 @@ const ChatWidget = () => {
         };
 
         try {
-            // 2. Gọi API Backend
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

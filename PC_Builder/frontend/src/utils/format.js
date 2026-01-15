@@ -1,7 +1,7 @@
 const EXCHANGE_RATES = {
-    vi: 1,          // Gốc (VND)
-    en: 0.00004,    // (khoảng 25.000 VND = 1 USD)
-    ja: 0.006       // (khoảng 165 VND = 1 JPY)
+    vi: 1,
+    en: 0.00004,
+    ja: 0.006
 };
 
 const CURRENCY_CONFIG = {

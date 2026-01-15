@@ -12,7 +12,6 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const DashboardPage = () => {
     const { user } = useAuth();
-    // Thay đổi state để lưu object thay vì mảng
     const [data, setData] = useState({
         monthlyStats: [],
         paymentStats: [],
@@ -25,8 +24,6 @@ const DashboardPage = () => {
         const fetchStats = async () => {
             try {
                 const res = await axiosClient.get(`/orders/stats?year=${year}`);
-
-                // Cập nhật state với dữ liệu mới từ Backend trả về
                 setData(res.data);
 
             } catch (error) {
@@ -35,8 +32,6 @@ const DashboardPage = () => {
         };
         fetchStats();
     }, [user.token, year]);
-
-    // Không cần tính totalRevenue thủ công nữa vì Backend đã tính rồi
 
     return (
         <div className="admin-container">

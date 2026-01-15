@@ -25,25 +25,19 @@ const CheckoutForm = () => {
 
         setIsProcessing(true);
 
-        // 1. Gửi yêu cầu thanh toán lên Stripe
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                // QUAN TRỌNG: Phải có return_url dù dùng "if_required"
-                // Đây là trang khách sẽ được đưa về nếu phải xác thực 3D Secure
                 return_url: `${window.location.origin}/order-success`,
             },
-            redirect: "if_required", // Chỉ redirect nếu ngân hàng bắt buộc
+            redirect: "if_required",
         });
 
         if (error) {
-            // Xử lý lỗi (Thẻ lỗi, thiếu tiền, v.v...)
             setMessage(error.message);
             setIsProcessing(false);
         } else if (paymentIntent && paymentIntent.status === "succeeded") {
-            // 2. Thanh toán thành công (Không cần redirect) -> Gọi API lưu đơn
             try {
-                // Lấy shippingAddress từ localStorage (được lưu ở bước trước)
                 const shippingAddressStr = localStorage.getItem('shippingAddress');
                 if (!shippingAddressStr) {
                     throw new Error("Không tìm thấy địa chỉ giao hàng");
@@ -59,7 +53,6 @@ const CheckoutForm = () => {
                     paymentMethod: 'Stripe',
                     isPaid: true,
 
-                    // Thông tin giao dịch từ Stripe trả về
                     paymentResult: {
                         id: paymentIntent.id,
                         status: paymentIntent.status,

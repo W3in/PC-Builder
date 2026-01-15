@@ -51,7 +51,6 @@ const ProductEditPage = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
 
-    // State cơ bản
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [image, setImage] = useState('');

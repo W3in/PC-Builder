@@ -18,22 +18,6 @@ const SearchBar = () => {
     const containerRef = useRef(null);
     const navigate = useNavigate();
 
-    // const getImageUrl = (imagePath) => {
-    //     if (!imagePath) return '/images/placeholder.png';
-
-    //     if (imagePath.startsWith('http')) {
-    //         return imagePath;
-    //     }
-    //     if (imagePath.startsWith('/images')) {
-    //         return imagePath;
-    //     }
-
-    //     if (imagePath.startsWith('/uploads')) {
-    //         return imagePath;
-    //     }
-    //     return `/uploads/${imagePath}`;
-    // };
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -97,7 +81,6 @@ const SearchBar = () => {
                 <FaSearch className="search-icon-input" />
                 <input
                     type="text"
-                    // Dùng t() để đa ngôn ngữ placeholder
                     placeholder={t('header.search_placeholder') || "Search..."}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

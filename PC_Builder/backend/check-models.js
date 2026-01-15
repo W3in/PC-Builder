@@ -1,4 +1,3 @@
-// File: backend/check-models.js
 require('dotenv').config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -7,9 +6,7 @@ async function listModels() {
     console.log("Checking API Key: ", process.env.GEMINI_API_KEY ? "Loaded ✅" : "Missing ❌");
 
     try {
-        // Lấy danh sách model mà Key này được phép dùng
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        // Dùng API quản lý để list (nếu SDK hỗ trợ) hoặc test thử generate
         console.log("Dang thu ket noi den gemini-1.5-flash...");
 
         const result = await model.generateContent("Hello, are you working?");

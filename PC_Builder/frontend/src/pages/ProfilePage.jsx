@@ -18,7 +18,6 @@ const ProfilePage = () => {
     const [favProducts, setFavProducts] = useState([]);
     const [totalSpent, setTotalSpent] = useState(0);
 
-    // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 16;
 
@@ -31,7 +30,6 @@ const ProfilePage = () => {
         confirmPassword: ''
     });
 
-    // Fetch dữ liệu theo Tab
     useEffect(() => {
         if (!user?.token) return;
 
@@ -95,7 +93,6 @@ const ProfilePage = () => {
         }
     };
 
-    // Logic Phân trang
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = favProducts.slice(indexOfFirstItem, indexOfLastItem);

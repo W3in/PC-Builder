@@ -42,10 +42,8 @@ const handleChatMessage = async (req, res) => {
             label_desc: "Mô tả", currency: "VNĐ", error_msg: "Lỗi kết nối"
         };
 
-        // 2. Tìm sản phẩm (Search Vector)
         const relevantProducts = await searchProducts(message, lang, 4);
 
-        // 3. Tạo Context sản phẩm (Dùng nhãn từ Config để đa ngôn ngữ)
         const productContext = relevantProducts.map(p => `
           - ${config.label_id}: ${p.id}
           - ${config.label_name}: ${p.name}
@@ -54,14 +52,12 @@ const handleChatMessage = async (req, res) => {
           - ${config.label_desc}: ${p.description}
         `).join("\n");
 
-        // 4. Xử lý Lịch sử Chat (Chuyển sang format mảng của Groq)
         const history = conversations.get(sessionId) || [];
         const messagesForGroq = history.map(h => ({
             role: h.role === 'model' ? 'assistant' : 'user',
             content: h.content
         }));
 
-        // 5. TẠO SYSTEM PROMPT (Kết hợp Logic cũ của bạn + Config mới)
         const systemPromptContent = `
         ${config.sys_prompt}
 
@@ -91,22 +87,17 @@ const handleChatMessage = async (req, res) => {
         ${productContext}
         `;
 
-        // 6. Gọi Groq API
         const completion = await groq.chat.completions.create({
             messages: [
-                // System Prompt chứa luật và dữ liệu sản phẩm
                 { role: "system", content: systemPromptContent },
-                // Lịch sử chat (AI tự hiểu đây là context cũ)
                 ...messagesForGroq,
-                // Câu hỏi mới nhất của khách
                 { role: "user", content: message }
             ],
             model: "llama-3.3-70b-versatile",
             temperature: 0.5,
-            response_format: { type: "json_object" } // Ép trả về JSON
+            response_format: { type: "json_object" }
         });
 
-        // 7. Xử lý kết quả trả về
         const responseText = completion.choices[0]?.message?.content;
         let aiResponse;
 
@@ -117,7 +108,6 @@ const handleChatMessage = async (req, res) => {
             aiResponse = { action: "chat", reply: config.error_msg };
         }
 
-        // 8. Lưu lịch sử
         history.push({ role: "user", content: message });
         history.push({ role: "model", content: aiResponse.reply });
 

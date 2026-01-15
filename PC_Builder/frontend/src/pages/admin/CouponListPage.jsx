@@ -10,7 +10,6 @@ const CouponListPage = () => {
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Modal xác nhận xóa
     const [showModal, setShowModal] = useState(false);
     const [targetId, setTargetId] = useState(null);
 

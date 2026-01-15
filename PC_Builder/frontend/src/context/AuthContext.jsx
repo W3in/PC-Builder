@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         setLoading(true);
         try {
-            // Gửi token sang backend xác thực
             const { data } = await axiosClient.post('/users/google', { googleToken });
 
             setUser(data);
@@ -57,7 +56,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Hàm Đăng ký
     const register = async (name, email, password, phone) => {
         setError(null);
         setLoading(true);
@@ -74,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Hàm Đăng xuất
     const logout = () => {
         localStorage.removeItem('pc_user');
         setUser(null);

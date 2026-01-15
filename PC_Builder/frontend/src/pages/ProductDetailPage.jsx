@@ -24,7 +24,6 @@ const ProductDetailPage = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
 
-    // Lấy hàm từ Context
     const { addToCart } = useCart();
     const { addComponent, buildState } = useBuilder();
 

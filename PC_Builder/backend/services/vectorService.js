@@ -2,14 +2,12 @@ const { Pinecone } = require('@pinecone-database/pinecone');
 const Groq = require("groq-sdk");
 const { HfInference } = require("@huggingface/inference");
 
-// Khởi tạo các dịch vụ
 const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const hf = new HfInference(process.env.HF_TOKEN);
 
-const INDEX_NAME = 'pc-products'; // Đảm bảo Index này trên Pinecone có Dimension = 384
+const INDEX_NAME = 'pc-products';
 
-// Helper: Tạo Embedding dùng Hugging Face (Model: all-MiniLM-L6-v2)
 async function createEmbedding(text) {
     try {
         const output = await hf.featureExtraction({
@@ -23,7 +21,6 @@ async function createEmbedding(text) {
     }
 }
 
-// Helper: Dịch thuật dùng Groq (Model: Llama 3)
 async function translateIfNeeded(text, lang) {
     if (lang === 'en') return text;
     try {
@@ -74,7 +71,6 @@ const indexProducts = async (products) => {
         })
     );
 
-    // Pinecone batch upsert
     const BATCH_SIZE = 100;
     for (let i = 0; i < vectors.length; i += BATCH_SIZE) {
         const batch = vectors.slice(i, i + BATCH_SIZE);

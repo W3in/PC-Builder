@@ -29,15 +29,12 @@ const OrderDetailPage = () => {
         fetchOrderDetails();
     }, [id, user.token]);
 
-    // ...existing code...
-
     const handleMarkAsPaid = async () => {
         if (window.confirm('Xác nhận đơn hàng này đã thu tiền?')) {
             try {
                 await axiosClient.put(`/orders/${id}/pay`, {});
 
                 toast.success("Đã cập nhật trạng thái thanh toán!");
-                // Fetch lại để cập nhật UI
                 const { data } = await axiosClient.get(`/orders/${id}`);
                 setOrder(data);
             } catch (error) {
