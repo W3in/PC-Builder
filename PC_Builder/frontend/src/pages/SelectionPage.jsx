@@ -20,7 +20,7 @@ const SelectionPage = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
-    const { addComponent } = useBuilder();
+    const { addComponent, buildState } = useBuilder();
     const currentSlot = searchParams.get('slot') || category;
     const navigate = useNavigate();
 
@@ -65,19 +65,59 @@ const SelectionPage = () => {
                         queryParams.append(key, values.join(','));
                     }
                 });
+                const findComponentInState = (type) => {
+                    const key = Object.keys(buildState).find(k => k.startsWith(type));
+                    return key ? buildState[key] : null;
+                };
 
-                const { data } = await axiosClient.get(`/products?${queryParams.toString()}`);
+                const selectedCpu = findComponentInState('cpu');
+                const selectedMainboard = findComponentInState('mainboard');
+                let sourceComponent = null;
+                if (category === 'mainboard' && selectedCpu) {
+                    sourceComponent = selectedCpu;
+                }
+                else if (category === 'ram' && selectedMainboard) {
+                    sourceComponent = selectedMainboard;
+                }
+                else if (category === 'cooler' && selectedCpu) {
+                    sourceComponent = selectedCpu;
+                }
 
-                setProducts(data.products);
-                setTotalPages(data.pages);
+                let responseData;
+
+                if (sourceComponent) {
+                    const { data } = await axiosClient.post(
+                        `/build/compatibility?${queryParams.toString()}`,
+                        {
+                            selectedComponentId: sourceComponent._id,
+                            targetCategory: category
+                        }
+                    );
+                    responseData = data;
+                } else {
+                    const { data } = await axiosClient.get(`/products?${queryParams.toString()}`);
+                    responseData = data;
+                }
+
+                setProducts(responseData.products || []);
+                if (responseData.pages) {
+                    setTotalPages(responseData.pages);
+                } else if (responseData.count) {
+                    setTotalPages(Math.ceil(responseData.count / 15));
+                } else {
+                    setTotalPages(1);
+                }
+
             } catch (error) {
-                console.error(error);
+                console.error("❌ Lỗi tải sản phẩm:", error);
+                setProducts([]);
             } finally {
                 setLoading(false);
             }
         };
+
         fetchProducts();
-    }, [category, page, filters]);
+    }, [category, page, filters, buildState]);
 
     const handleSelect = (product) => {
         addComponent(currentSlot, product);
