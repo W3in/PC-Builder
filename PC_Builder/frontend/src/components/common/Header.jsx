@@ -117,7 +117,6 @@ const Header = () => {
             <div className="top-header">
                 <div className="logo-area">
                     <Link to="/">
-                        <div className="logo-icon">P</div>
                         <span>PC Builder ®</span>
                     </Link>
                 </div>

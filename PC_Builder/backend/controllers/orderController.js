@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
+const Product = require('../models/Product');
 
 const getOrders = async (req, res) => {
     try {

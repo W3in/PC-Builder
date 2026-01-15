@@ -17,7 +17,6 @@ const Footer = () => {
             <div className="footer-main">
                 <div className="footer-col">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
-                        <div className="logo-icon" style={{ fontSize: '30px', color: '#26a69a' }}>P</div>
                         <span style={{ fontSize: '24px', fontWeight: 'bold', fontFamily: 'Chakra Petch', color: '#fff' }}>PC Builder ®</span>
                     </div>
                     <p className="footer-desc">{t('footer.desc')}</p>

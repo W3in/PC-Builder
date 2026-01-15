@@ -89,6 +89,7 @@ const ProductListPage = () => {
                                 <th>ID</th>
                                 <th>Tên</th>
                                 <th>Giá</th>
+                                <th>Tồn kho</th>
                                 <th>Danh mục</th>
                                 <th>Hãng</th>
                                 <th>Thao tác</th>
@@ -100,6 +101,12 @@ const ProductListPage = () => {
                                     <td>{product._id.substring(0, 10)}...</td>
                                     <td>{product.name}</td>
                                     <td>{formatPrice(product.price)}</td>
+                                    <td style={{
+                                        fontWeight: 'bold',
+                                        color: product.countInStock > 0 ? 'green' : 'red'
+                                    }}>
+                                        {product.countInStock}
+                                    </td>
                                     <td style={{ textTransform: 'uppercase' }}>{product.category}</td>
                                     <td>{product.brand}</td>
                                     <td>
