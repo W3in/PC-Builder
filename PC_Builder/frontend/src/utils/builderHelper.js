@@ -189,10 +189,10 @@ export const analyzeBuild = (cartItems, t) => {
                 report.warnings.push(`${t('builder.analysis.warn_bottleneck_cpu')} ${t('category.cpu')} ${cpu.name} ${t('builder.analysis.warn_bottleneck_cpu1')} ${gpu.name}. ${t('builder.analysis.warn_bottleneck_cpu2')}`);
             } else if (ratio > 1.5) {
                 report.stats.bottleneckStatus = t('builder.analysis.status_gpu_weak') || "Bottleneck: GPU Yếu";
-                report.tips.push(`t('builder.analysis.warn_bottleneck_cpu')`);
+                report.tips.push(t('builder.analysis.warn_bottleneck_gpu'));
             } else {
                 report.stats.bottleneckStatus = t('builder.analysis.status_balanced') || "Cân bằng tốt";
-                report.tips.push(`t('builder.analysis.tip_balanced')`);
+                report.tips.push(t('builder.analysis.tip_balanced'));
             }
         }
     }
