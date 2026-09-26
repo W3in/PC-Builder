@@ -29,14 +29,23 @@ const AuthPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLoginMode) {
-            await login(email, password);
-            toast.success(t('toast.login_success'));
-            navigate(redirectPath, { replace: true });
+            const success = await login(email, password);
+            if (success) {
+                toast.success(t('toast.login_success'));
+                navigate(redirectPath, { replace: true });
+            } else {
+                toast.error(error || t('toast.login_failed'));
+            }
         } else {
-            await register(name, email, password, phone);
+            const success = await register(name, email, password, phone);
+            if (success) {
+                toast.success(t('toast.register_success'));
+                navigate(redirectPath, { replace: true });
+            } else {
+                toast.error(error || t('toast.register_failed'));
+            }
         }
     };
-
 
     return (
         <div className="auth-fullscreen">
