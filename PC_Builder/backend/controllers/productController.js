@@ -19,7 +19,7 @@ const getProducts = async (req, res) => {
         const query = { ...keyword };
 
         if (req.query.category) query.category = req.query.category;
-        if (req.query.usage) query.usage = req.query.usage;
+        if (typeof req.query.usage === 'string') query.usage = { $in: req.query.usage.split(',') };
 
         if (req.query.minPrice || req.query.maxPrice) {
             query.price = {};
