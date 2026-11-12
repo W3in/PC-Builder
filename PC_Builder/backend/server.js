@@ -4,6 +4,13 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+// On some Windows machines Node only sees a 127.0.0.1 resolver that refuses the SRV lookup
+// mongodb+srv:// needs (querySrv ECONNREFUSED), so fall back to public DNS there. Render (Linux) is untouched.
+const dns = require('dns');
+if (process.platform === 'win32' && dns.getServers().every(s => s.startsWith('127.') || s === '::1')) {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+}
+
 const productRoutes = require('./routes/productRoutes');
 const buildRoutes = require('./routes/buildRoutes');
 const userRoutes = require('./routes/userRoutes');
