@@ -37,7 +37,7 @@ const CartPage = () => {
             <h1>{t('cart.title')}</h1>
 
             <div className="builder-table-container">
-                <table className="builder-table">
+                <table className="builder-table cart-table">
                     <thead>
                         <tr>
                             <th>{t('cart.product')}</th>

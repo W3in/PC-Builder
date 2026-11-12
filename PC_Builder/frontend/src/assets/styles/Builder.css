@@ -307,3 +307,113 @@
         padding-right: 16px;
     }
 }
+
+/* Phones: a 5-column table can't fit, so each component row becomes a small card. */
+@media (max-width: 768px) {
+    .builder-header-bar h1 {
+        font-size: 22px;
+    }
+
+    .builder-wrapper > .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .builder-table,
+    .builder-table tbody {
+        display: block;
+    }
+
+    .builder-table thead {
+        display: none;
+    }
+
+    .builder-table tr {
+        display: grid;
+        grid-template-columns: 56px minmax(0, 1fr) auto;
+        gap: 6px 12px;
+        align-items: center;
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .builder-table td {
+        display: block;
+        padding: 0;
+        border: none;
+    }
+
+    .comp-label,
+    .comp-empty {
+        grid-column: 1 / -1;
+        width: auto;
+    }
+
+    .comp-img img {
+        width: 56px;
+        height: 56px;
+        display: block;
+    }
+
+    .comp-name {
+        overflow-wrap: anywhere;
+    }
+
+    .comp-name a {
+        font-size: 15px;
+    }
+
+    /* explicit cells: image | name | remove, with the price under the name */
+    .comp-img {
+        grid-area: 2 / 1 / 4 / 2;
+        align-self: start;
+    }
+
+    .comp-name {
+        grid-area: 2 / 2;
+    }
+
+    .comp-action {
+        grid-area: 2 / 3;
+    }
+
+    .comp-price {
+        grid-area: 3 / 2 / 4 / 4;
+    }
+
+    /* Cart reuses this table: name on top, then quantity | line total | remove (unit price hidden). */
+    .cart-table tr {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .cart-table td:first-child {
+        grid-column: 1 / -1;
+        overflow-wrap: anywhere;
+    }
+
+    .cart-table td:nth-child(2) {
+        display: none;
+    }
+
+    .cart-table td:nth-child(4) {
+        text-align: right;
+    }
+
+    .builder-footer-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .budget-info {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+    }
+
+    .budget-info p {
+        text-align: left;
+    }
+}

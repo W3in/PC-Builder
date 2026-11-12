@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/axiosClient';
-import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaTrash, FaPlus, FaSave, FaArrowLeft, FaUpload } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
@@ -48,7 +47,6 @@ const ProductEditPage = () => {
     const { id } = useParams();
     const isEditMode = Boolean(id);
     const navigate = useNavigate();
-    const { user } = useAuth();
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
@@ -85,7 +83,7 @@ const ProductEditPage = () => {
                     } else {
                         setBuildParts([{ component: '', name: '' }]);
                     }
-                } catch (error) {
+                } catch {
                     toast.error("Không thể tải thông tin sản phẩm");
                     navigate('/admin/products');
                 }
@@ -136,7 +134,7 @@ const ProductEditPage = () => {
             setImage(data);
             setUploading(false);
             toast.success("Upload ảnh thành công!");
-        } catch (error) {
+        } catch {
             setUploading(false);
             toast.error("Lỗi upload ảnh");
         }
