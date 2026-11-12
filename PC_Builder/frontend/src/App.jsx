@@ -1,5 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from './context/ThemeContext';
@@ -42,6 +42,17 @@ import CouponListPage from './pages/admin/CouponListPage';
 import CouponEditPage from './pages/admin/CouponEditPage';
 
 
+// React Router keeps the old scroll position when the page changes, so opening a product from far
+// down a list landed at the footer. Start new pages at the top; leave Back/Forward (POP) alone.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  const navigationType = useNavigationType();
+  useEffect(() => {
+    if (navigationType !== 'POP') window.scrollTo(0, 0);
+  }, [pathname, navigationType]);
+  return null;
+}
+
 function App() {
   const { i18n } = useTranslation();
 
@@ -75,6 +86,7 @@ function App() {
             pauseOnHover
             theme="colored"
           />
+          <ScrollToTop />
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
