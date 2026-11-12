@@ -116,3 +116,12 @@
         opacity: 0.8;
     }
 }
+@media (max-width: 480px) {
+    .glitch-text-intro {
+        font-size: 40px;
+    }
+
+    .enter-btn {
+        padding: 12px 24px;
+    }
+}

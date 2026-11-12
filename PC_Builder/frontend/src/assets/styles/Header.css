@@ -316,3 +316,81 @@
     background: var(--input-bg);
     color: white;
 }
+@media (max-width: 1024px) {
+    .top-header {
+        flex-wrap: wrap;
+        padding: 10px 16px;
+        gap: 10px;
+    }
+
+    .logo-area a {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        font-size: 26px;
+    }
+
+    /* search moves to its own full-width row under logo + actions */
+    .search-bar {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    .user-actions {
+        gap: 12px;
+        margin-left: auto;
+    }
+
+    /* keep icons (and the cart count badge), hide the text labels next to them */
+    .action-item a > span,
+    .action-item a > div:last-child:not(:first-child),
+    .lang-current > span,
+    .lang-label {
+        display: none;
+    }
+
+    .lang-wrapper {
+        margin-left: 0;
+    }
+
+    .lang-current {
+        min-width: 0;
+    }
+
+    .sub-navbar {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .nav-item {
+        padding: 0 14px;
+        white-space: nowrap;
+    }
+
+    .mega-menu-container {
+        position: fixed;
+        top: auto;
+        max-height: 70vh;
+        overflow-y: auto;
+        padding: 16px 0;
+    }
+
+    .mega-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .mega-left {
+        grid-template-columns: repeat(2, 1fr);
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .mega-right {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

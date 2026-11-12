@@ -160,3 +160,14 @@
         grid-template-columns: 1fr;
     }
 }
+@media (max-width: 768px) {
+    .order-detail-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .order-detail-wrapper table {
+        display: block;
+        overflow-x: auto;
+    }
+}

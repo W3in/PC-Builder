@@ -100,3 +100,13 @@ button,
     background: rgba(11, 29, 42, 0.8);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
+/* Safety net for phones: media never wider than its column, and no sideways page scroll.
+   clip (not hidden) so position: sticky keeps working. */
+img,
+video {
+    max-width: 100%;
+}
+
+body {
+    overflow-x: clip;
+}

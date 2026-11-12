@@ -111,3 +111,14 @@
     font-size: 13px;
     color: #666;
 }
+@media (max-width: 768px) {
+    .footer-cta {
+        padding: 20px 16px;
+    }
+
+    .footer-main {
+        padding: 32px 16px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}

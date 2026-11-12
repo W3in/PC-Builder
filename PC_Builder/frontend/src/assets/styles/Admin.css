@@ -556,6 +556,12 @@ p {
     font-size: 16px;
 }
 
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
 @media (max-width: 768px) {
     .admin-search-form {
         max-width: 100%;
@@ -572,5 +578,35 @@ p {
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+@media (max-width: 768px) {
+    .admin-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboard-charts,
+    .edit-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: calc(100vw - 32px);
+    }
+
+    /* wide admin tables scroll sideways inside their box instead of stretching the page */
+    .admin-wrapper table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-grid {
+        grid-template-columns: 1fr;
     }
 }

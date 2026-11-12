@@ -154,3 +154,10 @@
 .toast-link-btn:hover {
     background: rgba(255, 255, 255, 0.2);
 }
+@media (max-width: 768px) {
+    .product-detail-container {
+        grid-template-columns: 1fr;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}

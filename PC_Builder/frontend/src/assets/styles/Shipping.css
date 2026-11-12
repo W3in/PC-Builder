@@ -192,3 +192,13 @@
         grid-template-columns: 1fr;
     }
 }
+@media (max-width: 600px) {
+    .shipping-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

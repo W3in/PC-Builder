@@ -41,3 +41,17 @@
     margin-bottom: 10px;
     color: var(--accent-color);
 }
+@media (max-width: 768px) {
+    .about-container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .about-hero h1 {
+        font-size: 28px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+}

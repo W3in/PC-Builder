@@ -352,3 +352,35 @@
         height: 350px;
     }
 }
+@media (max-width: 768px) {
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .slide-overlay h1,
+    .guides-intro h1 {
+        font-size: 30px;
+    }
+
+    .build-guides-section {
+        padding: 48px 0;
+    }
+
+    .build-guides-flex {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .guides-intro {
+        flex: none;
+    }
+
+    .guides-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-hero {
+        padding: 12px 24px;
+    }
+}

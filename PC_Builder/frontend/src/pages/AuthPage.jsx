@@ -118,7 +118,7 @@ const AuthPage = () => {
                             }}
                             theme="filled_blue"
                             size="large"
-                            width="340"
+                            width={String(Math.min(340, window.innerWidth - 80))}
                             shape="rectangular"
 
                             text={isLoginMode ? "signin_with" : "signup_with"}

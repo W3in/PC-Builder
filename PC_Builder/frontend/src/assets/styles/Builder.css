@@ -301,3 +301,9 @@
         width: 100%;
     }
 }
+@media (max-width: 600px) {
+    .builder-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}

@@ -143,9 +143,9 @@ const SelectionPage = () => {
                 </div>
             </div>
 
-            <div className="selection-body" style={{ display: 'flex', gap: '30px' }}>
+            <div className="selection-body">
 
-                <div style={{ width: '250px', flexShrink: 0 }}>
+                <div className="selection-sidebar">
                     <FilterSidebar
                         category={category}
                         selectedFilters={filters}

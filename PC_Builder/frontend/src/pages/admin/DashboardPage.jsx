@@ -73,7 +73,7 @@ const DashboardPage = () => {
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+            <div className="dashboard-charts">
 
                 <div className="dashboard-chart-box">
                     <h3 style={{ marginBottom: 20 }}>Biểu đồ doanh thu từng tháng</h3>
