@@ -1,16 +1,17 @@
 const Product = require('../models/Product');
+const { escapeRegex } = require('../middleware/sanitize');
 const User = require('../models/User');
 const { indexProducts } = require('../services/vectorService');
 
 const getProducts = async (req, res) => {
     try {
         const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 12;
+        const limit = Math.min(Number(req.query.limit) || 12, 100);
         const skip = (page - 1) * limit;
 
         const keyword = req.query.keyword ? {
             name: {
-                $regex: req.query.keyword,
+                $regex: escapeRegex(req.query.keyword),
                 $options: 'i',
             },
         } : {};
@@ -26,7 +27,7 @@ const getProducts = async (req, res) => {
             if (req.query.maxPrice) query.price.$lte = Number(req.query.maxPrice);
         }
 
-        if (req.query.brand) {
+        if (typeof req.query.brand === 'string') {
             query.brand = { $in: req.query.brand.split(',') };
         }
 
@@ -36,7 +37,7 @@ const getProducts = async (req, res) => {
             if (excludeFields.includes(key)) continue;
 
             const rawValue = req.query[key];
-            if (!rawValue) continue;
+            if (!rawValue || typeof rawValue !== 'string' || key.includes('$')) continue;
 
             const valueArray = rawValue.split(',');
 
@@ -106,7 +107,7 @@ const createProduct = async (req, res) => {
             return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin bắt buộc" });
         }
 
-        const productExists = await Product.findOne({ name: { $regex: `^${name}$`, $options: 'i' } });
+        const productExists = await Product.findOne({ name: { $regex: `^${escapeRegex(name)}$`, $options: 'i' } });
         if (productExists) {
             return res.status(400).json({ message: "Sản phẩm này đã tồn tại trong hệ thống!" });
         }
@@ -238,7 +239,7 @@ const searchSuggestions = async (req, res) => {
         }
 
         let products = await Product.find({
-            name: { $regex: keyword, $options: 'i' }
+            name: { $regex: escapeRegex(keyword), $options: 'i' }
         })
             .select('name image price slug category')
             .limit(20);

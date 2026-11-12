@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const generateToken = (id) => {
@@ -10,6 +11,13 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
     const { name, email, password, phone } = req.body;
+
+    if (typeof email !== 'string' || typeof password !== 'string' || typeof name !== 'string') {
+        return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+    }
+    if (password.length < 8) {
+        return res.status(400).json({ message: "Mật khẩu phải có ít nhất 8 ký tự" });
+    }
 
     try {
         const userExists = await User.findOne({ email });
@@ -44,6 +52,10 @@ const registerUser = async (req, res) => {
 
 const authUser = async (req, res) => {
     const { email, password } = req.body;
+
+    if (typeof email !== 'string' || typeof password !== 'string') {
+        return res.status(401).json({ message: "Sai email hoặc mật khẩu" });
+    }
 
     try {
         const user = await User.findOne({ email });
@@ -87,7 +99,7 @@ const googleLogin = async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
-            const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const randomPassword = crypto.randomBytes(32).toString('hex');
 
             user = await User.create({
                 name: name,
@@ -140,6 +152,10 @@ const updateUserProfile = async (req, res) => {
 
 const updateUserPassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
+
+    if (typeof currentPassword !== 'string' || typeof newPassword !== 'string' || newPassword.length < 8) {
+        return res.status(400).json({ message: "Mật khẩu mới phải có ít nhất 8 ký tự" });
+    }
 
     try {
         const user = await User.findById(req.user._id);

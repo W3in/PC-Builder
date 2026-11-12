@@ -31,12 +31,19 @@ const formatPriceServer = (amountInVND, lang) => {
 
 const handleChatMessage = async (req, res) => {
     try {
-        const { message, lang = 'vi', sessionId, aiConfig } = req.body;
+        const { message, sessionId, aiConfig } = req.body;
+        const lang = ['vi', 'en', 'ja'].includes(req.body.lang) ? req.body.lang : 'vi';
 
         if (!message || typeof message !== 'string') return res.status(400).json({ error: "Vui lòng nhập tin nhắn" });
         if (message.length > 1000) return res.status(400).json({ action: "chat", reply: "Tin nhắn quá dài (tối đa 1000 ký tự)." });
 
-        const config = aiConfig || {
+        const safeAiConfig = aiConfig && typeof aiConfig === 'object'
+            && Object.values(aiConfig).every(v => typeof v === 'string' && v.length <= 300) ? aiConfig : null;
+        if (typeof sessionId !== 'string' || sessionId.length > 100) {
+            return res.status(400).json({ action: "chat", reply: "Phiên chat không hợp lệ." });
+        }
+
+        const config = safeAiConfig || {
             sys_prompt: "Bạn là nhân viên tư vấn bán PC chuyên nghiệp.",
             label_id: "Mã", label_name: "Tên", label_price: "Giá",
             label_status: "Tình trạng", in_stock: "Còn hàng", out_stock: "Hết",
@@ -113,7 +120,10 @@ const handleChatMessage = async (req, res) => {
         history.push({ role: "model", content: aiResponse.reply });
 
         if (history.length > 20) history.splice(0, history.length - 20);
+        conversations.delete(sessionId);
         conversations.set(sessionId, history);
+        // Bound memory: drop the least recently used conversation once there are too many.
+        if (conversations.size > 500) conversations.delete(conversations.keys().next().value);
 
         res.json({
             ...aiResponse,

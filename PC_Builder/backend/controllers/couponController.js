@@ -40,6 +40,7 @@ const getAvailableCoupons = async (req, res) => {
 
 const validateCoupon = async (req, res) => {
     const { code, orderValue } = req.body;
+    if (typeof code !== 'string') return res.status(400).json({ message: "Mã giảm giá không hợp lệ" });
     try {
         const coupon = await Coupon.findOne({ code: code.toUpperCase() });
 

@@ -20,12 +20,25 @@ const orderRoutes = require('./routes/orderRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const { sanitizeBody } = require('./middleware/sanitize');
 const app = express();
 // Render sits behind a proxy; without this every user shares the proxy's IP and the rate limit hits everyone at once.
 app.set('trust proxy', 1);
 
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+    // nosniff stops browsers from running an uploaded file as a script; the rest are cheap hardening headers.
+    res.set({
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'Referrer-Policy': 'no-referrer',
+        'Strict-Transport-Security': 'max-age=15552000'
+    });
+    next();
+});
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
+app.use(sanitizeBody);
 
 mongoose.connect(process.env.MONGO_DB_URL)
     .then(() => console.log('✅ MongoDB Connected'))
