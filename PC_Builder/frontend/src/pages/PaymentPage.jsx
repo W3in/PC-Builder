@@ -14,24 +14,31 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const PaymentPage = () => {
     const { t, i18n } = useTranslation();
     const { theme } = useTheme();
-    const { finalTotal } = useCart();
+    const { finalTotal, cartItems, appliedCoupon } = useCart();
     const [clientSecret, setClientSecret] = useState("");
+    const [serverTotal, setServerTotal] = useState(null);
+    // A string key so a re-created (but identical) cart array doesn't create a second PaymentIntent.
+    const cartKey = JSON.stringify(cartItems.map(item => [item._id, item.qty])) + (appliedCoupon?.code || '');
 
     useEffect(() => {
         const createIntent = async () => {
             if (finalTotal <= 0) return;
             try {
+                // The server prices the cart itself; we only send product ids and quantities.
                 const { data } = await axiosClient.post('/payment/create-intent', {
-                    amount: finalTotal
+                    orderItems: cartItems.map(item => ({ _id: item._id, name: item.name, qty: item.qty })),
+                    couponCode: appliedCoupon ? appliedCoupon.code : null
                 });
                 setClientSecret(data.clientSecret);
+                setServerTotal(data.amount);
             } catch (error) {
                 console.error("Lỗi tạo thanh toán:", error);
-                alert("Lỗi kết nối cổng thanh toán.");
+                alert(error.response?.data?.message || "Lỗi kết nối cổng thanh toán.");
             }
         };
         createIntent();
-    }, [finalTotal]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cartKey]);
 
     const appearance = {
         theme: theme === 'dark' ? 'night' : 'stripe',
@@ -54,7 +61,7 @@ const PaymentPage = () => {
                 <p className="payment-summary-text">
                     {t('payment.total')}:
                     <span className="payment-total-highlight">
-                        {formatPrice(finalTotal, i18n.language)}
+                        {formatPrice(serverTotal ?? finalTotal, i18n.language)}
                     </span>
                 </p>
             </div>

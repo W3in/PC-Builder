@@ -2,6 +2,8 @@ const Order = require('../models/Order');
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
 const Product = require('../models/Product');
+const { stripe } = require('./paymentController');
+const { priceOrder, usableCouponFilter, PricingError } = require('../services/orderPricing');
 
 const getOrders = async (req, res) => {
     try {
@@ -27,103 +29,109 @@ const getOrders = async (req, res) => {
     }
 };
 
+// Asks Stripe (not the browser) whether this PaymentIntent really paid this exact order.
+const verifyStripePayment = async (paymentIntentId, totalPrice, userId) => {
+    if (typeof paymentIntentId !== 'string' || !paymentIntentId.startsWith('pi_')) {
+        throw new PricingError('Thiếu mã thanh toán Stripe');
+    }
+    if (await Order.exists({ 'paymentResult.id': paymentIntentId })) {
+        throw new PricingError('Giao dịch này đã được dùng cho một đơn hàng khác', 409);
+    }
+
+    const intent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (intent.status !== 'succeeded') throw new PricingError('Thanh toán chưa thành công');
+    if (intent.currency !== 'vnd' || intent.amount !== totalPrice) {
+        throw new PricingError('Số tiền đã thanh toán không khớp với đơn hàng');
+    }
+    if (intent.metadata?.userId !== userId.toString()) {
+        throw new PricingError('Giao dịch không thuộc về tài khoản này', 403);
+    }
+    return intent;
+};
+
+// Decrements stock only where enough is left, so two buyers can't both take the last item.
+const reserveStock = async (items) => {
+    const reserved = [];
+    for (const item of items) {
+        const updated = await Product.findOneAndUpdate(
+            { _id: item.product, countInStock: { $gte: item.qty } },
+            { $inc: { countInStock: -item.qty } }
+        );
+        if (!updated) {
+            await releaseStock(reserved);
+            throw new PricingError(`Sản phẩm ${item.name} vừa hết hàng, vui lòng thử lại.`);
+        }
+        reserved.push(item);
+    }
+    return reserved;
+};
+
+const releaseStock = (items) => Promise.all(items.map((item) =>
+    Product.findByIdAndUpdate(item.product, { $inc: { countInStock: item.qty } })
+));
+
 const addOrderItems = async (req, res) => {
+    let reserved = [];
+    let couponUsed = null;
+
     try {
-        const {
-            orderItems,
+        const { orderItems, shippingAddress, paymentMethod, couponCode, paymentResult } = req.body;
+
+        // Client-sent itemsPrice / totalPrice / isPaid are ignored on purpose.
+        const { dbOrderItems, itemsPrice, discountAmount, coupon, totalPrice } = await priceOrder(orderItems, couponCode);
+
+        let isPaid = false;
+        let verifiedPaymentResult;
+        if (paymentMethod === 'Stripe') {
+            const intent = await verifyStripePayment(paymentResult?.id, totalPrice, req.user._id);
+            isPaid = true;
+            verifiedPaymentResult = {
+                id: intent.id,
+                status: intent.status,
+                update_time: new Date(intent.created * 1000).toISOString(),
+                email_address: intent.receipt_email || req.user.email,
+            };
+        } else if (paymentMethod !== 'COD') {
+            throw new PricingError('Phương thức thanh toán không hợp lệ');
+        }
+
+        reserved = await reserveStock(dbOrderItems);
+
+        if (coupon) {
+            couponUsed = await Coupon.findOneAndUpdate(
+                { _id: coupon._id, ...usableCouponFilter(coupon.code) },
+                { $inc: { usedCount: 1 } }
+            );
+            if (!couponUsed) throw new PricingError('Mã giảm giá vừa hết lượt hoặc hết hạn');
+        }
+
+        const order = new Order({
+            user: req.user._id,
+            orderItems: dbOrderItems,
             shippingAddress,
             paymentMethod,
             itemsPrice,
-            couponCode,
+            discountAmount,
+            coupon: coupon ? coupon._id : null,
+            totalPrice,
             isPaid,
-            paymentResult
-        } = req.body;
+            paidAt: isPaid ? Date.now() : null,
+            paymentResult: verifiedPaymentResult
+        });
 
-        if (orderItems && orderItems.length === 0) {
-            return res.status(400).json({ message: 'Không có sản phẩm nào' });
-        } else {
-
-            for (const item of orderItems) {
-                const productId = item._id || item.product;
-
-                const productExist = await Product.findById(productId);
-
-                if (!productExist) {
-                    return res.status(404).json({ message: `Sản phẩm không tồn tại: ${item.name}` });
-                }
-
-                if (productExist.countInStock < item.qty) {
-                    return res.status(400).json({
-                        message: `Sản phẩm ${item.name} chỉ còn ${productExist.countInStock} cái, không đủ để đặt ${item.qty} cái.`
-                    });
-                }
-            }
-
-            const dbOrderItems = orderItems.map((item) => ({
-                ...item,
-                product: item._id || item.product,
-                _id: undefined
-            }));
-
-            let finalItemsPrice = Number(itemsPrice);
-            let finalDiscountAmount = 0;
-            let appliedCouponId = null;
-
-            if (couponCode) {
-                const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() });
-
-                if (coupon &&
-                    coupon.isActive &&
-                    new Date() <= coupon.expirationDate &&
-                    coupon.usedCount < coupon.usageLimit &&
-                    finalItemsPrice >= coupon.minOrderValue
-                ) {
-                    if (coupon.discountType === 'percent') {
-                        finalDiscountAmount = (finalItemsPrice * coupon.discountValue) / 100;
-                        if (coupon.maxDiscountAmount > 0 && finalDiscountAmount > coupon.maxDiscountAmount) {
-                            finalDiscountAmount = coupon.maxDiscountAmount;
-                        }
-                    } else if (coupon.discountType === 'fixed') {
-                        finalDiscountAmount = coupon.discountValue;
-                    }
-
-                    coupon.usedCount += 1;
-                    await coupon.save();
-
-                    appliedCouponId = coupon._id;
-                }
-            }
-
-            const shippingPrice = req.body.shippingPrice || 0;
-            const calculatedTotalPrice = finalItemsPrice + Number(shippingPrice) - finalDiscountAmount;
-
-            const order = new Order({
-                user: req.user._id,
-                orderItems: dbOrderItems,
-                shippingAddress,
-                paymentMethod,
-                itemsPrice: finalItemsPrice,
-                discountAmount: finalDiscountAmount,
-                coupon: appliedCouponId,
-                totalPrice: calculatedTotalPrice,
-                isPaid: isPaid || false,
-                paidAt: isPaid ? Date.now() : null,
-                paymentResult: paymentResult
-            });
-
-            const createdOrder = await order.save();
-
-            await Promise.all(orderItems.map(async (item) => {
-                const productId = item._id || item.product;
-
-                await Product.findByIdAndUpdate(productId, {
-                    $inc: { countInStock: -item.qty }
-                });
-            }));
-
-            res.status(201).json(createdOrder);
-        }
+        const createdOrder = await order.save();
+        res.status(201).json(createdOrder);
     } catch (error) {
+        // Undo partial work so a failed order doesn't eat stock or coupon uses.
+        await releaseStock(reserved).catch((e) => console.error('Rollback stock failed:', e));
+        if (couponUsed) {
+            await Coupon.findByIdAndUpdate(couponUsed._id, { $inc: { usedCount: -1 } })
+                .catch((e) => console.error('Rollback coupon failed:', e));
+        }
+
+        if (error instanceof PricingError || error.name === 'ValidationError') {
+            return res.status(error.status || 400).json({ message: error.message });
+        }
         console.error("Lỗi tạo đơn hàng:", error);
         res.status(500).json({ message: "Lỗi Server khi tạo đơn hàng", error: error.message });
     }

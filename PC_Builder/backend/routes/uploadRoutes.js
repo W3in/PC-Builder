@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
+const { protect, admin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -27,12 +28,14 @@ function checkFileType(file, cb) {
 
 const upload = multer({
     storage,
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     },
 });
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', protect, admin, upload.single('image'), (req, res) => {
+    if (!req.file) return res.status(400).json({ message: 'Chưa chọn ảnh' });
     res.send(`/${req.file.path.replace(/\\/g, '/')}`);
 });
 

@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/axiosClient';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { FaTrash, FaPlus, FaSave, FaArrowLeft, FaUpload } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
 import '../../assets/styles/Admin.css';
@@ -132,8 +131,8 @@ const ProductEditPage = () => {
         formData.append('image', file);
         setUploading(true);
         try {
-            const backendUrl = import.meta.env.VITE_API_URL.replace('/api', '');
-            const { data } = await axios.post(`${backendUrl}/api/upload`, formData);
+            // axiosClient attaches the admin's JWT, which /api/upload now requires
+            const { data } = await axiosClient.post('/upload', formData);
             setImage(data);
             setUploading(false);
             toast.success("Upload ảnh thành công!");

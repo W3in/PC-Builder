@@ -14,6 +14,8 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const app = express();
+// Render sits behind a proxy; without this every user shares the proxy's IP and the rate limit hits everyone at once.
+app.set('trust proxy', 1);
 
 app.use(cors());
 app.use(express.json());

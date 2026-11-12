@@ -3,7 +3,6 @@ import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import axiosClient from '../../api/axiosClient';
 import '../../assets/styles/Payment.css';
 
@@ -13,8 +12,7 @@ const CheckoutForm = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const { cartItems, finalTotal, subTotal, appliedCoupon, clearCart } = useCart();
-    const { user } = useAuth();
+    const { cartItems, appliedCoupon, clearCart } = useCart();
 
     const [message, setMessage] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -44,21 +42,13 @@ const CheckoutForm = () => {
                 }
                 const shippingAddress = JSON.parse(shippingAddressStr);
 
+                // The server re-prices the cart and checks this PaymentIntent with Stripe itself.
                 const orderData = {
                     orderItems: cartItems,
                     shippingAddress: shippingAddress,
-                    itemsPrice: subTotal,
-                    totalPrice: finalTotal,
                     couponCode: appliedCoupon ? appliedCoupon.code : null,
                     paymentMethod: 'Stripe',
-                    isPaid: true,
-
-                    paymentResult: {
-                        id: paymentIntent.id,
-                        status: paymentIntent.status,
-                        update_time: new Date().toISOString(),
-                        email_address: paymentIntent.receipt_email || user?.email,
-                    }
+                    paymentResult: { id: paymentIntent.id }
                 };
 
                 await axiosClient.post('/orders', orderData);

@@ -33,7 +33,8 @@ const handleChatMessage = async (req, res) => {
     try {
         const { message, lang = 'vi', sessionId, aiConfig } = req.body;
 
-        if (!message) return res.status(400).json({ error: "Vui lòng nhập tin nhắn" });
+        if (!message || typeof message !== 'string') return res.status(400).json({ error: "Vui lòng nhập tin nhắn" });
+        if (message.length > 1000) return res.status(400).json({ action: "chat", reply: "Tin nhắn quá dài (tối đa 1000 ký tự)." });
 
         const config = aiConfig || {
             sys_prompt: "Bạn là nhân viên tư vấn bán PC chuyên nghiệp.",
