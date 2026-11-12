@@ -1,0 +1,18 @@
+name: Keep Atlas awake
+
+# MongoDB Atlas pauses free clusters after 30 days without connections.
+# Once a week this calls a public endpoint that queries the database, which counts as activity.
+on:
+  schedule:
+    - cron: '0 3 * * 1' # Mondays 03:00 UTC (10:00 Vietnam time)
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      # Render's free tier needs up to a minute to wake up, so allow a long timeout and retries.
+      # The URL is not a secret: the public frontend already calls it from every visitor's browser.
+      - run: curl -fsS --max-time 120 --retry 3 --retry-delay 30 --retry-all-errors "https://pc-builder-ztfe.onrender.com/api/products?limit=1" -o /dev/null && echo ok
